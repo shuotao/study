@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""phase_a_clean.py — Phase 1 (Phase A): deterministic SRT cleanup. No LLM. UPGRADE of study SRT/qaqc_srt.py.
+"""phase_a_clean.py — candidate Phase A cleaner. SUPERSEDED (2026-10-22, round 2): study fixed SRT/qaqc_srt.py
+upstream and the fixed original ties or beats this file on every metric (docs/qaqc/tool-comparison.md).
+Kept only to re-run the comparison; gsn.py uses it only with --phase-a candidate.
 
-Default since it won the head-to-head on 4 real study sessions (docs/qaqc/tool-comparison.md): same dictionaries
+History: it was the default after it won the head-to-head on 4 real study sessions (docs/qaqc/tool-comparison.md): same dictionaries
 and garble thresholds as qaqc_srt.py, but (1) short replies (對／好／了解) are kept, as qaqc_srt.py's own docstring
 says they must be — its code dropped every cue under 3 characters; (2) short all-Latin terms inside a Chinese talk
 ("Writing is rewriting", "domain knowledge") are no longer dropped as garble; (3) English talks get English
@@ -31,7 +33,7 @@ import re
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from dict.load import load_hallucination_prefixes, load_qaqc_config, load_strip_prefixes, load_typo_dict  # noqa: E402
 from pipeline.common import format_srt, is_cjk_text, parse_srt  # noqa: E402
 

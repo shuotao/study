@@ -21,7 +21,7 @@ new options:
   --chunk-seconds N     chunk length (default 600; 300 for noisy rooms)
   --domain NAME         typo dictionary overlay dict/typo_dict.<NAME>.json
   --s2t                 convert Simplified-drift glyphs to Taiwan Traditional in cleaned.srt
-  --phase-a upgrade|upstream  Phase A cleaner: pipeline/phase_a_clean.py (default, won the comparison) or SRT/qaqc_srt.py
+  --phase-a upstream|candidate  Phase A cleaner: study SRT/qaqc_srt.py (default) or the superseded candidate
   --translate zh-TW     Phase 2: zh-TW subtitle track for a foreign-language talk (study srt_zhtw.py)
   --terms               Phase 4: term supplements → enhanced.md
   --identity ROLE       Phase 5: stance notes → notes_<ROLE>.md
@@ -289,14 +289,15 @@ def transcribe(sdir: Path, link: Path, lang: str, no_prompt: bool, chunk_seconds
 
 
 def phase_a(sdir: Path, domain: str | None, s2t: bool) -> None:
-    """Default: pipeline/phase_a_clean.py (upgrade that won docs/qaqc/tool-comparison.md).
-    --phase-a upstream: study SRT/qaqc_srt.py for Chinese; English then keeps every cue and srt_zhtw prep filters."""
+    """Default: study SRT/qaqc_srt.py (fixed upstream 2026-10-22; ties or beats the candidate, tool-comparison.md round 2).
+    English talks keep every cue here; srt_zhtw prep applies the English filter in Phase 2, as in study.
+    --phase-a candidate: pipeline/candidates/phase_a_clean.py (superseded; kept to reproduce the comparison)."""
     meta = load_meta(sdir)
     dom = ["--domain", domain] if domain else []
-    if meta.get("phase_a_tool", "upgrade") == "upgrade":
-        sh(PY, REPO / "pipeline/phase_a_clean.py", sdir / "transcript.srt", sdir / "cleaned.srt",
+    if meta.get("phase_a_tool", "upstream") == "candidate":
+        sh(PY, REPO / "pipeline/candidates/phase_a_clean.py", sdir / "transcript.srt", sdir / "cleaned.srt",
            "--context", sdir / "context.txt", *dom)
-        how = "pipeline/phase_a_clean.py (upgrade)"
+        how = "pipeline/candidates/phase_a_clean.py (superseded candidate)"
         if s2t:
             sh(PY, S2T, sdir / "cleaned.srt", "--in-place")
             how += " + s2t_normalize.py"
@@ -470,7 +471,7 @@ def main() -> int:
     n.add_argument("--from-srt")
     n.add_argument("--slug"); n.add_argument("--title"); n.add_argument("--speaker")
     n.add_argument("--context"); n.add_argument("--lang", default="zh", choices=["zh", "en"]); n.add_argument("--no-prompt", action="store_true")
-    n.add_argument("--chunk-seconds", type=int); n.add_argument("--phase-a", choices=["upgrade", "upstream"], default="upgrade"); n.add_argument("--domain"); n.add_argument("--s2t", action="store_true")
+    n.add_argument("--chunk-seconds", type=int); n.add_argument("--phase-a", choices=["upstream", "candidate"], default="upstream"); n.add_argument("--domain"); n.add_argument("--s2t", action="store_true")
     n.add_argument("--translate", choices=["zh-TW"]); n.add_argument("--terms", action="store_true"); n.add_argument("--identity")
     n.add_argument("--matrix", action="store_true"); n.add_argument("--stop-at", choices=STOP_AT)
     sub.add_parser("improve").add_argument("--session")

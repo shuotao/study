@@ -9,7 +9,7 @@ Raw numbers: `tool-comparison.json`. Run 2026-10-22.
 
 | Tool | Upstream (study) | Candidate (new) | Verdict |
 |---|---|---|---|
-| Phase A cleaner | `SRT/qaqc_srt.py` | `pipeline/phase_a_clean.py` | **candidate wins → default** (`--phase-a upstream` keeps the original available) |
+| Phase A cleaner | `SRT/qaqc_srt.py` | `pipeline/candidates/phase_a_clean.py` | round 1: candidate won → default. **Round 2: study fixed the original upstream; the fixed original ties or beats the candidate → original is the default again**, candidate superseded |
 | Groq transcription | `groq_transcribe.py` / `groq_transcribe_en.py` | `pipeline/candidates/transcribe_groq.py` | **upstream wins → kept**; candidate rejected |
 | Phase 2 translation | `srt_zhtw.py` + `zh_parts_check.py` | `pipeline/candidates/translate_srt.py` | **upstream wins → kept**; candidate rejected |
 
@@ -55,9 +55,30 @@ Both assemble **byte-identical** subtitle files (396 cues, every timecode proven
 correct translation. `zh_parts_check.py` handled it. The candidate's extra bilingual SRT is a convenience, not a
 quality win. Upstream kept.
 
+## Round 2 — after the fixes went upstream (2026-10-22)
+
+The three upstream issues found here were fixed in study and pushed to GENAI:
+`main` 5b3f5a7 (Phase A: short replies, short English speech, code-switching — CLI `qaqc_srt.py` and the Web
+mirror `studio.js`, parity on 1,966 real cues; live on GitHub Pages) and the feat branch 9ffc10a + 810fa13
+(resumable transcription; the English transcriber no longer exits 0 with a gapped SRT; empty tail chunks skipped).
+Those files were synced here from study commit 810fa13 (`docs/upstream.sha1`), and the Phase A comparison re-run:
+
+| Session | fixed original kept | false drops | low-overlap | candidate kept | false drops | low-overlap |
+|---|---|---|---|---|---|---|
+| 2026-07-06_lightalking | 51 | 0 | 0 | 51 | 0 | 0 |
+| 2026-07-22_genai-meetup-1 | 539 | 0 | 73 | 539 | 0 | 73 |
+| 2026-07-22_genai-meetup-2 | 557 | 0 | 212 | 556 | 0 | 212 |
+| 2026-10-19_taipei-current-songshan-xinyi | 803 | 0 | 395 | 803 | 0 | 395 |
+
+The fixed original keeps one real cue the candidate drops (「SUNNY在年會引用Web Read Alive,」 — its Latin-word rule
+allows a comma) and is otherwise identical. Ties go to the field-proven tool, so `SRT/qaqc_srt.py` is the default
+again; the candidate moved to `pipeline/candidates/` (`--phase-a candidate` reproduces it).
+The transcription candidate stays rejected; its one useful idea (resume) now exists upstream.
+
 ## What this changed in the repo
 
-- `pipeline/phase_a_clean.py` is the default Phase A; `gsn.py new --phase-a upstream` runs `SRT/qaqc_srt.py`.
+- Round 1: `pipeline/phase_a_clean.py` became the default Phase A. Round 2: superseded by the upstream fix; default is
+  `SRT/qaqc_srt.py` again, candidate in `pipeline/candidates/`.
 - Rejected candidates stay in `pipeline/candidates/` only so the comparison can be re-run; `gsn.py` never calls them.
 - Upstream issues to report to study: (1) `qaqc_srt.py` drops < 3-char cues contrary to its docstring, drops
   short English quotes in Chinese talks and drops code-switching sentences (「我用 Google 的 Gemini Flash」); (2) port the chunk cache to `groq_transcribe.py`.

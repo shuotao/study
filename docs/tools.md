@@ -3,8 +3,9 @@
 The one list of every tool. `tests/test_repo_hygiene.py` fails when a tool file is missing here.
 Two kinds, kept apart on purpose:
 
-- **Upstream (study, unchanged)** — field-proven across the study sessions. Byte-identical to study
-  (`docs/upstream.sha1`, checked by the test suite). Fix them upstream, not here.
+- **Upstream (study, unchanged)** — field-proven across the study sessions. Byte-identical to study commit 810fa13
+  (`docs/upstream.sha1`, checked by the test suite; `zh_parts_check.py` and `srt_translate_zhtw.py` are not committed in
+  study yet and match its working tree). Fix them upstream, then sync here.
 - **New in the CLI edition** — the layer study did not have: one entry point, gates, ledger, audit, headless,
   word-count chain, setup. Every new tool that *replaces* an upstream one is a candidate upgrade and must win a
   head-to-head comparison first (`docs/qaqc/tool-comparison.md`).
@@ -13,9 +14,9 @@ Two kinds, kept apart on purpose:
 
 | Tool | Phase | Purpose |
 |---|---|---|
-| `.claude/skills/good-student-notes/scripts/groq_transcribe.py` | 1 | Groq Whisper large-v3, Chinese; FFmpeg chunks, key rotation, `GROQ_NO_PROMPT`, `GROQ_CHUNK_SECONDS` |
+| `.claude/skills/good-student-notes/scripts/groq_transcribe.py` | 1 | Groq Whisper large-v3, Chinese; FFmpeg chunks, key rotation, resumable chunk cache, `GROQ_NO_PROMPT`, `GROQ_CHUNK_SECONDS` |
 | `scripts/lang/en/groq_transcribe_en.py` | 1 | same for English |
-| `SRT/qaqc_srt.py` | 1 | Phase A: hallucination prefixes, garbled cues, typo dictionary; timecodes untouched |
+| `SRT/qaqc_srt.py` | 1 | Phase A (default): hallucination prefixes, garbled cues with speech exemptions, typo dictionary; timecodes untouched |
 | `scripts/s2t_normalize.py` | 1 | Simplified-drift → Taiwan Traditional glyphs (OpenCC s2tw), refuses transcript.srt |
 | `scripts/lang/en/srt_zhtw.py` | 2 | prep / assemble timeline-locked EN→zh-TW, byte-identical timecode proof |
 | `scripts/lang/en/zh_parts_check.py` | 2 | translation gate C1–C7 |
@@ -26,6 +27,7 @@ Two kinds, kept apart on purpose:
 | `scripts/dialogue_check.py` | 3 | panels: speaker attribution and turn order |
 | `scripts/pipeline_logger.py` | all | log → check → improvement queue (the iteration loop) |
 | `scripts/tests/test_pipeline_logger.py` | — | its tests |
+| `scripts/tests/test_qaqc_srt.py` | 1 | tests for the R1.2 exemptions and short replies (added upstream 2026-10-22) |
 | `dict/load.py` | 1 | dictionary loader (+ `dict/*.json` data) |
 
 ## New in the CLI edition
@@ -43,8 +45,8 @@ Two kinds, kept apart on purpose:
 | `pipeline/init.py` | environment doctor behind `/init` |
 | `pipeline/secret_scan.py` | pre-commit hook: keys, .env, media, session products |
 | `pipeline/eval_effort.py` | model × effort eval for judgment stages |
-| `pipeline/phase_a_clean.py` | **upgrade of `SRT/qaqc_srt.py`, default Phase A** — won `docs/qaqc/tool-comparison.md` |
 | `pipeline/candidates/compare.py` | head-to-head harness: candidate vs upstream on real study sessions |
+| `pipeline/candidates/phase_a_clean.py` | superseded candidate: won round 1, tied/lost after the upstream fix (round 2); `--phase-a candidate` |
 | `pipeline/candidates/transcribe_groq.py` | rejected candidate (kept to re-run the comparison; never called) |
 | `pipeline/candidates/translate_srt.py` | rejected candidate (kept to re-run the comparison; never called) |
 | `pipeline/candidates/__init__.py` | package marker |

@@ -127,15 +127,12 @@ class Gates(unittest.TestCase):
 
 
 class Tools(unittest.TestCase):
-    def test_phase_a_upgrade_keeps_terms_and_replies(self):
-        from pipeline.phase_a_clean import is_garbled_cjk, is_garbled_latin
-        self.assertFalse(is_garbled_cjk("domain knowledge"))
-        self.assertFalse(is_garbled_cjk("Writing is rewriting"))      # upstream false drop (tool-comparison.md)
-        self.assertFalse(is_garbled_cjk("我用 Google 的 Gemini Flash"))  # code-switching, dropped by upstream too
-        self.assertTrue(is_garbled_cjk("這個 ┌┐└┘├┤ 符號"))               # noise still caught
-        self.assertTrue(is_garbled_cjk("Subtitles by the Amara.org community"))
-        self.assertTrue(is_garbled_latin("Thank you for watching"))
-        self.assertFalse(is_garbled_latin("We shipped Claude Code to production last week"))
+    def test_phase_a_default_is_upstream_and_keeps_speech(self):
+        """Default Phase A = study SRT/qaqc_srt.py (fixed upstream); its own tests live in scripts/tests/test_qaqc_srt.py."""
+        sys.path.insert(0, str(REPO / "SRT"))
+        from qaqc_srt import is_garbled
+        for s in ("domain knowledge", "Writing is rewriting", "我用 Google 的 Gemini Flash", "SUNNY在年會引用Web Read Alive,", "對"):
+            self.assertFalse(is_garbled(s), s)
 
     def test_punctuation_protection(self):
         sys.path.insert(0, str(REPO / "scripts"))

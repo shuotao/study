@@ -28,9 +28,9 @@
   "2026-07-22_genai-meetup-1": {
    "cues": 540,
    "upstream": {
-    "kept": 538,
-    "dropped": 2,
-    "han_kept": 11342,
+    "kept": 539,
+    "dropped": 1,
+    "han_kept": 11343,
     "latin_words_kept": 282,
     "false_drops": 0,
     "false_drop_examples": [],
@@ -59,23 +59,19 @@
      "我從這個開始"
     ]
    },
-   "only_candidate_keeps": [
-    "對。"
-   ],
+   "only_candidate_keeps": [],
    "only_upstream_keeps": []
   },
   "2026-07-22_genai-meetup-2": {
    "cues": 558,
    "upstream": {
-    "kept": 549,
-    "dropped": 9,
-    "han_kept": 11555,
-    "latin_words_kept": 179,
-    "false_drops": 1,
-    "false_drop_examples": [
-     "Writing is rewriting"
-    ],
-    "kept_low_overlap": 211,
+    "kept": 557,
+    "dropped": 1,
+    "han_kept": 11567,
+    "latin_words_kept": 189,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 212,
     "kept_low_examples": [
      "一段關於技術開發與會議簡報內容的繁體中文錄音。",
      "請看片尾的內容,並且請看其他人的內容。請看片尾的剪輯中文錄音。",
@@ -100,23 +96,17 @@
      "請問有要補充什麼?沒有的話我們就下去"
     ]
    },
-   "only_candidate_keeps": [
-    "Writing is rewriting",
-    "Yeah of course",
-    "岑",
-    "了解",
-    "是。",
-    "對",
-    "了解"
-   ],
-   "only_upstream_keeps": []
+   "only_candidate_keeps": [],
+   "only_upstream_keeps": [
+    "SUNNY在年會引用Web Read Alive,"
+   ]
   },
   "2026-10-19_taipei-current-songshan-xinyi": {
    "cues": 803,
    "upstream": {
-    "kept": 760,
-    "dropped": 43,
-    "han_kept": 7378,
+    "kept": 803,
+    "dropped": 0,
+    "han_kept": 7459,
     "latin_words_kept": 11,
     "false_drops": 0,
     "false_drop_examples": [],
@@ -145,23 +135,7 @@
      "我们的卓院长"
     ]
    },
-   "only_candidate_keeps": [
-    "确实",
-    "两年",
-    "離地",
-    "好",
-    "馬上",
-    "去路",
-    "好",
-    "谢谢",
-    "这个",
-    "好",
-    "对",
-    "加油",
-    "谢谢",
-    "所以",
-    "开始"
-   ],
+   "only_candidate_keeps": [],
    "only_upstream_keeps": []
   },
   "09_15__0600_AS1569": {

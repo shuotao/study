@@ -63,7 +63,7 @@ def run_upstream_a(srt: Path, out: Path) -> None:
 
 
 def run_candidate_a(srt: Path, out: Path) -> None:
-    subprocess.run([sys.executable, REPO / "pipeline/phase_a_clean.py", srt, out], check=True, capture_output=True)
+    subprocess.run([sys.executable, REPO / "pipeline/candidates/phase_a_clean.py", srt, out], check=True, capture_output=True)
 
 
 def phase_a(study: Path) -> dict:
