@@ -1,0 +1,7 @@
+description = "Good-Student Notes pipeline for a recording or SRT (phases 1-6, one stage at a time)"
+prompt = """
+Read CLAUDE.md. Act as the orchestrator for: {{args}}
+Ask for the context (speaker names, companies, products, key terms) first, then run `python3 gsn.py new ...`.
+Loop: `python3 gsn.py next <slug>` -> follow the stage prompt in prompts/ -> `python3 gsn.py done <slug> <stage> --actor gemini-cli:<model>`.
+One stage at a time, max 3 repair rounds, never delete markers or ledger lines. Finish with `python3 gsn.py audit <slug>`.
+"""

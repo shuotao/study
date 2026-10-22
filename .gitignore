@@ -1,131 +1,44 @@
-
-# Local API keys and config
+# ── secrets: never commit ──
 .env
-web/config.local.js
-SRT/Groq.md
+.env.*
+!.env.example
+.secrets/
+*.pem
+*.key
+*.p12
+credentials*.json
 
-# Private session data (user recordings, transcripts, notes)
-# All per-session products stay on user's local machine only.
-sessions/
+# ── your material and products: stay on your machine ──
+sessions/*
+!sessions/README.md
+matrix/runs/
+matrix/links/
+matrix/vault/
+exports/
+# study pipeline_logger: global run log + improvement queue (local)
+build/
 
-# Audio / video source files (may contain private recordings)
-*.m4a
+# ── raw audio / video anywhere in the tree ──
 *.mp3
+*.m4a
 *.wav
-*.mp4
-*.mov
-*.webm
+*.aac
 *.flac
 *.ogg
-*.mpeg
-*.mpga
+*.opus
+*.mp4
+*.mov
 *.mkv
+*.webm
+*.m4v
+*.avi
 
-# Python bytecode
+# ── tooling ──
 __pycache__/
 *.pyc
-*.pyo
-
-# Editor / backup files
-*.bak
-*.swp
-*.swo
+.venv/
+venv/
+node_modules/
 .DS_Store
-
-# Personal Claude Code settings (may contain user-specific paths/prefs)
+.gsn_write_probe
 .claude/settings.local.json
-
-# ── 製作品/過程/錄音(嚴禁上推,只留本機)──
-# 每篇筆記的處理資料夾(音檔、SRT、cleaned.md、HTML、照片)
-ClaudeDesign/
-# Step 5 部署產物(生成的多頁 HTML + 壓縮圖 + firebase 快取)
-scripts/publish/
-# 根目錄的成品檔(逐字稿/翻譯/HTML 等交付物)
-/claude_*.srt
-/claude_*.md
-/claude_*.html
-/claude_*.txt
-# 一次性/過程腳本與草稿(非可重用工具)
-/process_claude_audio.py
-/temp_srt_to_plain.py
-/fix_cleaned.py
-/speaker*_raw.txt
-# 其他與本專案規範無關的本機資料夾
-/GENAI/
-/claudeCode/
-# 個人檔案/測試殘渣集中區(2026-06 盤點引入:不屬專案的檔案搬此,不上推)
-/_local/
-# 根目錄測試殘渣
-/test*.py
-/test*.txt
-# 轉錄中間產物(YouTube VTT 字幕,屬 session 產物)
-*.vtt
-
-# ── Step 1-6 工作產物 file-level glob(任何位置都不上推)──
-# 不論放在 sessions/、ClaudeDesign/、MCP5/、或未來 MCP6/、koshi-2/... 任何 workdir,
-# 都用 file-level pattern 一網打盡,避免「新建一個工作資料夾忘了加 .gitignore」。
-# Step 1 — Groq 轉錄產物
-**/transcript.srt
-**/source.srt
-# Step 2 — Phase A/B 清理稿
-**/cleaned.md
-**/cleaned.srt
-**/transcript.cleaned.srt
-# Step 3 — 專名詞補充
-**/enhanced.md
-# Step 4 — 立場置入好學生筆記
-**/notes_*.md
-# Build / metadata / 個人校正 / engine 中繼 marker
-**/toc.json
-**/metadata.json
-**/corrections.json
-**/_build/
-**/_kc_build/
-**/_translate/
-**/_workdir/
-**/_local_backup/
-**/.phase_*_pending.json
-**/.step_*_pending.json
-# 個別專案 workdir(對應的截圖/原始照片 raw input;新增 workdir 時請依此格式補一行)
-MCP5/
-
-# ── 過程文件/對外文宣(非專案規範,只留本機)──
-# Newsletter / 能力宣傳稿等交付物,任何位置皆不上推
-# (docs/origin-story.md 等規範文件不受影響)
-**/*newsletter*.md
-
-# 派生/執行期產物留本機(可由 master + scripts 重生;見 memory outward-docs 原則)
-build/
-# 例外:book.json 是整條管線唯一「手寫、不可由其他檔重生」的產物
-# (章節順序、category/name/full/talk 都是人工判斷 + 官方議程 F1 校對的結果),
-# 遺失就得重做 Step 4.5 的人工關卡 → 納入版控以保可追溯與可重建。
-!build/
-build/*
-!build/*/
-build/*/*
-!build/*/book.json
-.worktrees/
-
-# COSCUP 2026 現場素材(音檔 + context;含現場臨時憑證,絕不進版控)
-/COSCUP2026/
-/COSCUP2026_2/
-
-# ── goodedunote 後台:憑證與個資,一律不進 git ─────────────────────────────
-.secrets/
-exports/
-scripts/publish/goodedunote/public/admin/*.local.js
-
-# scripts/publish/ 整個被忽略(那是部署產物根)。但後台的原始碼與 Firebase 基礎設定
-# 是「可重用的原始碼」而非產物,弄丟就要重寫 —— 用否定規則單獨收進版控。
-!scripts/publish/
-!scripts/publish/goodedunote/
-!scripts/publish/goodedunote/firebase.json
-!scripts/publish/goodedunote/.firebaserc
-!scripts/publish/goodedunote/firestore.rules
-!scripts/publish/goodedunote/firestore.indexes.json
-!scripts/publish/goodedunote/public/
-!scripts/publish/goodedunote/public/admin/
-!scripts/publish/goodedunote/public/admin/**
-scripts/publish/goodedunote/public/*
-!scripts/publish/goodedunote/public/admin
-scripts/publish/goodedunote/.firebase/

@@ -1,0 +1,8 @@
+description = "First-run setup for Good-Student Notes (doctor --fix, Groq key, git hook)"
+prompt = """
+This repository already has its constitution (CLAUDE.md, pointed to by GEMINI.md). Do not create GEMINI.md content.
+Run `python3 gsn.py doctor --fix {{args}}` and show the table. For each FAIL line give the exact fix in Traditional
+Chinese (README §1 for the Groq key; never ask for the key in chat, never print it). When all required lines are OK,
+run `python3 gsn.py doctor --check-key`, then suggest the bundled example:
+`python3 gsn.py new --from-srt examples/talk-context/excerpt.srt --context examples/talk-context/context.txt`.
+"""

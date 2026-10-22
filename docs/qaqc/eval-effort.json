@@ -1,0 +1,238 @@
+{
+ "runs": [
+  {
+   "config": "claude:haiku:medium",
+   "slug": "eval-claude-haiku-medium-1022103334",
+   "exit": 0,
+   "seconds": 117,
+   "stages": {
+    "p3-polish": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 59
+    },
+    "p3-punct": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 29
+    },
+    "p3-hooks": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 29
+    }
+   },
+   "circuit_break": false,
+   "audit_green": true,
+   "metrics": {
+    "ratio": 1.061,
+    "retention_4gram": 0.985,
+    "paragraphs": 12,
+    "para_median": 83.0,
+    "headings": 4,
+    "colons": 4,
+    "quotes": 1,
+    "hook_growth": 1.035
+   },
+   "fixture": "examples/talk-context/excerpt.srt"
+  },
+  {
+   "config": "claude:sonnet:low",
+   "slug": "eval-claude-sonnet-low-1022103532",
+   "exit": 0,
+   "seconds": 67,
+   "stages": {
+    "p3-polish": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 25
+    },
+    "p3-punct": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 27
+    },
+    "p3-hooks": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 14
+    }
+   },
+   "circuit_break": false,
+   "audit_green": true,
+   "metrics": {
+    "ratio": 1.059,
+    "retention_4gram": 0.988,
+    "paragraphs": 13,
+    "para_median": 78,
+    "headings": 2,
+    "colons": 4,
+    "quotes": 10,
+    "hook_growth": 1.038
+   },
+   "fixture": "examples/talk-context/excerpt.srt"
+  },
+  {
+   "config": "claude:sonnet:medium",
+   "slug": "eval-claude-sonnet-medium-1022103639",
+   "exit": 0,
+   "seconds": 71,
+   "stages": {
+    "p3-polish": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 28
+    },
+    "p3-punct": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 18
+    },
+    "p3-hooks": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 24
+    }
+   },
+   "circuit_break": false,
+   "audit_green": true,
+   "metrics": {
+    "ratio": 1.077,
+    "retention_4gram": 0.982,
+    "paragraphs": 14,
+    "para_median": 72.0,
+    "headings": 4,
+    "colons": 1,
+    "quotes": 2,
+    "hook_growth": 1.038
+   },
+   "fixture": "examples/talk-context/excerpt.srt"
+  },
+  {
+   "config": "claude:opus:low",
+   "slug": "eval-claude-opus-low-1022103750",
+   "exit": 0,
+   "seconds": 50,
+   "stages": {
+    "p3-polish": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 21
+    },
+    "p3-punct": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 14
+    },
+    "p3-hooks": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 15
+    }
+   },
+   "circuit_break": false,
+   "audit_green": true,
+   "metrics": {
+    "ratio": 1.057,
+    "retention_4gram": 0.992,
+    "paragraphs": 15,
+    "para_median": 68,
+    "headings": 2,
+    "colons": 5,
+    "quotes": 11,
+    "hook_growth": 1.03
+   },
+   "fixture": "examples/talk-context/excerpt.srt"
+  },
+  {
+   "config": "claude:opus:medium",
+   "slug": "eval-claude-opus-medium-1022103840",
+   "exit": 0,
+   "seconds": 82,
+   "stages": {
+    "p3-polish": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 29
+    },
+    "p3-punct": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 32
+    },
+    "p3-hooks": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 20
+    }
+   },
+   "circuit_break": false,
+   "audit_green": true,
+   "metrics": {
+    "ratio": 1.088,
+    "retention_4gram": 0.978,
+    "paragraphs": 16,
+    "para_median": 64.5,
+    "headings": 5,
+    "colons": 6,
+    "quotes": 8,
+    "hook_growth": 1.037
+   },
+   "fixture": "examples/talk-context/excerpt.srt"
+  },
+  {
+   "config": "claude:fable:low",
+   "slug": "eval-claude-fable-low-1022104002",
+   "exit": 0,
+   "seconds": 124,
+   "stages": {
+    "p3-polish": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 26
+    },
+    "p3-punct": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 44
+    },
+    "p3-hooks": {
+     "rounds": 1,
+     "gate_fails": 0,
+     "done": true,
+     "seconds": 54
+    }
+   },
+   "circuit_break": false,
+   "audit_green": true,
+   "metrics": {
+    "ratio": 1.107,
+    "retention_4gram": 0.975,
+    "paragraphs": 14,
+    "para_median": 73.5,
+    "headings": 3,
+    "colons": 4,
+    "quotes": 10,
+    "hook_growth": 1.072
+   },
+   "fixture": "examples/talk-context/excerpt.srt"
+  }
+ ]
+}

@@ -1,0 +1,181 @@
+{
+  "invocation": {
+    "cli": "claude",
+    "model": "sonnet",
+    "effort": null
+  },
+  "skill_name": "good-student-notes",
+  "description": "Turn a talk recording (audio/video) or an SRT into a zero-omission transcript, readable full text, bilingual subtitles, term supplements, stance notes (\u597d\u5b78\u751f\u7b46\u8a18) and the four-quadrant Good-Student Matrix (\u597d\u5b78\u751f\u77e9\u9663). Use when the user gives a media file or SRT and asks for \u9010\u5b57\u7a3f, \u5b57\u5e55, \u7b46\u8a18, \u597d\u5b78\u751f\u7b46\u8a18, \u597d\u5b78\u751f\u77e9\u9663, transcript or notes.",
+  "cli": "claude",
+  "results": [
+    {
+      "query": "\u5e6b\u6211\u628a ~/Downloads/\u9031\u4e09\u8b1b\u5ea7.m4a \u8f49\u6210\u9010\u5b57\u7a3f\uff0c\u8b1b\u8005\u662f\u9673\u6021\u541b\uff0c\u984c\u76ee\u662f BIM \u5354\u540c\u8a2d\u8a08",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u9019\u500b\u6703\u8b70\u9304\u97f3 meeting_1021.mp4 \u6211\u60f3\u8981\u5b8c\u6574\u7684\u597d\u8b80\u7248\u672c\uff0c\u4e0d\u8981\u6458\u8981\uff0c\u4e00\u53e5\u90fd\u4e0d\u8981\u6f0f",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u7528\u5efa\u7bc9\u5e2b\u7684\u7acb\u5834\u5e6b\u6211\u628a\u9019\u5834\u6f14\u8b1b\u505a\u6210\u597d\u5b78\u751f\u7b46\u8a18\uff0c\u97f3\u6a94\u5728 talks/ai-earth.mp3",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "I have an SRT from a conference talk, can you turn it into a clean readable transcript with headings?",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u5e6b\u6211\u628a\u82f1\u6587\u8ab2\u7a0b\u5f71\u7247 lecture3.mp4 \u505a\u6210\u4e2d\u82f1\u96d9\u8ecc\u5b57\u5e55\uff0c\u6642\u9593\u8ef8\u4e0d\u80fd\u8dd1\u6389",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u628a sessions/2026-10-21_talk \u9019\u5834\u505a\u6210\u597d\u5b78\u751f\u77e9\u9663\uff0c\u56db\u8c61\u9650\u90fd\u8981",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u9019\u4efd transcript.srt \u5e6b\u6211\u6574\u7406\u6210\u901a\u9806\u7684\u5168\u6587\uff0c\u518d\u88dc\u4e0a\u5c08\u6709\u540d\u8a5e\u7684\u8aaa\u660e",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "Transcribe interview.wav and make study notes from the perspective of a software engineer",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 2,
+      "runs": 2,
+      "errors": 1,
+      "pass": true
+    },
+    {
+      "query": "\u4e0a\u6b21\u90a3\u5834\u8b80\u66f8\u6703\u7684\u9304\u97f3 reading-club.m4a\uff0c\u5e6b\u6211\u7522\u51fa\u9010\u5b57\u7a3f\u8ddf\u540d\u8a5e\u88dc\u5145",
+      "should_trigger": true,
+      "trigger_rate": 1.0,
+      "triggers": 3,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u628a\u9019\u652f mp4 \u8f49\u6210 mp3 \u5c31\u597d",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 2,
+      "errors": 1,
+      "pass": true
+    },
+    {
+      "query": "\u5e6b\u6211\u4e0b\u8f09\u9019\u500b YouTube \u5f71\u7247 https://youtu.be/abc123",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u5e6b\u6211\u7528\u4e09\u500b\u91cd\u9ede\u6458\u8981\u9019\u7bc7\u6587\u7ae0\uff1aAI \u6703\u53d6\u4ee3\u5de5\u7a0b\u5e2b\u55ce\uff1f",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "Write a Python function that parses SRT timestamps into seconds",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u5e6b\u6211\u628a\u9019\u4efd\u6703\u8b70\u8a18\u9304 docx \u6539\u6210\u6b63\u5f0f\u7684\u516c\u6587\u683c\u5f0f",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u6211\u7684\u9ea5\u514b\u98a8\u9304\u97f3\u6709\u96dc\u97f3\uff0c\u8981\u600e\u9ebc\u7528 ffmpeg \u964d\u566a\uff1f",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u5e6b\u6211\u505a\u4e00\u5957\u570b\u4e2d\u7406\u5316\u7684\u5eb7\u4e43\u723e\u7b46\u8a18",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "Translate this paragraph into Japanese: The meeting is postponed to Friday.",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    },
+    {
+      "query": "\u6211\u60f3\u5b78 Obsidian \u7684 tag \u8ddf backlink \u8981\u600e\u9ebc\u7528",
+      "should_trigger": false,
+      "trigger_rate": 0.0,
+      "triggers": 0,
+      "runs": 3,
+      "errors": 0,
+      "pass": true
+    }
+  ],
+  "summary": {
+    "total": 18,
+    "passed": 18,
+    "failed": 0,
+    "inconclusive": 0
+  },
+  "effort": null
+}

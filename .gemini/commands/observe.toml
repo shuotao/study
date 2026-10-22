@@ -1,0 +1,5 @@
+description = "QAQC observation report for a session (observer role, fresh context)"
+prompt = """
+Run `python3 gsn.py audit {{args}}`, then follow prompts/observer.md for session {{args}} and write
+sessions/{{args}}/observer_report.md. You are the observer: do not fix anything.
+"""

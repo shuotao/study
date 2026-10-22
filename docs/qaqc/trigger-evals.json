@@ -1,0 +1,20 @@
+[
+ {"query": "幫我把 ~/Downloads/週三講座.m4a 轉成逐字稿，講者是陳怡君，題目是 BIM 協同設計", "should_trigger": true},
+ {"query": "這個會議錄音 meeting_1021.mp4 我想要完整的好讀版本，不要摘要，一句都不要漏", "should_trigger": true},
+ {"query": "用建築師的立場幫我把這場演講做成好學生筆記，音檔在 talks/ai-earth.mp3", "should_trigger": true},
+ {"query": "I have an SRT from a conference talk, can you turn it into a clean readable transcript with headings?", "should_trigger": true},
+ {"query": "幫我把英文課程影片 lecture3.mp4 做成中英雙軌字幕，時間軸不能跑掉", "should_trigger": true},
+ {"query": "把 sessions/2026-10-21_talk 這場做成好學生矩陣，四象限都要", "should_trigger": true},
+ {"query": "這份 transcript.srt 幫我整理成通順的全文，再補上專有名詞的說明", "should_trigger": true},
+ {"query": "Transcribe interview.wav and make study notes from the perspective of a software engineer", "should_trigger": true},
+ {"query": "上次那場讀書會的錄音 reading-club.m4a，幫我產出逐字稿跟名詞補充", "should_trigger": true},
+ {"query": "把這支 mp4 轉成 mp3 就好", "should_trigger": false},
+ {"query": "幫我下載這個 YouTube 影片 https://youtu.be/abc123", "should_trigger": false},
+ {"query": "幫我用三個重點摘要這篇文章：AI 會取代工程師嗎？", "should_trigger": false},
+ {"query": "Write a Python function that parses SRT timestamps into seconds", "should_trigger": false},
+ {"query": "幫我把這份會議記錄 docx 改成正式的公文格式", "should_trigger": false},
+ {"query": "我的麥克風錄音有雜音，要怎麼用 ffmpeg 降噪？", "should_trigger": false},
+ {"query": "幫我做一套國中理化的康乃爾筆記", "should_trigger": false},
+ {"query": "Translate this paragraph into Japanese: The meeting is postponed to Friday.", "should_trigger": false},
+ {"query": "我想學 Obsidian 的 tag 跟 backlink 要怎麼用", "should_trigger": false}
+]

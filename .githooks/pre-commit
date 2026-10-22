@@ -1,0 +1,3 @@
+#!/bin/sh
+# Refuse commits that contain keys, .env, raw media or session products.
+exec python3 "$(git rev-parse --show-toplevel)/pipeline/secret_scan.py"
