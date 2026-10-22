@@ -21,6 +21,7 @@ new options:
   --chunk-seconds N     chunk length (default 600; 300 for noisy rooms)
   --domain NAME         typo dictionary overlay dict/typo_dict.<NAME>.json
   --s2t                 convert Simplified-drift glyphs to Taiwan Traditional in cleaned.srt
+  --phase-a upgrade|upstream  Phase A cleaner: pipeline/phase_a_clean.py (default, won the comparison) or SRT/qaqc_srt.py
   --translate zh-TW     Phase 2: zh-TW subtitle track for a foreign-language talk (study srt_zhtw.py)
   --terms               Phase 4: term supplements → enhanced.md
   --identity ROLE       Phase 5: stance notes → notes_<ROLE>.md
@@ -245,7 +246,7 @@ def cmd_new(a) -> int:
         plan.append("p6-matrix")
     meta = {"session_id": slug, "source": src.name, "created_at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
             "title": a.title or src.stem, "speaker": a.speaker or "", "lang": a.lang, "domain": a.domain,
-            "translate_to": a.translate, "identity": a.identity, "plan": plan, "stop_at": stop, "status": "running"}
+            "translate_to": a.translate, "identity": a.identity, "phase_a_tool": a.phase_a, "plan": plan, "stop_at": stop, "status": "running"}
     save_meta(sdir, meta)
     append_ledger(sdir, "create", None, actor=actor_default(), plan=plan, source=src.name, context_chars=len(ctx))
 
@@ -288,14 +289,22 @@ def transcribe(sdir: Path, link: Path, lang: str, no_prompt: bool, chunk_seconds
 
 
 def phase_a(sdir: Path, domain: str | None, s2t: bool) -> None:
-    """study SRT/qaqc_srt.py (Chinese cleaner). English sessions keep every cue here; srt_zhtw prep
-    applies the English hallucination filter in Phase 2, exactly as in study."""
+    """Default: pipeline/phase_a_clean.py (upgrade that won docs/qaqc/tool-comparison.md).
+    --phase-a upstream: study SRT/qaqc_srt.py for Chinese; English then keeps every cue and srt_zhtw prep filters."""
     meta = load_meta(sdir)
-    if meta.get("lang") == "en":
+    dom = ["--domain", domain] if domain else []
+    if meta.get("phase_a_tool", "upgrade") == "upgrade":
+        sh(PY, REPO / "pipeline/phase_a_clean.py", sdir / "transcript.srt", sdir / "cleaned.srt",
+           "--context", sdir / "context.txt", *dom)
+        how = "pipeline/phase_a_clean.py (upgrade)"
+        if s2t:
+            sh(PY, S2T, sdir / "cleaned.srt", "--in-place")
+            how += " + s2t_normalize.py"
+    elif meta.get("lang") == "en":
         shutil.copyfile(sdir / "transcript.srt", sdir / "cleaned.srt")
         how = "copy (English: hallucination filter runs in srt_zhtw prep)"
     else:
-        sh(PY, QAQC_SRT, sdir / "transcript.srt", "-o", sdir / "cleaned.srt", *(["--domain", domain] if domain else []))
+        sh(PY, QAQC_SRT, sdir / "transcript.srt", "-o", sdir / "cleaned.srt", *dom)
         how = "SRT/qaqc_srt.py"
         if s2t:
             sh(PY, S2T, sdir / "cleaned.srt", "--in-place")
@@ -456,7 +465,7 @@ def main() -> int:
     n.add_argument("--from-srt")
     n.add_argument("--slug"); n.add_argument("--title"); n.add_argument("--speaker")
     n.add_argument("--context"); n.add_argument("--lang", default="zh", choices=["zh", "en"]); n.add_argument("--no-prompt", action="store_true")
-    n.add_argument("--chunk-seconds", type=int); n.add_argument("--domain"); n.add_argument("--s2t", action="store_true")
+    n.add_argument("--chunk-seconds", type=int); n.add_argument("--phase-a", choices=["upgrade", "upstream"], default="upgrade"); n.add_argument("--domain"); n.add_argument("--s2t", action="store_true")
     n.add_argument("--translate", choices=["zh-TW"]); n.add_argument("--terms", action="store_true"); n.add_argument("--identity")
     n.add_argument("--matrix", action="store_true"); n.add_argument("--stop-at", choices=STOP_AT)
     sub.add_parser("improve").add_argument("--session")

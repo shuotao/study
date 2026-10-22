@@ -13,7 +13,7 @@ sys.path.insert(0, str(REPO))
 class DocsSync(unittest.TestCase):
     def test_every_tool_is_registered(self):
         doc = (REPO / "docs/tools.md").read_text(encoding="utf-8")
-        tools = [p for p in (REPO / "pipeline").glob("*.py")] + list((REPO / "scripts").rglob("*.py")) + \
+        tools = [p for p in (REPO / "pipeline").rglob("*.py")] + list((REPO / "scripts").rglob("*.py")) + \
                 [REPO / "SRT/qaqc_srt.py", REPO / "dict/load.py", REPO / "gsn.py",
                  REPO / ".claude/skills/good-student-notes/scripts/groq_transcribe.py"] + \
                 [p for p in (REPO / "matrix/tools").iterdir() if p.is_file() and p.suffix in (".py", ".cjs", ".txt")]

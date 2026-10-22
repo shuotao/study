@@ -43,6 +43,11 @@ Two kinds, kept apart on purpose:
 | `pipeline/init.py` | environment doctor behind `/init` |
 | `pipeline/secret_scan.py` | pre-commit hook: keys, .env, media, session products |
 | `pipeline/eval_effort.py` | model × effort eval for judgment stages |
+| `pipeline/phase_a_clean.py` | **upgrade of `SRT/qaqc_srt.py`, default Phase A** — won `docs/qaqc/tool-comparison.md` |
+| `pipeline/candidates/compare.py` | head-to-head harness: candidate vs upstream on real study sessions |
+| `pipeline/candidates/transcribe_groq.py` | rejected candidate (kept to re-run the comparison; never called) |
+| `pipeline/candidates/translate_srt.py` | rejected candidate (kept to re-run the comparison; never called) |
+| `pipeline/candidates/__init__.py` | package marker |
 
 ## Phase 6 — `matrix/tools/` (from N; verbatim import + one layout commit; spec `matrix/SPEC.md`)
 

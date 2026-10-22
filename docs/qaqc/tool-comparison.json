@@ -1,0 +1,267 @@
+{
+ "phase_a": {
+  "2026-07-06_lightalking": {
+   "cues": 51,
+   "upstream": {
+    "kept": 51,
+    "dropped": 0,
+    "han_kept": 905,
+    "latin_words_kept": 28,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 0,
+    "kept_low_examples": []
+   },
+   "candidate": {
+    "kept": 51,
+    "dropped": 0,
+    "han_kept": 905,
+    "latin_words_kept": 28,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 0,
+    "kept_low_examples": []
+   },
+   "only_candidate_keeps": [],
+   "only_upstream_keeps": []
+  },
+  "2026-07-22_genai-meetup-1": {
+   "cues": 540,
+   "upstream": {
+    "kept": 538,
+    "dropped": 2,
+    "han_kept": 11342,
+    "latin_words_kept": 282,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 73,
+    "kept_low_examples": [
+     "我們希望聊的深入一些",
+     "然後我們開始到下半場的情況",
+     "請不吝點讚 订阅 转发 打赏支持明镜与点点栏目",
+     "詹姆士,請說一下,您是誰?",
+     "我從這個開始"
+    ]
+   },
+   "candidate": {
+    "kept": 539,
+    "dropped": 1,
+    "han_kept": 11343,
+    "latin_words_kept": 282,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 73,
+    "kept_low_examples": [
+     "我們希望聊的深入一些",
+     "然後我們開始到下半場的情況",
+     "請不吝點讚 订阅 转发 打赏支持明镜与点点栏目",
+     "詹姆士,請說一下,您是誰?",
+     "我從這個開始"
+    ]
+   },
+   "only_candidate_keeps": [
+    "對。"
+   ],
+   "only_upstream_keeps": []
+  },
+  "2026-07-22_genai-meetup-2": {
+   "cues": 558,
+   "upstream": {
+    "kept": 549,
+    "dropped": 9,
+    "han_kept": 11555,
+    "latin_words_kept": 179,
+    "false_drops": 1,
+    "false_drop_examples": [
+     "Writing is rewriting"
+    ],
+    "kept_low_overlap": 211,
+    "kept_low_examples": [
+     "一段關於技術開發與會議簡報內容的繁體中文錄音。",
+     "請看片尾的內容,並且請看其他人的內容。請看片尾的剪輯中文錄音。",
+     "請問有什麼要補充的?",
+     "有這兩個還是人啊",
+     "請問有要補充什麼?沒有的話我們就下去"
+    ]
+   },
+   "candidate": {
+    "kept": 556,
+    "dropped": 2,
+    "han_kept": 11562,
+    "latin_words_kept": 185,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 212,
+    "kept_low_examples": [
+     "一段關於技術開發與會議簡報內容的繁體中文錄音。",
+     "請看片尾的內容,並且請看其他人的內容。請看片尾的剪輯中文錄音。",
+     "請問有什麼要補充的?",
+     "有這兩個還是人啊",
+     "請問有要補充什麼?沒有的話我們就下去"
+    ]
+   },
+   "only_candidate_keeps": [
+    "Writing is rewriting",
+    "Yeah of course",
+    "岑",
+    "了解",
+    "是。",
+    "對",
+    "了解"
+   ],
+   "only_upstream_keeps": []
+  },
+  "2026-10-19_taipei-current-songshan-xinyi": {
+   "cues": 803,
+   "upstream": {
+    "kept": 760,
+    "dropped": 43,
+    "han_kept": 7378,
+    "latin_words_kept": 11,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 395,
+    "kept_low_examples": [
+     "因为我们也都跟理长",
+     "都已经先讨论过了",
+     "其实是要早一点收起来",
+     "但是刚刚还是真的很谢谢",
+     "我们的卓院长"
+    ]
+   },
+   "candidate": {
+    "kept": 803,
+    "dropped": 0,
+    "han_kept": 7459,
+    "latin_words_kept": 11,
+    "false_drops": 0,
+    "false_drop_examples": [],
+    "kept_low_overlap": 395,
+    "kept_low_examples": [
+     "因为我们也都跟理长",
+     "都已经先讨论过了",
+     "其实是要早一点收起来",
+     "但是刚刚还是真的很谢谢",
+     "我们的卓院长"
+    ]
+   },
+   "only_candidate_keeps": [
+    "确实",
+    "两年",
+    "離地",
+    "好",
+    "馬上",
+    "去路",
+    "好",
+    "谢谢",
+    "这个",
+    "好",
+    "对",
+    "加油",
+    "谢谢",
+    "所以",
+    "开始"
+   ],
+   "only_upstream_keeps": []
+  },
+  "09_15__0600_AS1569": {
+   "cues": 397,
+   "upstream_prep_kept": 396,
+   "upstream_after_semantic_drops": 396,
+   "candidate_kept": 396,
+   "candidate_keeps_upstream_dropped": [],
+   "candidate_drops_upstream_kept": [],
+   "semantic_drops_candidate_still_keeps": 0
+  }
+ },
+ "transcribe": {
+  "2026-10-19_taipei-current-songshan-xinyi": {
+   "clip": "600s+300s",
+   "lang": "zh",
+   "upstream_exit": 0,
+   "candidate_exit": 0,
+   "candidate_note": [
+    "[groq] wrote 28 cues → /var/folders/pr/gw4s355x5yj36nwgpsk1l2tr0000gn/T/gsn-cmp-xd41pof1/2026-10-19_taipei-current-songshan-xinyi/cand.srt (detected language: Chinese)"
+   ],
+   "upstream": {
+    "cues": 32,
+    "han": 1201,
+    "latin_words": 1,
+    "prompt_echo_cues": 0,
+    "precision_vs_published_text": 0.917,
+    "simplified_chars": 2
+   },
+   "candidate": {
+    "cues": 28,
+    "han": 989,
+    "latin_words": 1,
+    "prompt_echo_cues": 0,
+    "precision_vs_published_text": 0.897,
+    "simplified_chars": 1
+   },
+   "agreement_4gram_jaccard": 0.67
+  },
+  "09_15__0600_AS1569": {
+   "clip": "600s+300s",
+   "lang": "en",
+   "upstream_exit": 0,
+   "candidate_exit": 0,
+   "candidate_note": [
+    "[groq] wrote 42 cues → /var/folders/pr/gw4s355x5yj36nwgpsk1l2tr0000gn/T/gsn-cmp-xd41pof1/09_15__0600_AS1569/cand.srt (detected language: English)"
+   ],
+   "upstream": {
+    "cues": 28,
+    "han": 0,
+    "latin_words": 540,
+    "prompt_echo_cues": 0
+   },
+   "candidate": {
+    "cues": 42,
+    "han": 0,
+    "latin_words": 540,
+    "prompt_echo_cues": 0
+   },
+   "agreement_4gram_jaccard": 0.937
+  }
+ },
+ "translate": {
+  "upstream": {
+   "assemble_exit": 0,
+   "assemble": [
+    "[verify] OK — all 396 timecodes byte-identical to original and present in /Users/shuotaochiang/Desktop/study/sessions/09_15__0600_AS1569/transcript.srt",
+    "[assemble] COMPLETE: all 396 kept cues translated (0 cues dropped as hallucination/garbage)."
+   ],
+   "check_exit": 0,
+   "check": [
+    "C7 長度比離群(資訊性,跨 cue 斷句會自然造成): 0",
+    "",
+    "=== 硬性失敗項(C1/C2/C3): 0 ==="
+   ],
+   "cues": 396,
+   "prep_drops_automatic": true,
+   "outputs": [
+    "translated SRT"
+   ]
+  },
+  "candidate": {
+   "assemble_exit": 0,
+   "assemble": [
+    "[p2 assemble] 396 cues → translated.zh-TW.srt, bilingual.srt; all timecodes byte-identical to transcript.srt (1 dropped)"
+   ],
+   "check_exit": 1,
+   "check": [
+    "WARN C7 length outlier at 11 (ratio 5.00 vs median 1.62)",
+    "WARN C7 length outlier at 48 (ratio 0.00 vs median 1.62)",
+    "[p2 check] 396/396 translated; 12 hard failure(s), 2 warning(s)"
+   ],
+   "cues": 396,
+   "prep_drops_automatic": false,
+   "outputs": [
+    "translated SRT",
+    "bilingual SRT"
+   ]
+  },
+  "identical_output": true,
+  "upstream_drops_json": 0
+ }
+}

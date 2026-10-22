@@ -127,6 +127,14 @@ class Gates(unittest.TestCase):
 
 
 class Tools(unittest.TestCase):
+    def test_phase_a_upgrade_keeps_terms_and_replies(self):
+        from pipeline.phase_a_clean import is_garbled_cjk, is_garbled_latin
+        self.assertFalse(is_garbled_cjk("domain knowledge"))
+        self.assertFalse(is_garbled_cjk("Writing is rewriting"))      # upstream false drop (tool-comparison.md)
+        self.assertTrue(is_garbled_cjk("Subtitles by the Amara.org community"))
+        self.assertTrue(is_garbled_latin("Thank you for watching"))
+        self.assertFalse(is_garbled_latin("We shipped Claude Code to production last week"))
+
     def test_punctuation_protection(self):
         sys.path.insert(0, str(REPO / "scripts"))
         from normalize_punctuation import normalize_text
