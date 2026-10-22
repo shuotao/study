@@ -23,7 +23,7 @@ Whisper echoing the prompt (a prefix grep alone misses tail echoes). A non-empty
 "re-transcribe with --no-prompt"; gsn.py shows it as a warning on p1-clean.
 
 Usage:
-    python3 pipeline/phase_a_clean.py <transcript.srt> <cleaned.srt> [--domain NAME] [--context FILE] [--s2t]
+    python3 pipeline/candidates/phase_a_clean.py <transcript.srt> <cleaned.srt> [--domain NAME] [--context FILE] [--s2t]
 """
 from __future__ import annotations
 
