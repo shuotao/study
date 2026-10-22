@@ -1,0 +1,103 @@
+/* N 四象限主題 — 與好學生筆記（goodedunote）一致：暖白紙、深褐墨、赭紅強調、明體正文。
+   離線可用：不載入網路字型，依序回退到系統中文字型。由 tools/n.py build 注入每一頁。
+   設計系統：四頁共用同一組元件（tools/ui.py），字級下限 14px（tools/ui_check.py 檢查）。 */
+:root{
+  --paper:#fdfbf7; --paper-soft:#f7f1e8; --paper-deep:#f3ebe0; --rule:#e4d8ca;
+  --ink:#2d2a26; --ink-soft:#4a423a; --ink-mute:#6f675a;
+  --accent:#b34a2f; --accent-2:#c2683f; --accent-soft:#e0a892; --accent-ink:#7a3a24; --hl:#f6e3d9;
+  --serif:"Noto Serif TC","Source Han Serif TC","Songti TC",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* 字級階梯：正文 17、次要 15、最小 14 */
+  --fs-body:17px; --fs-2:15px; --fs-min:14px;
+}
+*{box-sizing:border-box}
+html,body{background:var(--paper)!important;color:var(--ink)!important;margin:0}
+body{font-family:var(--serif)!important;line-height:1.9;font-size:var(--fs-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif)!important;color:var(--ink);line-height:1.5}
+h1{font-size:1.8rem;font-weight:700;letter-spacing:.01em;margin:.3rem 0 .6rem}
+h2{color:var(--accent)!important;font-weight:700}
+h3{color:var(--accent-2)!important;font-weight:600}
+a{color:#a8442a}a:hover{color:var(--accent-ink)}
+p{text-align:justify}
+small,.ui,nav,footer,button,label,input,textarea,figcaption,.n-tag,.n-ref,.pid{font-family:var(--sans)!important}
+hr{border:0;border-top:1px solid var(--rule)}
+blockquote{background:var(--paper-soft)!important;border-left:4px solid var(--accent-soft)!important;border-radius:0 8px 8px 0;padding:.8rem 1rem;margin:.6rem 0}
+code{background:#efe7dc;color:var(--accent-ink);border-radius:4px;padding:.05rem .3rem;font-family:var(--mono)}
+table{border-collapse:collapse}
+th,td{border:1px solid var(--rule)!important;font-size:var(--fs-2)}
+th{background:var(--paper-deep)!important;color:#8a3f28!important;font-family:var(--sans)}
+details>summary{cursor:pointer;color:var(--accent);font-family:var(--sans);font-size:var(--fs-2)}
+textarea,input[type=text],input[type=search]{border:1px solid var(--rule)!important;border-radius:8px;background:#fff;padding:.5rem .7rem;font-size:var(--fs-2)}
+button{border:1px solid #e0c4b6!important;color:var(--accent)!important;background:#fff!important;border-radius:9999px!important;padding:.45rem 1.1rem;font-size:var(--fs-2);cursor:pointer}
+button:hover,button.on{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+img{border-radius:10px;max-width:100%}
+:target,.hit{background:var(--hl)!important;border-radius:6px;outline:2px solid var(--accent-soft)}
+.n-card:target{background:#fffdf9!important;outline:none;border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--hl)}
+
+/* ── 四象限導覽列（n.py 注入，四頁相同） ── */
+.n-nav{position:sticky;top:0;z-index:50;background:rgba(253,251,247,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);font-family:var(--sans)}
+.n-nav .in{max-width:1240px;margin:0 auto;display:flex;gap:.45rem;align-items:center;padding:.6rem 1.4rem;flex-wrap:wrap}
+.n-nav .brand{font-family:var(--serif);font-weight:700;color:var(--ink);margin-right:auto;text-decoration:none;font-size:var(--fs-2)}
+.n-nav a.q{font-size:var(--fs-min);color:var(--ink-soft);text-decoration:none;border:1px solid var(--rule);border-radius:9999px;padding:.2rem .8rem;background:#fff}
+.n-nav a.q b{color:var(--accent);margin-right:.3rem;font-family:var(--serif)}
+.n-nav a.q.on{background:var(--accent);color:#fff;border-color:var(--accent)}.n-nav a.q.on b{color:#fff}
+
+/* ── 共用元件（tools/ui.py） ── */
+.n-page{max-width:860px;margin:0 auto;padding:2rem 1.4rem 4rem}
+.n-mast{margin-bottom:1.6rem}
+.n-kicker{font-size:var(--fs-2);color:var(--ink-mute);letter-spacing:.06em}
+.n-lead{color:var(--ink-soft);font-size:var(--fs-body);margin:.2rem 0 1rem}
+.n-how{background:var(--paper-soft);border:1px solid var(--rule);border-radius:12px;padding:.7rem 1.1rem;margin:1rem 0 0}
+.n-how h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:0 0 .2rem;font-weight:600}
+.n-how ol{margin:0;padding:0;list-style:none;display:flex;gap:.4rem 1.6rem;flex-wrap:wrap;counter-reset:s}
+.n-how li{font-size:var(--fs-2);color:var(--ink);counter-increment:s}
+.n-how li::before{content:counter(s);display:inline-block;width:1.45em;height:1.45em;line-height:1.45em;text-align:center;border-radius:50%;background:var(--accent);color:#fff;font-size:var(--fs-min);margin-right:.45rem}
+/* 卡片：I 與 IV 同一種卡 */
+.n-card{background:#fffdf9;border:1px solid var(--rule);border-radius:14px;box-shadow:0 10px 26px -20px rgba(120,60,40,.45);padding:1.4rem 1.6rem;margin:1.4rem 0;scroll-margin-top:4.5rem}
+.n-card>header{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem;flex-wrap:wrap}
+.n-card>header h2{margin:0;font-size:1.25rem;flex:1;min-width:12em;color:var(--ink)!important}
+.n-card h3{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:1.1rem 0 .3rem;font-weight:600}
+.n-card p{margin:.35rem 0}
+.n-card ul{margin:.2rem 0;padding-left:1.2rem}.n-card li{margin:.35rem 0}
+.kn{font-family:var(--serif);font-weight:700;font-size:var(--fs-2);background:var(--accent);color:#fff;border-radius:6px;padding:.05rem .5rem}
+.n-card .go{margin-top:.9rem;font-family:var(--sans);font-size:var(--fs-2);display:flex;flex-wrap:wrap;gap:.3rem 1.2rem}
+.n-card .go a{text-decoration:none}
+/* 重點清單：I 的「重點清單」與 IV 的「先看哪裡」同一個元件 */
+.n-index{background:var(--paper-soft);border-radius:14px;padding:1rem 1.3rem;margin:0 0 1.8rem}
+.n-index h2{font-size:var(--fs-body);margin:.1rem 0 .5rem}
+.n-index .grp{font-size:var(--fs-min);color:var(--ink-mute);letter-spacing:.1em;margin-top:.6rem}
+.n-index ul{list-style:none;padding:0;margin:.2rem 0}
+.n-index li{margin:.4rem 0;font-size:var(--fs-body)}
+.n-index a{text-decoration:none;font-weight:600}.n-index a b{font-family:var(--serif);margin-right:.35rem}
+.n-index .why{display:block;font-size:var(--fs-2);color:var(--ink-mute);font-weight:400}
+/* 出處上標：II/III/IV 一致 */
+sup.n-ref{font-size:var(--fs-min);line-height:0;margin-left:.1rem;vertical-align:super}
+sup.n-ref a.fn{color:var(--ink-mute);text-decoration:none}sup.n-ref a.fn:hover{color:var(--accent)}
+sup.n-ref .sep{color:#b8ae99}
+/* 標籤：聽眾 / 講義 / 值得細讀 / 熟手可略 / 類型 */
+.n-tag{display:inline-block;font-size:var(--fs-min);line-height:1.5;border-radius:6px;padding:0 .45rem;margin-right:.45rem;border:1px solid var(--rule);color:var(--ink-mute);background:#fff;vertical-align:.08em;white-space:nowrap}
+.n-tag.deep{background:var(--hl);color:var(--accent-ink);border-color:var(--accent-soft)}
+.n-tag.skim{background:var(--paper-deep)}
+.n-tag.ask{background:var(--hl);color:var(--accent-ink);border-color:transparent}
+.n-tag.aud,.n-tag.maybe-aud{border-style:dashed}
+/* 補述（I 的白話說明） */
+.supp{color:var(--ink-mute)!important;font-family:var(--sans)!important;font-size:var(--fs-2)}
+/* 圖解 */
+figure.kdiagram{margin:1rem 0 .4rem;overflow-x:auto;-webkit-overflow-scrolling:touch}  /* 圖解保持原尺寸(字 ≥14px),窄螢幕在卡內左右捲動 */
+figure.kdiagram figcaption{font-size:var(--fs-min);color:var(--ink-mute);margin-top:.3rem}
+.kdiagram-svg a:hover rect{stroke:var(--accent)}
+/* 頁尾「讀完之後」：四頁互相導流 */
+.n-next{border-top:1px solid var(--rule);margin-top:3rem;padding-top:1rem}
+.n-next h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em}
+.n-next ul{list-style:none;padding:0;display:flex;gap:1rem;flex-wrap:wrap}
+.n-next li{flex:1;min-width:14em;background:#fffdf9;border:1px solid var(--rule);border-radius:12px;padding:.7rem 1rem}
+.n-next a{text-decoration:none;font-weight:700;font-family:var(--serif)}.n-next a b{color:var(--accent)}
+.n-next span{display:block;font-size:var(--fs-2);color:var(--ink-mute)}
+/* 原文段（II/III）與聽眾標示 */
+.pid{font-size:var(--fs-min);font-family:var(--mono)!important;color:var(--ink-mute);margin-right:.5rem;text-decoration:none}
+.aud{background:#f3efe9!important;border-left:3px solid #b8ae99;padding-left:.6rem}
+.aud-span{background:#f3efe9;border-bottom:1px dashed #b8ae99}
+.aud-tag{display:inline-block;font-family:var(--sans);font-size:var(--fs-min);color:var(--ink-mute);border:1px dashed #b8ae99;border-radius:6px;padding:0 .45rem;margin-right:.45rem;vertical-align:.08em}
+
+@media(max-width:640px){.n-nav .in{flex-wrap:nowrap;overflow-x:auto;padding:.5rem 1rem}.n-nav .brand{display:none}.n-nav a.q{white-space:nowrap}}
