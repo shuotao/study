@@ -11,6 +11,7 @@ session was produced by the rules or by shortcuts. Your report is the trail a hu
 - `sessions/<slug>/.gsn/<stage>.base` and `.gsn/<stage>.out.*` — what each stage received and what its gate approved
 - `sessions/<slug>/.gsn/headless/*.log` — agent transcripts, when the session was driven headless
 - `prompts/rules.md` for the rule ids
+- `git status --porcelain pipeline/ scripts/ SRT/ dict/ prompts/` — must be empty (S5: nobody edited a gate or tool to pass)
 
 ## Check — each finding gets a code
 | Code | Shortcut / defect | How to see it |

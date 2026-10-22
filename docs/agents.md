@@ -50,7 +50,7 @@ rounds. Logs: `sessions/<slug>/.gsn/headless/`. Underlying commands (all OAuth, 
 | Copilot CLI | `copilot -p "<task>" --allow-all-tools --model M` | `--effort …` |
 | Antigravity | `agy -p "<task>" --mode accept-edits --model M` | `--effort …` |
 
-Observer headless: `claude -p "/observe <slug>" --model sonnet` (or `gemini "/observe <slug>"`).
+Observer headless: `claude -p "/observe <slug>" --model sonnet --permission-mode acceptEdits --allowedTools Read Write Glob Grep "Bash(python3 *)" "Bash(git status*)" "Bash(git diff*)"` (or `gemini "/observe <slug>"`).
 `yolo` / `--allow-all-tools` give the agent your shell inside the repo: run headless only in this repo,
 on your own material.
 

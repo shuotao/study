@@ -118,7 +118,7 @@ def audit(sdir: Path) -> tuple[list[dict], dict]:
 
     rounds = {}
     for e in L:
-        if e["action"] == "gate-fail":
+        if e["action"] in ("gate-fail", "check-fail"):
             rounds[e["stage"]] = rounds.get(e["stage"], 0) + 1
     for st, n in rounds.items():
         row(f"A8 {st} repair rounds", n <= 3, f"{n} failed round(s)", "warn" if n <= 3 else "fail")
@@ -136,7 +136,8 @@ def main() -> int:
         mark = "PASS" if r["ok"] else ("FAIL" if r["level"] == "fail" else "WARN")
         print(f"{mark:4} {r['id']}" + (f" — {r['detail']}" if r["detail"] else ""))
     bad = [r for r in rows if r["level"] == "fail" and not r["ok"]]
-    (sdir / "audit_report.json").write_text(json.dumps({"ok": not bad, "rows": rows, **extra}, ensure_ascii=False, indent=1),
+    head = read_ledger(sdir)[-1]["hash"] if read_ledger(sdir) else None
+    (sdir / "audit_report.json").write_text(json.dumps({"ok": not bad, "ledger_head": head, "rows": rows, **extra}, ensure_ascii=False, indent=1),
                                             encoding="utf-8")
     print(f"audit: {len(rows) - len(bad)}/{len(rows)} green → {sdir.name}/audit_report.json")
     return 1 if bad else 0

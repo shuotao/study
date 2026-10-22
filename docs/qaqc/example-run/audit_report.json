@@ -1,0 +1,396 @@
+{
+ "ok": true,
+ "rows": [
+  {
+   "id": "A0 ledger hash chain",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A1 transcript.srt immutable",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p1-transcribe accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p1-clean accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p3-polish accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 p3-polish opened before done",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p3-punct accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 p3-punct opened before done",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p3-hooks accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 p3-hooks opened before done",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p4-terms accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 p4-terms opened before done",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p5-stance accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 p5-stance opened before done",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A2 p6-matrix accounted for",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 p6-matrix opened before done",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A3 stages finished in plan order",
+   "ok": true,
+   "detail": "[2, 3, 5, 7, 9, 11, 13, 15]",
+   "level": "fail"
+  },
+  {
+   "id": "A4 p3-polish base snapshot unchanged",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A4 p3-punct base snapshot unchanged",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A4 p3-hooks base snapshot unchanged",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A4 p4-terms base snapshot unchanged",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A4 p5-stance base snapshot unchanged",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A4 p6-matrix base snapshot unchanged",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A5 p3-punct input == previous approved cleaned.md",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A5 p3-hooks input == previous approved cleaned.md",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A5 p4-terms input == previous approved cleaned.md",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A5 p6-matrix input == previous approved cleaned.md",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 transcript.srt unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 cleaned.srt unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 cleaned.md unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 enhanced.md unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 notes_工程師.md unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 matrix/runs/talk-context/K.json unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 matrix/runs/talk-context/i.json unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 matrix/runs/talk-context/claims.json unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 matrix/runs/talk-context/diagrams.json unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 matrix/runs/talk-context/iv.json unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A6 matrix/links/links.json unchanged since approved",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A7 p3-polish gate re-run on frozen output",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A7 p3-punct gate re-run on frozen output",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A7 p3-hooks gate re-run on frozen output",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A7 p4-terms gate re-run on frozen output",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A7 p5-stance gate re-run on frozen output",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A7 p6-matrix gate re-run on frozen output",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A9 word-count chain (original → every stage, same basis)",
+   "ok": true,
+   "detail": "",
+   "level": "fail"
+  },
+  {
+   "id": "A9 end-to-end retention vs ALL original cues (E4)",
+   "ok": true,
+   "detail": "6795/6588 = 1.031",
+   "level": "warn"
+  }
+ ],
+ "rounds": {},
+ "timeline": [
+  {
+   "seq": 1,
+   "ts": "2026-10-22T10:55:03+08:00",
+   "action": "create",
+   "stage": null,
+   "actor": "claude-code"
+  },
+  {
+   "seq": 2,
+   "ts": "2026-10-22T10:55:03+08:00",
+   "action": "tool",
+   "stage": "p1-transcribe",
+   "actor": "gsn"
+  },
+  {
+   "seq": 3,
+   "ts": "2026-10-22T10:55:03+08:00",
+   "action": "tool",
+   "stage": "p1-clean",
+   "actor": "gsn"
+  },
+  {
+   "seq": 4,
+   "ts": "2026-10-22T10:55:03+08:00",
+   "action": "open",
+   "stage": "p3-polish",
+   "actor": "gsn"
+  },
+  {
+   "seq": 5,
+   "ts": "2026-10-22T10:56:54+08:00",
+   "action": "done",
+   "stage": "p3-polish",
+   "actor": "claude-subagent:opus-5.5"
+  },
+  {
+   "seq": 6,
+   "ts": "2026-10-22T10:56:54+08:00",
+   "action": "open",
+   "stage": "p3-punct",
+   "actor": "gsn"
+  },
+  {
+   "seq": 7,
+   "ts": "2026-10-22T10:57:38+08:00",
+   "action": "done",
+   "stage": "p3-punct",
+   "actor": "claude-subagent:opus-5.5"
+  },
+  {
+   "seq": 8,
+   "ts": "2026-10-22T10:57:38+08:00",
+   "action": "open",
+   "stage": "p3-hooks",
+   "actor": "gsn"
+  },
+  {
+   "seq": 9,
+   "ts": "2026-10-22T10:58:22+08:00",
+   "action": "done",
+   "stage": "p3-hooks",
+   "actor": "claude-subagent:opus-5.5"
+  },
+  {
+   "seq": 10,
+   "ts": "2026-10-22T10:58:22+08:00",
+   "action": "open",
+   "stage": "p4-terms",
+   "actor": "gsn"
+  },
+  {
+   "seq": 11,
+   "ts": "2026-10-22T11:00:02+08:00",
+   "action": "done",
+   "stage": "p4-terms",
+   "actor": "claude-subagent:opus-5.5"
+  },
+  {
+   "seq": 12,
+   "ts": "2026-10-22T11:00:02+08:00",
+   "action": "open",
+   "stage": "p5-stance",
+   "actor": "gsn"
+  },
+  {
+   "seq": 13,
+   "ts": "2026-10-22T11:01:39+08:00",
+   "action": "done",
+   "stage": "p5-stance",
+   "actor": "claude-subagent:opus-5.5"
+  },
+  {
+   "seq": 14,
+   "ts": "2026-10-22T11:01:39+08:00",
+   "action": "open",
+   "stage": "p6-matrix",
+   "actor": "gsn"
+  },
+  {
+   "seq": 15,
+   "ts": "2026-10-22T11:29:46+08:00",
+   "action": "done",
+   "stage": "p6-matrix",
+   "actor": "orchestrator:fable-5.1"
+  },
+  {
+   "seq": 16,
+   "ts": "2026-10-22T11:29:46+08:00",
+   "action": "complete",
+   "stage": null,
+   "actor": "gsn"
+  }
+ ]
+}

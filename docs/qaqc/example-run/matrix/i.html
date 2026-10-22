@@ -1,0 +1,141 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>I 建立入口｜說話與聽話</title><style></style><style id="n-theme">/* N 四象限主題 — 與好學生筆記（goodedunote）一致：暖白紙、深褐墨、赭紅強調、明體正文。
+   離線可用：不載入網路字型，依序回退到系統中文字型。由 tools/n.py build 注入每一頁。
+   設計系統：四頁共用同一組元件（tools/ui.py），字級下限 14px（tools/ui_check.py 檢查）。 */
+:root{
+  --paper:#fdfbf7; --paper-soft:#f7f1e8; --paper-deep:#f3ebe0; --rule:#e4d8ca;
+  --ink:#2d2a26; --ink-soft:#4a423a; --ink-mute:#6f675a;
+  --accent:#b34a2f; --accent-2:#c2683f; --accent-soft:#e0a892; --accent-ink:#7a3a24; --hl:#f6e3d9;
+  --serif:"Noto Serif TC","Source Han Serif TC","Songti TC",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* 字級階梯：正文 17、次要 15、最小 14 */
+  --fs-body:17px; --fs-2:15px; --fs-min:14px;
+}
+*{box-sizing:border-box}
+html,body{background:var(--paper)!important;color:var(--ink)!important;margin:0}
+body{font-family:var(--serif)!important;line-height:1.9;font-size:var(--fs-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif)!important;color:var(--ink);line-height:1.5}
+h1{font-size:1.8rem;font-weight:700;letter-spacing:.01em;margin:.3rem 0 .6rem}
+h2{color:var(--accent)!important;font-weight:700}
+h3{color:var(--accent-2)!important;font-weight:600}
+a{color:#a8442a}a:hover{color:var(--accent-ink)}
+p{text-align:justify}
+small,.ui,nav,footer,button,label,input,textarea,figcaption,.n-tag,.n-ref,.pid{font-family:var(--sans)!important}
+hr{border:0;border-top:1px solid var(--rule)}
+blockquote{background:var(--paper-soft)!important;border-left:4px solid var(--accent-soft)!important;border-radius:0 8px 8px 0;padding:.8rem 1rem;margin:.6rem 0}
+code{background:#efe7dc;color:var(--accent-ink);border-radius:4px;padding:.05rem .3rem;font-family:var(--mono)}
+table{border-collapse:collapse}
+th,td{border:1px solid var(--rule)!important;font-size:var(--fs-2)}
+th{background:var(--paper-deep)!important;color:#8a3f28!important;font-family:var(--sans)}
+details>summary{cursor:pointer;color:var(--accent);font-family:var(--sans);font-size:var(--fs-2)}
+textarea,input[type=text],input[type=search]{border:1px solid var(--rule)!important;border-radius:8px;background:#fff;padding:.5rem .7rem;font-size:var(--fs-2)}
+button{border:1px solid #e0c4b6!important;color:var(--accent)!important;background:#fff!important;border-radius:9999px!important;padding:.45rem 1.1rem;font-size:var(--fs-2);cursor:pointer}
+button:hover,button.on{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+img{border-radius:10px;max-width:100%}
+:target,.hit{background:var(--hl)!important;border-radius:6px;outline:2px solid var(--accent-soft)}
+.n-card:target{background:#fffdf9!important;outline:none;border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--hl)}
+
+/* ── 四象限導覽列（n.py 注入，四頁相同） ── */
+.n-nav{position:sticky;top:0;z-index:50;background:rgba(253,251,247,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);font-family:var(--sans)}
+.n-nav .in{max-width:1240px;margin:0 auto;display:flex;gap:.45rem;align-items:center;padding:.6rem 1.4rem;flex-wrap:wrap}
+.n-nav .brand{font-family:var(--serif);font-weight:700;color:var(--ink);margin-right:auto;text-decoration:none;font-size:var(--fs-2)}
+.n-nav a.q{font-size:var(--fs-min);color:var(--ink-soft);text-decoration:none;border:1px solid var(--rule);border-radius:9999px;padding:.2rem .8rem;background:#fff}
+.n-nav a.q b{color:var(--accent);margin-right:.3rem;font-family:var(--serif)}
+.n-nav a.q.on{background:var(--accent);color:#fff;border-color:var(--accent)}.n-nav a.q.on b{color:#fff}
+
+/* ── 共用元件（tools/ui.py） ── */
+.n-page{max-width:860px;margin:0 auto;padding:2rem 1.4rem 4rem}
+.n-mast{margin-bottom:1.6rem}
+.n-kicker{font-size:var(--fs-2);color:var(--ink-mute);letter-spacing:.06em}
+.n-lead{color:var(--ink-soft);font-size:var(--fs-body);margin:.2rem 0 1rem}
+.n-how{background:var(--paper-soft);border:1px solid var(--rule);border-radius:12px;padding:.7rem 1.1rem;margin:1rem 0 0}
+.n-how h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:0 0 .2rem;font-weight:600}
+.n-how ol{margin:0;padding:0;list-style:none;display:flex;gap:.4rem 1.6rem;flex-wrap:wrap;counter-reset:s}
+.n-how li{font-size:var(--fs-2);color:var(--ink);counter-increment:s}
+.n-how li::before{content:counter(s);display:inline-block;width:1.45em;height:1.45em;line-height:1.45em;text-align:center;border-radius:50%;background:var(--accent);color:#fff;font-size:var(--fs-min);margin-right:.45rem}
+/* 卡片：I 與 IV 同一種卡 */
+.n-card{background:#fffdf9;border:1px solid var(--rule);border-radius:14px;box-shadow:0 10px 26px -20px rgba(120,60,40,.45);padding:1.4rem 1.6rem;margin:1.4rem 0;scroll-margin-top:4.5rem}
+.n-card>header{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem;flex-wrap:wrap}
+.n-card>header h2{margin:0;font-size:1.25rem;flex:1;min-width:12em;color:var(--ink)!important}
+.n-card h3{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:1.1rem 0 .3rem;font-weight:600}
+.n-card p{margin:.35rem 0}
+.n-card ul{margin:.2rem 0;padding-left:1.2rem}.n-card li{margin:.35rem 0}
+.kn{font-family:var(--serif);font-weight:700;font-size:var(--fs-2);background:var(--accent);color:#fff;border-radius:6px;padding:.05rem .5rem}
+.n-card .go{margin-top:.9rem;font-family:var(--sans);font-size:var(--fs-2);display:flex;flex-wrap:wrap;gap:.3rem 1.2rem}
+.n-card .go a{text-decoration:none}
+/* 重點清單：I 的「重點清單」與 IV 的「先看哪裡」同一個元件 */
+.n-index{background:var(--paper-soft);border-radius:14px;padding:1rem 1.3rem;margin:0 0 1.8rem}
+.n-index h2{font-size:var(--fs-body);margin:.1rem 0 .5rem}
+.n-index .grp{font-size:var(--fs-min);color:var(--ink-mute);letter-spacing:.1em;margin-top:.6rem}
+.n-index ul{list-style:none;padding:0;margin:.2rem 0}
+.n-index li{margin:.4rem 0;font-size:var(--fs-body)}
+.n-index a{text-decoration:none;font-weight:600}.n-index a b{font-family:var(--serif);margin-right:.35rem}
+.n-index .why{display:block;font-size:var(--fs-2);color:var(--ink-mute);font-weight:400}
+/* 出處上標：II/III/IV 一致 */
+sup.n-ref{font-size:var(--fs-min);line-height:0;margin-left:.1rem;vertical-align:super}
+sup.n-ref a.fn{color:var(--ink-mute);text-decoration:none}sup.n-ref a.fn:hover{color:var(--accent)}
+sup.n-ref .sep{color:#b8ae99}
+/* 標籤：聽眾 / 講義 / 值得細讀 / 熟手可略 / 類型 */
+.n-tag{display:inline-block;font-size:var(--fs-min);line-height:1.5;border-radius:6px;padding:0 .45rem;margin-right:.45rem;border:1px solid var(--rule);color:var(--ink-mute);background:#fff;vertical-align:.08em;white-space:nowrap}
+.n-tag.deep{background:var(--hl);color:var(--accent-ink);border-color:var(--accent-soft)}
+.n-tag.skim{background:var(--paper-deep)}
+.n-tag.ask{background:var(--hl);color:var(--accent-ink);border-color:transparent}
+.n-tag.aud,.n-tag.maybe-aud{border-style:dashed}
+/* 補述（I 的白話說明） */
+.supp{color:var(--ink-mute)!important;font-family:var(--sans)!important;font-size:var(--fs-2)}
+/* 圖解 */
+figure.kdiagram{margin:1rem 0 .4rem;overflow-x:auto;-webkit-overflow-scrolling:touch}  /* 圖解保持原尺寸(字 ≥14px),窄螢幕在卡內左右捲動 */
+figure.kdiagram figcaption{font-size:var(--fs-min);color:var(--ink-mute);margin-top:.3rem}
+.kdiagram-svg a:hover rect{stroke:var(--accent)}
+/* 頁尾「讀完之後」：四頁互相導流 */
+.n-next{border-top:1px solid var(--rule);margin-top:3rem;padding-top:1rem}
+.n-next h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em}
+.n-next ul{list-style:none;padding:0;display:flex;gap:1rem;flex-wrap:wrap}
+.n-next li{flex:1;min-width:14em;background:#fffdf9;border:1px solid var(--rule);border-radius:12px;padding:.7rem 1rem}
+.n-next a{text-decoration:none;font-weight:700;font-family:var(--serif)}.n-next a b{color:var(--accent)}
+.n-next span{display:block;font-size:var(--fs-2);color:var(--ink-mute)}
+/* 原文段（II/III）與聽眾標示 */
+.pid{font-size:var(--fs-min);font-family:var(--mono)!important;color:var(--ink-mute);margin-right:.5rem;text-decoration:none}
+.aud{background:#f3efe9!important;border-left:3px solid #b8ae99;padding-left:.6rem}
+.aud-span{background:#f3efe9;border-bottom:1px dashed #b8ae99}
+.aud-tag{display:inline-block;font-family:var(--sans);font-size:var(--fs-min);color:var(--ink-mute);border:1px dashed #b8ae99;border-radius:6px;padding:0 .45rem;margin-right:.45rem;vertical-align:.08em}
+
+@media(max-width:640px){.n-nav .in{flex-wrap:nowrap;overflow-x:auto;padding:.5rem 1rem}.n-nav .brand{display:none}.n-nav a.q{white-space:nowrap}}
+</style></head><body><nav class="n-nav"><div class="in"><a class="brand" href="index.html">說話與聽話</a><a class="q" href="ii.html"><b>II</b>理解過程</a><a class="q on" href="i.html"><b>I</b>建立入口</a><a class="q" href="iii.html"><b>III</b>追查與檢核</a><a class="q" href="iv.html"><b>IV</b>交換與判斷</a></div></nav><main class="n-page"><header class="n-mast"><div class="n-kicker ui">象限 I　建立入口（重點 × 初學）</div><h1>這場在講：開始踏入 AI 的第一步之前，我們該做些什麼</h1><div class=n-lead>7 個重點，約 2 分鐘。每張卡都能點回講者的原話。</div><section class="n-how ui" aria-label="這頁怎麼讀"><h2>這頁怎麼讀</h2><ol><li>先掃一遍下面的重點清單</li><li>每張卡看標題、短文和圖解</li><li>挑一張有興趣的，點「讀原文」深入</li></ol></section></header><nav class="n-index ui" aria-label="重點清單"><h2>重點清單</h2><ul><li><a href="#K1"><b>K1</b>同一句「原則上應該可以」，有人聽成同意，有人聽成條件還沒釐清</a></li><li><a href="#K2"><b>K2</b>導入 AI 時，先問它拿到的是哪一段往來</a></li><li><a href="#K3"><b>K3</b>不少公司試圖用團隊累積的知識導入 AI，結果仍舊需要檢查</a></li><li><a href="#K4"><b>K4</b>完整保留原文，補充放在旁邊、不改原文</a></li><li><a href="#K5"><b>K5</b>四個象限：先有完整脈絡，才能產生重點</a></li><li><a href="#K6"><b>K6</b>第三象限往深處追查，第四象限連到其他場次</a></li><li><a href="#K7"><b>K7</b>把任務拆成 phase，每個 phase 只做一件事</a></li></ul></nav><article class="n-card" id="K1" data-k="K1" data-anchors="p0006 p0007 p0008 p0010">
+<header><span class="kn">K1</span><h2>同一句「原則上應該可以」，有人聽成同意，有人聽成條件還沒釐清</h2></header>
+<p>有人說：「這個你們再看看，原則上應該可以。」有人聽到可以，認為方向得到同意，準備繼續處理。</p><p>也有人抓住再看看與應該，覺得條件還沒釐清。AI 整理後，文字可能很通順，卻可能刪掉了保留條件。</p><p>他想知道：這句話是誰說的？他能決定什麼？再看看，要看什麼？誰負責確認？</p>
+<div class="go"><a href="ii.html#p0006" title="原文 p0006">讀原文：一句話的兩種聽法</a><a href="ii.html#p0007" title="原文 p0007">讀原文：一句話的兩種聽法</a></div>
+</article>
+<article class="n-card" id="K2" data-k="K2" data-anchors="p0012 p0016 p0017">
+<header><span class="kn">K2</span><h2>導入 AI 時，先問它拿到的是哪一段往來</h2></header>
+<p>他說導入 AI 時，會先問它拿到哪一段往來、哪種媒介，以及還缺哪些背景。</p><p>他的產業日常大多是電話、email、工地對講機，也可能是一場一場的會議。</p><p>熟悉的雙方常省略背景。對話變成逐字稿或摘要時，原本靠雙方理解的部分不一定跟著進入資料。</p>
+<div class="go"><a href="ii.html#p0012" title="原文 p0012">讀原文：在場的人與溝通的媒介</a><a href="ii.html#p0016" title="原文 p0016">讀原文：在場的人與溝通的媒介</a></div>
+</article>
+<article class="n-card" id="K3" data-k="K3" data-anchors="p0023 p0024 p0025 p0030">
+<header><span class="kn">K3</span><h2>不少公司試圖用團隊累積的知識導入 AI，結果仍舊需要檢查</h2></header>
+<p>現在不少公司試圖導入 AI，第一步是用團隊經年累積的知識當 context（與 AI 溝通的上下文）。</p><p>他說他們曾經以為調用過去的資料集後，AI 就可以協助製作出類似的結果。他們以為這樣可以直接交付。</p><p>實際導入後，仍舊需要把獲得的結果再次檢查。資料整理好，不代表判斷就一定正確。</p>
+<div class="go"><a href="ii.html#p0023" title="原文 p0023">讀原文：導入 AI 的第一步</a><a href="ii.html#p0030" title="原文 p0030">讀原文：導入 AI 的第一步</a></div>
+</article>
+<article class="n-card" id="K4" data-k="K4" data-anchors="p0032 p0034 p0045 p0046 p0047">
+<header><span class="kn">K4</span><h2>完整保留原文，補充放在旁邊、不改原文</h2></header>
+<p>好學生筆記是他開發的系統，可以把對話整理成完整的逐字文檔。系統的規範不允許任何形式的重點與摘要。</p><p>他說，最後一句最像重點，但前面的推論過程，可能才是讓他理解的原因。</p><p>他說另一條規則是：就地補充、不改原文。在不少的學習筆記的場次上，可以看見原文和他的補述分開呈現。讀者需要辨認，哪段來自原始內容，哪段是後來加入的理解。</p>
+<div class="go"><a href="ii.html#p0032" title="原文 p0032">讀原文：好學生筆記：完整的上下文</a><a href="ii.html#p0046" title="原文 p0046">讀原文：好學生矩陣的四個象限</a></div>
+</article>
+<article class="n-card" id="K5" data-k="K5" data-anchors="p0041 p0042 p0053 p0054">
+<header><span class="kn">K5</span><h2>四個象限：先有完整脈絡，才能產生重點</h2></header>
+<p>好學生矩陣（同一份資料的思考象限）用兩個向度組成一張圖。橫軸是完整與重點，縱軸是初學與精通。</p><p>第一象限是建立入口，第二象限是理解過程，第三象限是追查與檢核，第四象限是交換與判斷。</p><p>他認為，對還沒有讀過原文的人，摘要會直接成為理解的誤區。他提出先有完整脈絡、才能產生重點的兩部曲流程。</p>
+<figure class="kdiagram" data-k="K5" data-diagram="d-k5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 688 128" role="img" aria-labelledby="d-k5-title d-k5-desc" class="kdiagram-svg" style="width:688px;max-width:none;height:auto;display:block;margin:0 auto"><title id="d-k5-title">四個象限的閱讀順序（江碩濤的說法）</title><desc id="d-k5-desc">扎實完成第二象限的完整閱讀後，再前往一、三象限的強化與深化；當累積量能足以有了知識點間的關係時，第四象限的廣度就會出現</desc><defs><marker id="d-k5-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8ae99"/></marker></defs><a href="ii.html#p0074" data-anchors="p0074" data-edge="n1-n2"><line x1="200.0" y1="64.0" x2="256.0" y2="64.0" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k5-arr)"/><rect x="199.5" y="52.0" width="57" height="22" rx="4" fill="#f7f1e8"/><text x="228.0" y="68.0" text-anchor="middle" font-size="14" fill="#7a7264">再前往</text></a><a href="ii.html#p0074" data-anchors="p0074" data-edge="n2-n3"><line x1="432.0" y1="64.0" x2="488.0" y2="64.0" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k5-arr)"/><rect x="431.5" y="52.0" width="57" height="22" rx="4" fill="#f7f1e8"/><text x="460.0" y="68.0" text-anchor="middle" font-size="14" fill="#7a7264">累積後</text></a><a href="ii.html#p0074" data-anchors="p0074" data-node="n1" data-status="existing"><rect x="24" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="112.0" y="69.0" text-anchor="middle" font-size="15" fill="#2d2a26">第二象限：完整閱讀</text></a><a href="ii.html#p0074" data-anchors="p0074" data-node="n2" data-status="existing"><rect x="256" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="344.0" y="60.0" text-anchor="middle" font-size="15" fill="#2d2a26">第一、三象限：強化與</text><text x="344.0" y="79.0" text-anchor="middle" font-size="15" fill="#2d2a26">深化</text></a><a href="ii.html#p0074" data-anchors="p0074" data-node="n3" data-status="existing"><rect x="488" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="576.0" y="69.0" text-anchor="middle" font-size="15" fill="#2d2a26">第四象限的廣度</text></a></svg><figcaption>圖解：四個象限的閱讀順序（江碩濤的說法）（點節點讀原文）</figcaption></figure>
+<div class="go"><a href="ii.html#p0041" title="原文 p0041">讀原文：好學生矩陣的四個象限</a><a href="ii.html#p0054" title="原文 p0054">讀原文：好學生矩陣的四個象限</a></div>
+</article>
+<article class="n-card" id="K6" data-k="K6" data-anchors="p0058 p0060 p0066 p0067 p0073">
+<header><span class="kn">K6</span><h2>第三象限往深處追查，第四象限連到其他場次</h2></header>
+<p>第三象限的精通者看到一張卡，反應不再是「我懂了」，而是「為什麼」。</p><p>這個為什麼會把他帶回完整的內容，而且比初學時讀得更深。</p><p>第四象限的重點卡透過 tag<span class="supp" data-term="tag"><span class="supp">〔補述：tag＝貼在內容上、用來分類的標記〕</span></span> 與其他場次的卡片產生連結。他說，沒有深度就去連結，兩張卡可能只是用了同一個名詞。</p>
+<figure class="kdiagram" data-k="K6" data-diagram="d-k6"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 688 128" role="img" aria-labelledby="d-k6-title d-k6-desc" class="kdiagram-svg" style="width:688px;max-width:none;height:auto;display:block;margin:0 auto"><title id="d-k6-title">第三象限：從一張卡往深處追（江碩濤的說法）</title><desc id="d-k6-desc">專家看到卡片的反應是為什麼，帶回完整的內容，沿著一個問題往下追</desc><defs><marker id="d-k6-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8ae99"/></marker></defs><a href="ii.html#p0060" data-anchors="p0060" data-edge="n1-n2"><line x1="200.0" y1="64.0" x2="256.0" y2="64.0" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k6-arr)"/><rect x="207.0" y="52.0" width="42" height="22" rx="4" fill="#f7f1e8"/><text x="228.0" y="68.0" text-anchor="middle" font-size="14" fill="#7a7264">反應</text></a><a href="ii.html#p0060" data-anchors="p0060" data-edge="n2-n3"><line x1="432.0" y1="64.0" x2="488.0" y2="64.0" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k6-arr)"/><rect x="439.0" y="52.0" width="42" height="22" rx="4" fill="#f7f1e8"/><text x="460.0" y="68.0" text-anchor="middle" font-size="14" fill="#7a7264">帶回</text></a><a href="ii.html#p0060" data-anchors="p0060" data-node="n1" data-status="existing"><rect x="24" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="112.0" y="69.0" text-anchor="middle" font-size="15" fill="#2d2a26">看到一張卡</text></a><a href="ii.html#p0060" data-anchors="p0060" data-node="n2" data-status="existing"><rect x="256" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="344.0" y="69.0" text-anchor="middle" font-size="15" fill="#2d2a26">反應是「為什麼」</text></a><a href="ii.html#p0060" data-anchors="p0060" data-node="n3" data-status="existing"><rect x="488" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="576.0" y="60.0" text-anchor="middle" font-size="15" fill="#2d2a26">回到完整的內容，沿著</text><text x="576.0" y="79.0" text-anchor="middle" font-size="15" fill="#2d2a26">一個問題往下追</text></a></svg><figcaption>圖解：第三象限：從一張卡往深處追（江碩濤的說法）（點節點讀原文）</figcaption></figure>
+<div class="go"><a href="ii.html#p0058" title="原文 p0058">讀原文：好學生矩陣的四個象限</a><a href="ii.html#p0066" title="原文 p0066">讀原文：好學生矩陣的四個象限</a></div>
+</article>
+<article class="n-card" id="K7" data-k="K7" data-anchors="p0093 p0097">
+<header><span class="kn">K7</span><h2>把任務拆成 phase，每個 phase 只做一件事</h2></header>
+<p>他提出的原則之一，是把任務拆成 phase（每個 phase 只做一件事）。</p><p>另一個原則是確定性的工作（轉錄、時間軸、全形化、合併段落與檢查字數）給工具。</p><p>判斷的工作給 AI，最後的決定給人。每個 phase 的產物都留下來，它們本身就是學習的材料。</p>
+<figure class="kdiagram" data-k="K7" data-diagram="d-k7"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 692 380" role="img" aria-labelledby="d-k7-title d-k7-desc" class="kdiagram-svg" style="width:692px;max-width:none;height:auto;display:block;margin:0 auto"><title id="d-k7-title">工具、AI 與人的分工（江碩濤的說法）</title><desc id="d-k7-desc">確定性的工作給工具，判斷的工作給 AI，最後的決定給人</desc><defs><marker id="d-k7-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8ae99"/></marker></defs><a href="ii.html#p0097" data-anchors="p0097" data-edge="n1-n2"><line x1="346.5" y1="174.0" x2="347.5" y2="104.0" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k7-arr)"/><rect x="296.0" y="127.0" width="102" height="22" rx="4" fill="#f7f1e8"/><text x="347.0" y="143.0" text-anchor="middle" font-size="14" fill="#7a7264">確定性的工作</text></a><a href="ii.html#p0097" data-anchors="p0097" data-edge="n1-n3"><line x1="434.0" y1="241.8" x2="492.0" y2="260.2" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k7-arr)"/><rect x="442.0" y="239.0" width="42" height="22" rx="4" fill="#f7f1e8"/><text x="463.0" y="255.0" text-anchor="middle" font-size="14" fill="#7a7264">判斷</text></a><a href="ii.html#p0097" data-anchors="p0097" data-edge="n1-n4"><line x1="258.0" y1="241.8" x2="200.0" y2="260.2" stroke="#b8ae99" stroke-width="1.6" marker-end="url(#d-k7-arr)"/><rect x="208.0" y="239.0" width="42" height="22" rx="4" fill="#f7f1e8"/><text x="229.0" y="255.0" text-anchor="middle" font-size="14" fill="#7a7264">決定</text></a><a href="ii.html#p0093" data-anchors="p0093" data-node="n1" data-status="existing"><rect x="258.0" y="174.0" width="176" height="80" rx="8" fill="#fffdf9" stroke="#b34a2f" stroke-width="2.2"/><text x="346.0" y="210.0" text-anchor="middle" font-size="15" fill="#2d2a26">一個團隊的分工（講者</text><text x="346.0" y="229.0" text-anchor="middle" font-size="15" fill="#2d2a26">的比喻）</text></a><a href="ii.html#p0093" data-anchors="p0093" data-node="n2" data-status="existing"><rect x="260" y="24" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="348.0" y="60.0" text-anchor="middle" font-size="15" fill="#2d2a26">工具：轉錄、時間軸、</text><text x="348.0" y="79.0" text-anchor="middle" font-size="15" fill="#2d2a26">全形化</text></a><a href="ii.html#p0093" data-anchors="p0093" data-node="n3" data-status="existing"><rect x="492" y="248" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="580.0" y="284.0" text-anchor="middle" font-size="15" fill="#2d2a26">AI：翻譯、標點判斷</text><text x="580.0" y="303.0" text-anchor="middle" font-size="15" fill="#2d2a26">、前後承接</text></a><a href="ii.html#p0093" data-anchors="p0093" data-node="n4" data-status="existing"><rect x="24" y="248" width="176" height="80" rx="8" fill="#fffdf9" stroke="#2d2a26" stroke-width="1.4"/><text x="112.0" y="284.0" text-anchor="middle" font-size="15" fill="#2d2a26">人：確認專有名詞、最</text><text x="112.0" y="303.0" text-anchor="middle" font-size="15" fill="#2d2a26">後的判斷</text></a><text x="24" y="366" font-size="14" fill="#7a7264" data-anchors="p0093">講者說「如果把它想成一個團隊的分工」。</text></svg><figcaption>圖解：工具、AI 與人的分工（江碩濤的說法）（點節點讀原文）</figcaption></figure>
+<div class="go"><a href="ii.html#p0081" title="原文 p0081">讀原文：好學生筆記怎麼做</a><a href="ii.html#p0097" title="原文 p0097">讀原文：三個原則</a></div>
+</article><footer class="n-next ui"><h2>讀完之後</h2><ul><li><a href="ii.html"><b>II</b> 理解過程</a><span>想照順序讀完整篇</span></li><li><a href="iv.html"><b>IV</b> 交換與判斷</a><span>想看這些重點和其他場次怎麼連</span></li></ul></footer></main></body></html>

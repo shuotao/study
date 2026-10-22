@@ -181,7 +181,7 @@
    "upstream_exit": 0,
    "candidate_exit": 0,
    "candidate_note": [
-    "[groq] wrote 28 cues → /var/folders/pr/gw4s355x5yj36nwgpsk1l2tr0000gn/T/gsn-cmp-xd41pof1/2026-10-19_taipei-current-songshan-xinyi/cand.srt (detected language: Chinese)"
+    "[groq] wrote 28 cues → <tmp>/2026-10-19_taipei-current-songshan-xinyi/cand.srt (detected language: Chinese)"
    ],
    "upstream": {
     "cues": 32,
@@ -207,7 +207,7 @@
    "upstream_exit": 0,
    "candidate_exit": 0,
    "candidate_note": [
-    "[groq] wrote 42 cues → /var/folders/pr/gw4s355x5yj36nwgpsk1l2tr0000gn/T/gsn-cmp-xd41pof1/09_15__0600_AS1569/cand.srt (detected language: English)"
+    "[groq] wrote 42 cues → <tmp>/09_15__0600_AS1569/cand.srt (detected language: English)"
    ],
    "upstream": {
     "cues": 28,
@@ -228,7 +228,7 @@
   "upstream": {
    "assemble_exit": 0,
    "assemble": [
-    "[verify] OK — all 396 timecodes byte-identical to original and present in /Users/shuotaochiang/Desktop/study/sessions/09_15__0600_AS1569/transcript.srt",
+    "[verify] OK — all 396 timecodes byte-identical to original and present in ~/Desktop/study/sessions/09_15__0600_AS1569/transcript.srt",
     "[assemble] COMPLETE: all 396 kept cues translated (0 cues dropped as hallucination/garbage)."
    ],
    "check_exit": 0,

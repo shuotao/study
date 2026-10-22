@@ -1,0 +1,29 @@
+[
+ {"id":"d-k5","k":"K5","type":"flow","title":"四個象限的閱讀順序（江碩濤的說法）","desc":"扎實完成第二象限的完整閱讀後，再前往一、三象限的強化與深化；當累積量能足以有了知識點間的關係時，第四象限的廣度就會出現",
+  "nodes":[
+   {"id":"n1","label":"第二象限：完整閱讀","anchors":["p0074"],"status":"existing"},
+   {"id":"n2","label":"第一、三象限：強化與深化","anchors":["p0074"],"status":"existing"},
+   {"id":"n3","label":"第四象限的廣度","anchors":["p0074"],"status":"existing"}],
+  "edges":[
+   {"from":"n1","to":"n2","label":"再前往","anchors":["p0074"]},
+   {"from":"n2","to":"n3","label":"累積後","anchors":["p0074"]}]},
+ {"id":"d-k6","k":"K6","type":"flow","title":"第三象限：從一張卡往深處追（江碩濤的說法）","desc":"專家看到卡片的反應是為什麼，帶回完整的內容，沿著一個問題往下追",
+  "nodes":[
+   {"id":"n1","label":"看到一張卡","anchors":["p0060"],"status":"existing"},
+   {"id":"n2","label":"反應是「為什麼」","anchors":["p0060"],"status":"existing"},
+   {"id":"n3","label":"回到完整的內容，沿著一個問題往下追","anchors":["p0060"],"status":"existing"}],
+  "edges":[
+   {"from":"n1","to":"n2","label":"反應","anchors":["p0060"]},
+   {"from":"n2","to":"n3","label":"帶回","anchors":["p0060"]}]},
+ {"id":"d-k7","k":"K7","type":"hub","title":"工具、AI 與人的分工（江碩濤的說法）","desc":"確定性的工作給工具，判斷的工作給 AI，最後的決定給人",
+  "nodes":[
+   {"id":"n1","label":"一個團隊的分工（講者的比喻）","anchors":["p0093"],"status":"existing","accent":true},
+   {"id":"n2","label":"工具：轉錄、時間軸、全形化","anchors":["p0093"],"status":"existing"},
+   {"id":"n3","label":"AI：翻譯、標點判斷、前後承接","anchors":["p0093"],"status":"existing"},
+   {"id":"n4","label":"人：確認專有名詞、最後的判斷","anchors":["p0093"],"status":"existing"}],
+  "edges":[
+   {"from":"n1","to":"n2","label":"確定性的工作","anchors":["p0097"]},
+   {"from":"n1","to":"n3","label":"判斷","anchors":["p0097"]},
+   {"from":"n1","to":"n4","label":"決定","anchors":["p0097"]}],
+  "note":"講者說「如果把它想成一個團隊的分工」。","note_anchors":["p0093"]}
+]

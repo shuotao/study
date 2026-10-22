@@ -1,0 +1,109 @@
+{
+ "ok": true,
+ "rows": [
+  {
+   "stage": "p1-transcribe",
+   "product": "transcript.srt (all cues)",
+   "units": 6588,
+   "vs": "—",
+   "ratio": null,
+   "band": null,
+   "ok": null,
+   "level": "info",
+   "vs_original": 1.0,
+   "note": "E4 base",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "p1-clean",
+   "product": "cleaned.srt",
+   "units": 6588,
+   "vs": "original",
+   "ratio": 1.0,
+   "band": "0.90-1.00",
+   "ok": true,
+   "level": "warn",
+   "vs_original": 1.0,
+   "note": "",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "p3-polish",
+   "product": "cleaned.md",
+   "units": 6748,
+   "vs": "Phase A text",
+   "ratio": 1.024,
+   "band": "0.95-1.05",
+   "ok": true,
+   "level": "fail",
+   "vs_original": 1.024,
+   "note": "",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "p3-punct",
+   "product": "cleaned.md",
+   "units": 6748,
+   "vs": "p3-polish",
+   "ratio": 1.0,
+   "band": "1.00-1.00",
+   "ok": true,
+   "level": "fail",
+   "vs_original": 1.024,
+   "note": "",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "p3-hooks",
+   "product": "cleaned.md",
+   "units": 6795,
+   "vs": "p3-punct",
+   "ratio": 1.007,
+   "band": "1.00-1.12",
+   "ok": true,
+   "level": "fail",
+   "vs_original": 1.031,
+   "note": "",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "p4-terms",
+   "product": "enhanced.md (speaker body)",
+   "units": 6795,
+   "vs": "cleaned.md body",
+   "ratio": 1.0,
+   "band": "1.00-1.00",
+   "ok": true,
+   "level": "fail",
+   "vs_original": 1.031,
+   "note": "added in > blocks: 1771 Han chars (26% of body)",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "p5-stance",
+   "product": "notes_工程師.md (speaker body)",
+   "units": 6795,
+   "vs": "enhanced.md body",
+   "ratio": 1.0,
+   "band": "1.00-1.00",
+   "ok": true,
+   "level": "fail",
+   "vs_original": 1.031,
+   "note": "added in > blocks: 3909 Han chars (58% of body)",
+   "unit": "Han chars"
+  },
+  {
+   "stage": "end-to-end",
+   "product": "final cleaned.md",
+   "units": 6795,
+   "vs": "original",
+   "ratio": 1.031,
+   "band": null,
+   "ok": null,
+   "level": "info",
+   "vs_original": 1.031,
+   "note": "E4: retention traced from Step 1 to the last product (headings/hooks included)",
+   "unit": "Han chars"
+  }
+ ]
+}

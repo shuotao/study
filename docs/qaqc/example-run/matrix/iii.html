@@ -1,0 +1,417 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>III 追查與檢核｜說話與聽話</title><style>.n-page.wide{max-width:1240px} .mode-ii .n-page.wide{max-width:1040px}
+.mode-iii .text figure img{max-height:300px;width:auto}
+.layout{display:grid;gap:2.4rem;align-items:start}
+.mode-ii .layout{grid-template-columns:220px minmax(0,720px);justify-content:center}
+.mode-iii .layout{grid-template-columns:minmax(0,1fr) 400px}
+.toc,.side{position:sticky;top:4.2rem;max-height:calc(100vh - 5rem);overflow:auto;font-family:var(--sans)}
+.toc h2,.side h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:.2rem 0 .5rem}
+.toc ol{list-style:none;padding:0;margin:0;counter-reset:t}.toc li{font-size:var(--fs-2);margin:.35rem 0;line-height:1.5}
+.toc a{text-decoration:none;color:var(--ink-soft)}.toc a:hover{color:var(--accent)}
+.text h2{font-size:1.35rem;border-top:1px solid var(--rule);padding-top:1.4rem;margin-top:2.6rem;scroll-margin-top:4.5rem}
+.text h3{font-size:1.1rem;margin-top:1.6rem}
+.text p{margin:.9rem 0;scroll-margin-top:5rem}
+.mode-ii .text p{line-height:2}
+.mode-ii .pid{display:none}
+.text figure{margin:1.2rem 0}.text figcaption{font-size:var(--fs-min);color:var(--ink-mute)}
+.rail .tools{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.8rem}
+.rail .chips{display:flex;flex-wrap:wrap;gap:.35rem}.rail .chips button{padding:.2rem .75rem;font-size:var(--fs-min)}
+.rail .count{font-size:var(--fs-min);color:var(--ink-mute)}
+#claims{list-style:none;padding:0;margin:0}
+#claims li{font-size:var(--fs-2);line-height:1.7;padding:.6rem .7rem;border-bottom:1px solid var(--rule);cursor:pointer;border-radius:8px}
+#claims li:hover,#claims li.on{background:var(--paper-soft)}
+#claims .ct{color:var(--ink)}
+@media(max-width:1000px){.mode-ii .layout,.mode-iii .layout{grid-template-columns:1fr}.toc,.side{position:static;max-height:none}}
+.rail{position:sticky;top:4.2rem;max-height:calc(100vh - 5rem);display:flex;flex-direction:column;font-family:var(--sans)}
+.tabs{display:flex;gap:.3rem;border-bottom:1px solid var(--rule);margin-bottom:.6rem}
+.tabs button{border:0!important;border-radius:0!important;background:none!important;color:var(--ink-mute)!important;padding:.45rem .7rem;border-bottom:2px solid transparent!important}
+.tabs button:hover{color:var(--accent)!important}
+.tabs button[aria-selected=true]{color:var(--accent)!important;border-bottom-color:var(--accent)!important}
+.pane{overflow:auto;padding-right:.3rem} .pane[hidden]{display:none}
+.pane details{border-bottom:1px solid var(--rule);padding:.3rem 0} .pane summary{color:var(--ink);font-size:var(--fs-2);padding:.3rem 0}
+.pane summary b{color:var(--accent);margin-right:.3rem;font-family:var(--serif)} .pane summary .n{float:right;color:var(--ink-mute);font-size:var(--fs-min)}
+.topics{list-style:none;padding:0;margin:.2rem 0 .4rem} .topics li{font-size:var(--fs-2);line-height:1.7;padding:.5rem 0;border-top:1px dashed var(--rule)}
+.topics q{display:block;color:var(--accent-ink);margin:.15rem 0}
+.acts{display:flex;gap:.4rem;margin-top:.35rem} .acts button,.ann button{font-size:var(--fs-min);padding:.15rem .7rem}
+.empty{color:var(--ink-mute);font-size:var(--fs-2);background:var(--paper-soft);border-radius:10px;padding:.8rem 1rem}
+.ann{border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:8px;background:#fffdf9;padding:.6rem .8rem;margin:0 0 .7rem}
+.ann blockquote{margin:0 0 .4rem;font-size:var(--fs-2);cursor:pointer;font-family:var(--serif)} .ann .src{font-size:var(--fs-min);color:var(--ink-mute)}
+.ann label{display:block;font-size:var(--fs-min);color:var(--ink-mute);margin:.45rem 0 .15rem}
+.ann textarea,.ann input,.ann select{width:100%;font-family:var(--sans);font-size:var(--fs-2)} .ann textarea{min-height:3.2em;resize:vertical}
+.ann .row{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
+.ann.flash{box-shadow:0 0 0 3px var(--hl)}
+.bar{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem}
+mark.ann-m{background:#f3dccd;color:inherit;border-bottom:2px solid var(--accent);border-radius:2px;cursor:pointer;padding:0 .05em}
+#selbar{position:fixed;z-index:80;display:none;gap:.25rem;background:var(--ink);border-radius:10px;padding:.3rem;box-shadow:0 8px 24px -10px rgba(0,0,0,.5)}
+#selbar button{background:none!important;border:0!important;color:#f7f1e8!important;font-size:var(--fs-2);padding:.3rem .7rem;border-radius:7px!important}
+#selbar button:hover,#selbar button:focus-visible{background:var(--accent)!important}
+@media(max-width:1000px){.rail{position:static;max-height:none}}</style><style id="n-theme">/* N 四象限主題 — 與好學生筆記（goodedunote）一致：暖白紙、深褐墨、赭紅強調、明體正文。
+   離線可用：不載入網路字型，依序回退到系統中文字型。由 tools/n.py build 注入每一頁。
+   設計系統：四頁共用同一組元件（tools/ui.py），字級下限 14px（tools/ui_check.py 檢查）。 */
+:root{
+  --paper:#fdfbf7; --paper-soft:#f7f1e8; --paper-deep:#f3ebe0; --rule:#e4d8ca;
+  --ink:#2d2a26; --ink-soft:#4a423a; --ink-mute:#6f675a;
+  --accent:#b34a2f; --accent-2:#c2683f; --accent-soft:#e0a892; --accent-ink:#7a3a24; --hl:#f6e3d9;
+  --serif:"Noto Serif TC","Source Han Serif TC","Songti TC",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* 字級階梯：正文 17、次要 15、最小 14 */
+  --fs-body:17px; --fs-2:15px; --fs-min:14px;
+}
+*{box-sizing:border-box}
+html,body{background:var(--paper)!important;color:var(--ink)!important;margin:0}
+body{font-family:var(--serif)!important;line-height:1.9;font-size:var(--fs-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif)!important;color:var(--ink);line-height:1.5}
+h1{font-size:1.8rem;font-weight:700;letter-spacing:.01em;margin:.3rem 0 .6rem}
+h2{color:var(--accent)!important;font-weight:700}
+h3{color:var(--accent-2)!important;font-weight:600}
+a{color:#a8442a}a:hover{color:var(--accent-ink)}
+p{text-align:justify}
+small,.ui,nav,footer,button,label,input,textarea,figcaption,.n-tag,.n-ref,.pid{font-family:var(--sans)!important}
+hr{border:0;border-top:1px solid var(--rule)}
+blockquote{background:var(--paper-soft)!important;border-left:4px solid var(--accent-soft)!important;border-radius:0 8px 8px 0;padding:.8rem 1rem;margin:.6rem 0}
+code{background:#efe7dc;color:var(--accent-ink);border-radius:4px;padding:.05rem .3rem;font-family:var(--mono)}
+table{border-collapse:collapse}
+th,td{border:1px solid var(--rule)!important;font-size:var(--fs-2)}
+th{background:var(--paper-deep)!important;color:#8a3f28!important;font-family:var(--sans)}
+details>summary{cursor:pointer;color:var(--accent);font-family:var(--sans);font-size:var(--fs-2)}
+textarea,input[type=text],input[type=search]{border:1px solid var(--rule)!important;border-radius:8px;background:#fff;padding:.5rem .7rem;font-size:var(--fs-2)}
+button{border:1px solid #e0c4b6!important;color:var(--accent)!important;background:#fff!important;border-radius:9999px!important;padding:.45rem 1.1rem;font-size:var(--fs-2);cursor:pointer}
+button:hover,button.on{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+img{border-radius:10px;max-width:100%}
+:target,.hit{background:var(--hl)!important;border-radius:6px;outline:2px solid var(--accent-soft)}
+.n-card:target{background:#fffdf9!important;outline:none;border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--hl)}
+
+/* ── 四象限導覽列（n.py 注入，四頁相同） ── */
+.n-nav{position:sticky;top:0;z-index:50;background:rgba(253,251,247,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);font-family:var(--sans)}
+.n-nav .in{max-width:1240px;margin:0 auto;display:flex;gap:.45rem;align-items:center;padding:.6rem 1.4rem;flex-wrap:wrap}
+.n-nav .brand{font-family:var(--serif);font-weight:700;color:var(--ink);margin-right:auto;text-decoration:none;font-size:var(--fs-2)}
+.n-nav a.q{font-size:var(--fs-min);color:var(--ink-soft);text-decoration:none;border:1px solid var(--rule);border-radius:9999px;padding:.2rem .8rem;background:#fff}
+.n-nav a.q b{color:var(--accent);margin-right:.3rem;font-family:var(--serif)}
+.n-nav a.q.on{background:var(--accent);color:#fff;border-color:var(--accent)}.n-nav a.q.on b{color:#fff}
+
+/* ── 共用元件（tools/ui.py） ── */
+.n-page{max-width:860px;margin:0 auto;padding:2rem 1.4rem 4rem}
+.n-mast{margin-bottom:1.6rem}
+.n-kicker{font-size:var(--fs-2);color:var(--ink-mute);letter-spacing:.06em}
+.n-lead{color:var(--ink-soft);font-size:var(--fs-body);margin:.2rem 0 1rem}
+.n-how{background:var(--paper-soft);border:1px solid var(--rule);border-radius:12px;padding:.7rem 1.1rem;margin:1rem 0 0}
+.n-how h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:0 0 .2rem;font-weight:600}
+.n-how ol{margin:0;padding:0;list-style:none;display:flex;gap:.4rem 1.6rem;flex-wrap:wrap;counter-reset:s}
+.n-how li{font-size:var(--fs-2);color:var(--ink);counter-increment:s}
+.n-how li::before{content:counter(s);display:inline-block;width:1.45em;height:1.45em;line-height:1.45em;text-align:center;border-radius:50%;background:var(--accent);color:#fff;font-size:var(--fs-min);margin-right:.45rem}
+/* 卡片：I 與 IV 同一種卡 */
+.n-card{background:#fffdf9;border:1px solid var(--rule);border-radius:14px;box-shadow:0 10px 26px -20px rgba(120,60,40,.45);padding:1.4rem 1.6rem;margin:1.4rem 0;scroll-margin-top:4.5rem}
+.n-card>header{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem;flex-wrap:wrap}
+.n-card>header h2{margin:0;font-size:1.25rem;flex:1;min-width:12em;color:var(--ink)!important}
+.n-card h3{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em;margin:1.1rem 0 .3rem;font-weight:600}
+.n-card p{margin:.35rem 0}
+.n-card ul{margin:.2rem 0;padding-left:1.2rem}.n-card li{margin:.35rem 0}
+.kn{font-family:var(--serif);font-weight:700;font-size:var(--fs-2);background:var(--accent);color:#fff;border-radius:6px;padding:.05rem .5rem}
+.n-card .go{margin-top:.9rem;font-family:var(--sans);font-size:var(--fs-2);display:flex;flex-wrap:wrap;gap:.3rem 1.2rem}
+.n-card .go a{text-decoration:none}
+/* 重點清單：I 的「重點清單」與 IV 的「先看哪裡」同一個元件 */
+.n-index{background:var(--paper-soft);border-radius:14px;padding:1rem 1.3rem;margin:0 0 1.8rem}
+.n-index h2{font-size:var(--fs-body);margin:.1rem 0 .5rem}
+.n-index .grp{font-size:var(--fs-min);color:var(--ink-mute);letter-spacing:.1em;margin-top:.6rem}
+.n-index ul{list-style:none;padding:0;margin:.2rem 0}
+.n-index li{margin:.4rem 0;font-size:var(--fs-body)}
+.n-index a{text-decoration:none;font-weight:600}.n-index a b{font-family:var(--serif);margin-right:.35rem}
+.n-index .why{display:block;font-size:var(--fs-2);color:var(--ink-mute);font-weight:400}
+/* 出處上標：II/III/IV 一致 */
+sup.n-ref{font-size:var(--fs-min);line-height:0;margin-left:.1rem;vertical-align:super}
+sup.n-ref a.fn{color:var(--ink-mute);text-decoration:none}sup.n-ref a.fn:hover{color:var(--accent)}
+sup.n-ref .sep{color:#b8ae99}
+/* 標籤：聽眾 / 講義 / 值得細讀 / 熟手可略 / 類型 */
+.n-tag{display:inline-block;font-size:var(--fs-min);line-height:1.5;border-radius:6px;padding:0 .45rem;margin-right:.45rem;border:1px solid var(--rule);color:var(--ink-mute);background:#fff;vertical-align:.08em;white-space:nowrap}
+.n-tag.deep{background:var(--hl);color:var(--accent-ink);border-color:var(--accent-soft)}
+.n-tag.skim{background:var(--paper-deep)}
+.n-tag.ask{background:var(--hl);color:var(--accent-ink);border-color:transparent}
+.n-tag.aud,.n-tag.maybe-aud{border-style:dashed}
+/* 補述（I 的白話說明） */
+.supp{color:var(--ink-mute)!important;font-family:var(--sans)!important;font-size:var(--fs-2)}
+/* 圖解 */
+figure.kdiagram{margin:1rem 0 .4rem;overflow-x:auto;-webkit-overflow-scrolling:touch}  /* 圖解保持原尺寸(字 ≥14px),窄螢幕在卡內左右捲動 */
+figure.kdiagram figcaption{font-size:var(--fs-min);color:var(--ink-mute);margin-top:.3rem}
+.kdiagram-svg a:hover rect{stroke:var(--accent)}
+/* 頁尾「讀完之後」：四頁互相導流 */
+.n-next{border-top:1px solid var(--rule);margin-top:3rem;padding-top:1rem}
+.n-next h2{font-size:var(--fs-2)!important;color:var(--ink-mute)!important;font-family:var(--sans)!important;letter-spacing:.12em}
+.n-next ul{list-style:none;padding:0;display:flex;gap:1rem;flex-wrap:wrap}
+.n-next li{flex:1;min-width:14em;background:#fffdf9;border:1px solid var(--rule);border-radius:12px;padding:.7rem 1rem}
+.n-next a{text-decoration:none;font-weight:700;font-family:var(--serif)}.n-next a b{color:var(--accent)}
+.n-next span{display:block;font-size:var(--fs-2);color:var(--ink-mute)}
+/* 原文段（II/III）與聽眾標示 */
+.pid{font-size:var(--fs-min);font-family:var(--mono)!important;color:var(--ink-mute);margin-right:.5rem;text-decoration:none}
+.aud{background:#f3efe9!important;border-left:3px solid #b8ae99;padding-left:.6rem}
+.aud-span{background:#f3efe9;border-bottom:1px dashed #b8ae99}
+.aud-tag{display:inline-block;font-family:var(--sans);font-size:var(--fs-min);color:var(--ink-mute);border:1px dashed #b8ae99;border-radius:6px;padding:0 .45rem;margin-right:.45rem;vertical-align:.08em}
+
+@media(max-width:640px){.n-nav .in{flex-wrap:nowrap;overflow-x:auto;padding:.5rem 1rem}.n-nav .brand{display:none}.n-nav a.q{white-space:nowrap}}
+</style></head><body class="mode-iii"><nav class="n-nav"><div class="in"><a class="brand" href="index.html">說話與聽話</a><a class="q" href="ii.html"><b>II</b>理解過程</a><a class="q" href="i.html"><b>I</b>建立入口</a><a class="q on" href="iii.html"><b>III</b>追查與檢核</a><a class="q" href="iv.html"><b>IV</b>交換與判斷</a></div></nav><main class="n-page wide"><header class="n-mast"><div class="n-kicker ui">象限 III　追查與檢核（完整 × 精通）</div><h1>說話與聽話</h1><div class=n-lead>原文逐段照錄。反白任何一句，可以寫註記、帶去 Claude 或 Google 往外查，再把查到的貼回來。註記只存在你的瀏覽器，不會改動原文；要保存時匯出成 Markdown。</div><section class="n-how ui" aria-label="這頁怎麼讀"><h2>這頁怎麼讀</h2><ol><li>反白一句有興趣的話，或從右側挑一個深挖題目</li><li>寫註記，或帶去 Claude、Google 往外查</li><li>把查到的貼回註記，對照原文判斷</li></ol></section></header><div class="layout"><div class="text"><details class=ui><summary>目錄（13 節）</summary><ol><li><a href="#s1">開場</a></li><li><a href="#s2">一句話的兩種聽法</a></li><li><a href="#s3">在場的人與溝通的媒介</a></li><li><a href="#s4">職稱、權責與場合</a></li><li><a href="#s5">導入 AI 的第一步</a></li><li><a href="#s6">好學生筆記：完整的上下文</a></li><li><a href="#s7">學習的循環</a></li><li><a href="#s8">好學生矩陣的四個象限</a></li><li><a href="#s9">好學生筆記怎麼做</a></li><li><a href="#s10">最後的判斷留給人</a></li><li><a href="#s11">三個原則</a></li><li><a href="#s12">再聽一次那句話</a></li><li><a href="#s13">對未來的期待</a></li></ol></details><h2 id="s1">開場</h2>
+<p id="p0001" data-sha1="77d79738e2a9"><a class="pid" href="#p0001">p0001</a>大家好，我是江碩濤，在中鼎工程擔任助理總工程師。今天談說話與聽話，簡單介紹我的工作背景，是在營建產業，也就是大家認識的超傳統產業，進步慢、轉動不易。</p>
+<p id="p0002" data-sha1="0a13a47953bd"><a class="pid" href="#p0002">p0002</a>那麼今天作為第一場的分享者，特別是在這麼先進的 AI 場合上，我想和大家分享的仍舊是怎麼做。但是更重要的事情是，我們要開始踏入 AI 的第一步之前，我們該做些什麼？</p>
+<p id="p0003" data-sha1="ccd2555f5efc"><a class="pid" href="#p0003">p0003</a>不少人已經在用 AI 記錄對話，產生逐字稿、整理重點以外，進而開始讓 AI 有生產的能力，例如是寫出下一封信等。但當使用 AI 留下的產出，它是否也留下了人想要留下的這段話所代表的含義呢？</p>
+<p id="p0004" data-sha1="e8bdf2aa01be"><a class="pid" href="#p0004">p0004</a>說話是人，而聽話的現在有人與 AI。所以今天的分享我會用一段對話、一份我使用將近一年的逐字稿工具好學生筆記，並且擴增到我們營建產業在過去長期累積的知識，或是現在大家用更專業的定義詞 domain knowledge，來談這些資訊在人與 AI 之間怎麼進出。</p>
+<p id="p0005" data-sha1="20ca089a9c66"><a class="pid" href="#p0005">p0005</a>此外，AI 的時代上，重視的 context 是什麼？溝通的 context 由人產生，我們要怎麼訂出使用規則，讓 AI 在合適的工作裡幫得上忙？</p>
+<h2 id="s2">一句話的兩種聽法</h2>
+<p id="p0006" data-sha1="01fa9ad09456"><a class="pid" href="#p0006">p0006</a>我們先聽一句話。有人說：「這個你們再看看，原則上應該可以。」如果這句話是對你說的，現在可以往下做嗎？</p>
+<p id="p0007" data-sha1="6af4acf8a77a"><a class="pid" href="#p0007">p0007</a>有人聽到可以，認為方向得到同意，準備繼續處理。有人抓住再看看與應該，覺得條件還沒釐清，不能當成最後決定。兩個人都可能認為自己聽懂了。</p>
+<p id="p0008" data-sha1="9b35e1845c1f"><a class="pid" href="#p0008">p0008</a>中性的 AI 在語意上的加權預測後，可能會整理成對方已同意，文字很通順，卻可能刪掉了保留條件。相反的，是否也可能整理成對方拒絕，又超出了這句話能支持的意思呢？</p>
+<p id="p0009" data-sha1="82082681a2ee"><a class="pid" href="#p0009">p0009</a>另外我們是不是要換一個角度想一下，人類在使用這個你們再看看、原則上應該可以的句型結構作為溝通使用時，說話的人想要傳遞什麼？</p>
+<p id="p0010" data-sha1="7b8f359ccd50"><a class="pid" href="#p0010">p0010</a>從這句話，我想要知道的是：從聽見一句話到把它當成執行依據，中間需要哪些確認。這句話是誰說的？他能決定什麼？再看看，要看什麼？誰負責確認？如果這些資訊沒有留下，不能因為摘要寫得肯定，就做出肯定的判斷。</p>
+<h2 id="s3">在場的人與溝通的媒介</h2>
+<p id="p0011" data-sha1="2ce32a92d8e3"><a class="pid" href="#p0011">p0011</a>而更重要的關鍵是，在場的人是誰，成員的人數與溝通間的關係為何，一對一、一對多。</p>
+<p id="p0012" data-sha1="c13be7fa67bd"><a class="pid" href="#p0012">p0012</a>回到我的產業日常，我們大多都是用一對一的馬上使用電話即時的確認與指示，一對一但一堆 CC 的用 email 追蹤，多對多同時在工地的現場用對講機協調，或也可能是透過拜訪客戶，以一場一場的會議繼續推進。</p>
+<p id="p0013" data-sha1="bc8ad67f91e4"><a class="pid" href="#p0013">p0013</a>上述的情境或許都會指向同一件事情。可能在電話中提出，可能是在電腦前的一封 email，又或許是在現場由一個工程團隊檢核中發現，更有可能是回到會議室裡的多方會議，腦力激盪的那一瞬間的發現。</p>
+<p id="p0014" data-sha1="bdb6f6ba99b0"><a class="pid" href="#p0014">p0014</a>但就像是上一頁的分享，每次留下的紀錄可能只是其中一段。意思留在人與人的互動外，更會留在關係裡，對方知道我的職責，我了解他上次在意什麼。</p>
+<p id="p0015" data-sha1="f9737f68290e"><a class="pid" href="#p0015">p0015</a>當面談話時，我們還會注意眼神、姿態、語氣，以及一句話如何斷開。這些線索可以提醒我追問，但不能直接當作答案。</p>
+<p id="p0016" data-sha1="15b413d8c857"><a class="pid" href="#p0016">p0016</a>熟悉的雙方常省略背景，不熟的雙方可能每句話都說得很保留。當對話變成逐字稿或摘要，原本靠雙方理解的部分不一定跟著進入資料。</p>
+<p id="p0017" data-sha1="20edbeab8628"><a class="pid" href="#p0017">p0017</a>所以導入 AI 時，我會先問，它拿到的是哪一段往來、哪種媒介，以及還缺哪些背景。接著再把句子放回說話的人與組織裡。</p>
+<h2 id="s4">職稱、權責與場合</h2>
+<p id="p0018" data-sha1="b0e02732a6c9"><a class="pid" href="#p0018">p0018</a>回到原則上應該可以。說話的人是提供技術意見的同事，還是具有核定權責的人，接收者需要確認的事情可能不同。對工作夥伴說和對客戶說，也有不同的表達分寸。</p>
+<p id="p0019" data-sha1="3f05d959d5c5"><a class="pid" href="#p0019">p0019</a>但這不代表知道職稱，就能推算他真正的意思。職稱最多提醒我這個人可能負責哪一段工作；能不能做出決定，還是要看這個議題的權責，以及這次對話是在建議、協調，還是在確認。</p>
+<p id="p0020" data-sha1="91be8343d609"><a class="pid" href="#p0020">p0020</a>場合和前後文同樣重要。腦力激盪時說可以，可能是值得再研究；正式確認時說可以，仍要看當時確認了哪些條件、能支持哪個步驟。如果前面還有一句等資料補齊，省略這一句，就會改變後面那句話的使用方式。</p>
+<p id="p0021" data-sha1="ed650e566488"><a class="pid" href="#p0021">p0021</a>中文表達有很多分寸，有些保留是禮貌，有些保留則代表條件還沒滿足。哪些可以略過、哪些不能略過，需要接收者判斷。</p>
+<p id="p0022" data-sha1="f9c7152e21ee"><a class="pid" href="#p0022">p0022</a>AI 可以幫忙列出待確認的地方，但不能把禮貌用語自動翻譯成同意，或把組織層級直接翻譯成授權。所以 context 不只是多放一些文字，它也關係到文字的來由，以及可以被怎麼使用。讓我們用後面的篇幅一篇一篇的討論。</p>
+<h2 id="s5">導入 AI 的第一步</h2>
+<p id="p0023" data-sha1="f23d1d5d21c8"><a class="pid" href="#p0023">p0023</a>接下來要討論的是導入 AI 的第一步。我們需要回歸討論一下，現在不少公司試圖導入 AI 的第一步，是利用自己團隊經年累積的知識，想要成為與 AI 溝通的上下文，來提升 AI 的產出品質的參考依據。</p>
+<p id="p0024" data-sha1="d1a8bc95bc26"><a class="pid" href="#p0024">p0024</a>但也在近期發現到，似乎產出的結果需要被大幅度的強調檢證的衍生作業。我們曾經以為，調用過去的資料集後，AI 就可以協助製作出類似的結果，並且可以直接交付。</p>
+<p id="p0025" data-sha1="a43cd342d24f"><a class="pid" href="#p0025">p0025</a>但實際導入後卻發現，沒有改變的是，我們仍舊需要如同過去，把獲得的結果再次檢查，看圖說、讀文字報告、檢查表單數據。</p>
+<p id="p0026" data-sha1="757957e7a487"><a class="pid" href="#p0026">p0026</a>而這些的過程中，也是在累積工程能力的最關鍵的核心，也是為什麼能夠從 junior to senior 的唯一道路，利用檢查的重複訓練，累積確保成果品質與可使用的專案知識。</p>
+<p id="p0027" data-sha1="2863624e4ddb"><a class="pid" href="#p0027">p0027</a>同時，我也曾經以為，將所有要檢查的項目改為清單與矩陣後，就可以取代過去的檢查工作。然而實際上，這樣的修改只是讓我們更清楚過去的檢查工作與標籤。</p>
+<p id="p0028" data-sha1="e5507fed1ace"><a class="pid" href="#p0028">p0028</a>以標籤為例，標籤告訴我們文件類別、專案與提供者。這些整理有幫助，但知道一份圖說是新版，和知道它為什麼改版，仍然是兩件事。如果能連到變更原因、討論紀錄與原始依據，我們才更有機會理解它的意思。</p>
+<p id="p0029" data-sha1="2054bf68c9ca"><a class="pid" href="#p0029">p0029</a>我們的成果最後要讀與施作的依然是人。那麼勢必會有的溝通中，除了懂怎麼說、理解內容以外，還需要知道這句話有沒有留下為什麼這樣說，以及它和哪些條件有關。</p>
+<p id="p0030" data-sha1="ce05303a4f48"><a class="pid" href="#p0030">p0030</a>收集、整理、分類、補充背景與建立關聯，都需要做。但資料整理好，不代表判斷就一定正確，需要確認的事仍然要確認。有些人際線索沒有留下，也不能只靠增加標籤就還原。</p>
+<p id="p0031" data-sha1="6cf566130558"><a class="pid" href="#p0031">p0031</a>因此，在 AI 整理對話之前，我想先知道：我們給了它什麼，還有哪些是它沒有拿到的。</p>
+<h2 id="s6">好學生筆記：完整的上下文</h2>
+<p id="p0032" data-sha1="598d394e6b94"><a class="pid" href="#p0032">p0032</a>今年度我開發了一套收錄說話者的系統。它可以將對話整理成完整的逐字文檔以外，系統的規範要求不允許任何形式的重點與摘要，僅透過順暢連接逐字稿段落與段落間的連接詞與補充語意來呈現，目標為協助閱讀者好讀而生的系統。</p>
+<p id="p0033" data-sha1="c36f70bb5997"><a class="pid" href="#p0033">p0033</a>當音訊素材轉為可閱讀的文字內容同時，我們會發現到，因為有文字的關係，閱讀者會在好讀的文字間，找尋到與自己知識能夠共鳴的關鍵點以外，同時也因為全篇內容的完整度，同步可以協助對於人類的上下文理解。</p>
+<p id="p0034" data-sha1="268c96872147"><a class="pid" href="#p0034">p0034</a>事實上，這和 AI 的 context 讀寫是同樣邏輯的。也就是說，好學生筆記會整理成通順的閱讀稿，我們可以在完整的文字 context 上去理解講者怎麼斷句、為什麼改口，甚至可以推測講者的情緒起伏。</p>
+<p id="p0035" data-sha1="3affc074d7d8"><a class="pid" href="#p0035">p0035</a>這些都是在原始逐字稿上不容易發現的線索。當然最直接的還是要回到音訊或帶時間的紀錄，但閱讀文字稿可以大幅降低我們理解上下文的時間。</p>
+<p id="p0036" data-sha1="ccc6ae4835da"><a class="pid" href="#p0036">p0036</a>回到我們開頭的頁面那句話：「這個你們再看看，原則上應該可以。」也因為有了完整的內容成為了上下文，我們則可將視點從文字的表面解釋，轉往對應的對象或是場合，多對象的意義性產生。這也成為了好學生筆記升級成為好學生矩陣的原因。</p>
+<h2 id="s7">學習的循環</h2>
+<p id="p0037" data-sha1="dd22e12d76fa"><a class="pid" href="#p0037">p0037</a>我們需要回到這場演講與這份筆記工具的初衷來談論，就是學習。對於學習者來說，所謂的學習的結果是能夠使用學程的能力，就像是我們在討論製造流程一樣的可穩定再現。</p>
+<p id="p0038" data-sha1="ed1c4c4dd1e8"><a class="pid" href="#p0038">p0038</a>連動其他的習得知識並用，最後是湧現出新的技術可能，同時新的能力解構成為學程，讓循環產生，得到學成與進步。</p>
+<p id="p0039" data-sha1="7d0ea9ae48cc"><a class="pid" href="#p0039">p0039</a>這也就是企業在提供 AI 工具時，需要思考的脈絡，並非只是生成能夠產出，還包含是否能夠在產出的基礎上，協助人類建立理解的上下文，進而讓人類產生學成與進步的可能。</p>
+<p id="p0040" data-sha1="d498fd94012d"><a class="pid" href="#p0040">p0040</a>而這點和當初在訓練大語言模型 LLM 的流程，是完全相同的精神與步驟。也就是今天的主題，context 的完整性，是不管在什麼時間點都是最為重要的學習要素。</p>
+<h2 id="s8">好學生矩陣的四個象限</h2>
+<p id="p0041" data-sha1="ed568b88fe41"><a class="pid" href="#p0041">p0041</a>所以我用兩個向度組成這張圖。橫軸，左邊是完整，右邊是重點；縱軸，上面是初學，下面是精通。四個格子依照象限的順序編號。</p>
+<p id="p0042" data-sha1="549ba5925a07"><a class="pid" href="#p0042">p0042</a>第一象限，右上，重點＋初學，建立入口。第二象限，左上，完整＋初學，理解過程。第三象限，左下，完整＋精通，追查與檢核。第四象限，右下，重點＋精通，交換與判斷。在整理 context 之前，先用這張圖問：誰要用？用來做什麼？</p>
+<h3>第二象限：完整</h3>
+<p id="p0043" data-sha1="cf107dcbafb8"><a class="pid" href="#p0043">p0043</a>我們先從第二象限，也就是左上角看起，那是我對好學生筆記的期待。好學生筆記這是一個已經實踐了將近一年的專案，它要求在學習階段能讀到完整論述，而不只是別人篩選後的幾個結論。</p>
+<p id="p0044" data-sha1="8b37ade77576"><a class="pid" href="#p0044">p0044</a>而在將近百場的活動紀錄中，在製作為成果的過程中，始終有一條明確的規則：完整保留原文。</p>
+<p id="p0045" data-sha1="5a8197531214"><a class="pid" href="#p0045">p0045</a>為什麼在意完整？講者可能先提出問題、試著解釋、用例子修正，最後補上一個限制。最後一句最像重點，但前面的推論過程，可能才是讓我理解它的原因。把過程拿掉，我可能記住答案，卻不知道它如何成立。</p>
+<p id="p0046" data-sha1="784b52e5fe74"><a class="pid" href="#p0046">p0046</a>另一條規則是：就地補充、不改原文。遇到陌生術語，可以在旁邊加說明，或用學習者熟悉的工作做類比。</p>
+<p id="p0047" data-sha1="bdd88dbf4135"><a class="pid" href="#p0047">p0047</a>也因此，在不少的學習筆記的場次上，可以看見原文和我的補述也是分開呈現。讀者需要辨認，哪段來自原始內容，哪段是後來加入的理解。</p>
+<p id="p0048" data-sha1="6aa7554c37e7"><a class="pid" href="#p0048">p0048</a>而這樣的筆記工具，再現的就是如當時的講者斷句、改口與思考點，讓閱讀上又再次的因通順文字之方便閱讀結果，協助大腦去回溯到語音線索，進而強化了學習上的記憶觸發點。</p>
+<p id="p0049" data-sha1="4b824bd7034d"><a class="pid" href="#p0049">p0049</a>這也就是為什麼談完整時，也要說清楚究竟保留到哪裡。不過，學習並不是不需要重點，導讀也能幫我找到方向。這就是我原本覺得衝突，後來想重新區分的地方。</p>
+<h3>第一象限：重點</h3>
+<p id="p0050" data-sha1="5c12fb1016c6"><a class="pid" href="#p0050">p0050</a>就在開發筆記專案的前半年來，我把完整和摘要想成一種衝突，既然要學好，就應該全部留下。而在使用筆記的半年後，發現大家也會想知道重點。</p>
+<p id="p0051" data-sha1="7dc25c768726"><a class="pid" href="#p0051">p0051</a>但也因此而去思考到，重點的產生在學習前，還是學習過程，或是學習後的提供，才得以真實的幫助到閱讀筆記的人？</p>
+<p id="p0052" data-sha1="b372bf03edb2"><a class="pid" href="#p0052">p0052</a>還是回到學習這件事來談論。因為我有看到主辦人 A-Ming 在活動前的準備與對話，而這邊就想要先拉出來的想法就是：缺乏閱讀力培養的過程中，重點是僅能提供給已經有至少讀過一次原文的人來作為出發。</p>
+<p id="p0053" data-sha1="bb11e211bac9"><a class="pid" href="#p0053">p0053</a>對於還沒有讀過原文的人，摘要會直接成為理解的誤區。看見不同背景的人對同一段話的理解差異性，也就是說，如果沒有完整脈絡的理解，重點也會成為誤區。</p>
+<p id="p0054" data-sha1="613b70b12170"><a class="pid" href="#p0054">p0054</a>也就是說，這會成為一個先有完整脈絡、才能產生重點的兩部曲流程。也就是這樣的現在，好學生筆記專案的左側頁籤，則會提供同一份資料的思考象限，好學生矩陣。</p>
+<p id="p0055" data-sha1="d47c08784539"><a class="pid" href="#p0055">p0055</a>給予有讀完筆記原文的讀者，有摘要的重點卡，伴隨附上圖解的功能，再讓每張卡都有連回原文段落的入口，又再次在能夠在易於閱讀的原文上，伴隨上下文的存在而強化理解的迴圈。</p>
+<p id="p0056" data-sha1="8121e4b7112b"><a class="pid" href="#p0056">p0056</a>對初學者來說，因為聽過場次，再看完整筆記下的記憶，而後再依據重點卡片的引導，選擇想深入的內容，而達到強化。我認為在學習上與重點的順序應該為此。</p>
+<p id="p0057" data-sha1="703bc4e429c1"><a class="pid" href="#p0057">p0057</a>而各位也可以思考一下，我們和 AI 在 context 的提供是否也是如此。這就是第一象限，也就是右上角的需求。</p>
+<h3>第三象限：精通者的追查</h3>
+<p id="p0058" data-sha1="013f211c7d9e"><a class="pid" href="#p0058">p0058</a>接下來想和各位討論的是好學生矩陣左下角，也就是第三象限的精通者。我們現在知道有完整的內容，可再依據重點卡來強化知識的記憶腦內的碰撞次數。</p>
+<p id="p0059" data-sha1="9c631be8f6bd"><a class="pid" href="#p0059">p0059</a>一旦重點區塊被一次一次地強化以後，初學者會慢慢變成熟悉這個議題的人。但是不是也有可能，這位讀者本來就是這個領域的專業者？</p>
+<p id="p0060" data-sha1="188657ef70b7"><a class="pid" href="#p0060">p0060</a>這時候，他看到一張卡的反應，就不再是「我懂了」，而是「為什麼」。這個為什麼會把他帶回完整的內容，而且比初學時讀得更深。不只是回到這一場的原文，而是沿著一個問題往下追。</p>
+<p id="p0061" data-sha1="01dc34ebd58e"><a class="pid" href="#p0061">p0061</a>講者這個說法的前提是什麼？引用了哪份資料？例子背後的條件，適不適用在我的專案上？如果有不同的說法，差在哪裡？</p>
+<p id="p0062" data-sha1="59218bec4223"><a class="pid" href="#p0062">p0062</a>這很像現在大家在用的 AI Deep Research，把一個問題拆成好幾個子問題，回到一份一份的原始資料交叉比對，最後才回答。在第三象限裡，做這件事的是人。</p>
+<p id="p0063" data-sha1="cf9f26895c91"><a class="pid" href="#p0063">p0063</a>而這也是我在 05 說的，檢查是 junior 走到 senior 的路。越資深的人越需要細節，因為他要負責檢核與追查，要為一個結論負責。</p>
+<p id="p0064" data-sha1="5e20f555bf5c"><a class="pid" href="#p0064">p0064</a>對專家來說，完整不是給初學者的入門，而是判斷的依據。所以第三象限練的是深度，可是只有深度，學習還只是從一張又一張的重點做出的不同路徑的嘗試。</p>
+<h3>第四象限：連結與湧現</h3>
+<p id="p0065" data-sha1="87f884440125"><a class="pid" href="#p0065">p0065</a>上一頁的第三象限是往下挖一口井，當把學習篇章精通的你，下一步又是什麼？</p>
+<p id="p0066" data-sha1="7bc1efc8e15b"><a class="pid" href="#p0066">p0066</a>用過 Obsidian 的人可能比較有感覺，每一份筆記都有自己的 tag。當兩份筆記的關鍵 tag 互相拉扯，原本不相干的內容，就在知識族譜上靠在一起。</p>
+<p id="p0067" data-sha1="04fafcd8edb2"><a class="pid" href="#p0067">p0067</a>好學生矩陣的第四象限也是這樣，重點卡透過 tag 與其他場次的卡片產生連結。而這樣觀點需要有累積，有許多的知識矩陣下才能夠開始驅動。</p>
+<p id="p0068" data-sha1="59900ba9d78c"><a class="pid" href="#p0068">p0068</a>但我們今天的分享，也是唯一想要帶給大家的觀念，在 context 上，不變的還是從完整的內容，先好好的閱讀一次開始。</p>
+<p id="p0069" data-sha1="54c0ad3b9bda"><a class="pid" href="#p0069">p0069</a>換句話說，當我們累積成為精通每一份筆記的同時，知識的網狀關聯，其實一直以來都是在人類的腦中被訓練且存在的。而當這個知識的網狀關聯越大，在我們需要的時候，提取的能力就更強大。</p>
+<p id="p0070" data-sha1="2fc65b55e167"><a class="pid" href="#p0070">p0070</a>回來背個書包。2022 年 Google 的研究團隊發現，要求大型模型把推理的步驟一步一步寫出來，解數學與推理問題的能力會大幅提升。</p>
+<p id="p0071" data-sha1="d86b103baa07"><a class="pid" href="#p0071">p0071</a>但同樣的方法用在小模型上幫助很有限，甚至會寫出看似通順、其實不合邏輯的推理。也就是說，把步驟串起來推理的能力，是模型在規模足夠以後才湧現出來的。</p>
+<p id="p0072" data-sha1="2a76e9bc5495"><a class="pid" href="#p0072">p0072</a>回到學習來看，我認為人的學習也是一樣。卡片之間的連結，要建立在第三象限累積的深度上，才會湧現出原本任何一張卡片上都沒有寫的東西，也就是 07 說的，連動其他的習得知識並用，最後湧現出新的技術可能。</p>
+<p id="p0073" data-sha1="022251b45f72"><a class="pid" href="#p0073">p0073</a>反過來說，沒有深度就去連結，就像小模型寫出的推理，看起來很通順，但兩張卡可能只是用了同一個名詞，講的根本不是同一件事。</p>
+<p id="p0074" data-sha1="903088a17ed0"><a class="pid" href="#p0074">p0074</a>也就是鋪成了那麼多的討論，我們在想的事實上是，學習的對象中，不論是人或 AI，當我們扎實的完成第二象限的完整閱讀後，再前往一、三象限的強化與深化。當累積量能足以開始有了知識點間的關係時，第四象限的廣度就會出現，進步也會因而發生，並且被落地和應用。</p>
+<h2 id="s9">好學生筆記怎麼做</h2>
+<p id="p0075" data-sha1="c67382e3e399"><a class="pid" href="#p0075">p0075</a>前面談了這麼多觀念，接下來這三頁，我想把好學生筆記怎麼做出來，一步一步拆給大家，讓各位今天回家就可以動手。</p>
+<h3>第一步：轉錄成 SRT</h3>
+<p id="p0076" data-sha1="973e201002c1"><a class="pid" href="#p0076">p0076</a>第一步，是把聲音變成帶時間軸的字幕檔，也就是 SRT。我用的是 Groq 上的 Whisper 模型。為什麼是 Groq？因為它做語音轉文字非常快，而且有免費額度，30 分鐘以內的素材幾乎不用花錢。</p>
+<p id="p0077" data-sha1="8c5091d4b110"><a class="pid" href="#p0077">p0077</a>但我發現，大多數人還是卡在一個習慣：什麼事都丟給同一個商業模型去做。其實現在有很多模型，各自擅長不同的工作，選對工具，往往比寫好 prompt 更重要。</p>
+<p id="p0078" data-sha1="b627349e04f0"><a class="pid" href="#p0078">p0078</a>這一步還有一個小技巧。轉錄前，先給它一段 context，例如講者姓名、專有名詞，辨識的錯字會少很多。但這段 context 有長度上限，要挑最關鍵的放。</p>
+<h3>第二步：雙軌字幕</h3>
+<p id="p0079" data-sha1="2fa2f9868090"><a class="pid" href="#p0079">p0079</a>第二步，是翻譯成雙軌字幕，我用 Google 的 Gemini Flash。這裡最關鍵的知識是：要清楚告訴 AI 它的邊界在哪裡。時間軸不能交給 LLM，它很容易在翻譯的同時，順手把時間軸改掉、合併或漏掉。</p>
+<p id="p0080" data-sha1="e3aeb5552548"><a class="pid" href="#p0080">p0080</a>所以時間軸先由一支 Python 腳本完整保留，LLM 只負責翻譯文字，翻完再由腳本把文字放回原本的時間軸上。結果就是：時間軸正確，翻譯也順暢。</p>
+<p id="p0081" data-sha1="80265a7e26e8"><a class="pid" href="#p0081">p0081</a>我自己的原則只有一句話：確定性的工作交給工具，需要判斷的工作才交給 LLM。而每一個 phase 的成果，本身就可以拿來學習。如果這是一場錄影的課程，雙軌字幕就能讓我在畫面上同時對照原文與中文，邊看邊強化。</p>
+<h3>第三步：連成文章</h3>
+<p id="p0082" data-sha1="c55e7c381283"><a class="pid" href="#p0082">p0082</a>拿到字幕以後，第三步要做的事剛好相反，把時間軸拿掉，讓一段一段被切開的字幕，重新連成有前後文的文章。</p>
+<p id="p0083" data-sha1="8f4c48b2b2c8"><a class="pid" href="#p0083">p0083</a>這一步裡，我最想分享的是標點符號。講者說話時的斷句、停頓、思考、改口，在字幕裡全部被切成一格一格，但在文章裡，標點就是語境。</p>
+<p id="p0084" data-sha1="1eee49869979"><a class="pid" href="#p0084">p0084</a>一個停頓，是講者在想下一句話，還是刻意留給聽眾思考的空間？要用……，用換行，還是用冒號，帶出後面要交代的東西？這些判斷，決定了讀者能不能讀回講者當下的語氣。</p>
+<p id="p0085" data-sha1="8805937e6c84"><a class="pid" href="#p0085">p0085</a>所以全形化這種機械的事交給工具，標點放在哪裡，則由我和 AI 一起判斷。接著再補上前後句之間的承接，例如也因為上面的困擾、接下來要討論的是，讓讀者讀得順。</p>
+<p id="p0086" data-sha1="6356cd41800f"><a class="pid" href="#p0086">p0086</a>但有一條鐵則：承接只能插在句子之間，不能改寫或刪掉任何一句原話。這就是 08 說的完整保留原文。</p>
+<p id="p0087" data-sha1="35c5346ca88f"><a class="pid" href="#p0087">p0087</a>當然，我們也可以只用一個 prompt，請 AI 直接產生逐字稿，再順便潤成好讀的文章。但我深信，這種 one-shot 的結果，和拆成三個 phase、每一步都有明確邊界做出來的品質，是完全不同的。</p>
+<p id="p0088" data-sha1="992600ebbc8c"><a class="pid" href="#p0088">p0088</a>以開場那句話為例，one-shot 為了通順，很可能就把這個你們再看看、原則上應該可以，潤成了對方同意。差別不在模型，而在我們有沒有把任務拆開。</p>
+<p id="p0089" data-sha1="813244d41a13"><a class="pid" href="#p0089">p0089</a>做到這裡，就是好學生筆記的全文，也就是好學生矩陣的第二象限。</p>
+<h3>第四步之後：一層一層加上去</h3>
+<p id="p0090" data-sha1="4a648a25711f"><a class="pid" href="#p0090">p0090</a>全文完成以後，後面的階段就是一層一層地加上去，而且每一層都不動原文。</p>
+<p id="p0091" data-sha1="eef89f672506"><a class="pid" href="#p0091">p0091</a>第四步是名詞補充，遇到陌生的術語，在旁邊加上說明，給對內容不熟的人。第五步是立場筆記，用我的身份，例如工程師、建築師，在原文旁邊寫下我的視角與類比。這兩層都是補述，讀者一眼就要能分辨，哪段是原文，哪段是後加的理解。</p>
+<p id="p0092" data-sha1="16025356b24f"><a class="pid" href="#p0092">p0092</a>再往下，就是好學生矩陣。第一象限，建立入口，把全文整理成重點卡，每張都連回原文段落。第三象限，追查與檢核，沿著一個問題，回到原文與來源，往深處讀。第四象限，交換與判斷，用 tag 把這一場的卡片和其他場次連起來，往廣處走。</p>
+<p id="p0093" data-sha1="27b24b4636d1"><a class="pid" href="#p0093">p0093</a>如果把它想成一個團隊的分工，工具負責轉錄、時間軸、全形化、合併段落與檢查字數；AI 負責翻譯、標點判斷、前後承接、名詞說明與重點卡；人負責決定這次要做到哪一步、確認專有名詞，以及最後的判斷。</p>
+<h2 id="s10">最後的判斷留給人</h2>
+<p id="p0094" data-sha1="09fc29c86b8c"><a class="pid" href="#p0094">p0094</a>為什麼最後的判斷一定要留給人？我在 Revit 專案裡記下過一個負面教材：追蹤系統的已結案，不等於設計上的已決定。狀態欄寫著 Closed，打開回覆卻是原則同意，但須等後續資料確認。</p>
+<p id="p0095" data-sha1="f1da890c7723"><a class="pid" href="#p0095">p0095</a>AI 如果只讀狀態欄，就會整理成全部已決定。這段回覆能支持哪一步，要回到完整的回覆、權責，以及條件是否真的滿足，這一層確認不能省。</p>
+<h2 id="s11">三個原則</h2>
+<p id="p0096" data-sha1="b3cc8498eb1a"><a class="pid" href="#p0096">p0096</a>所以我想請大家帶回去的，不是一個開源倉庫等著大家去 clone，而是三個可以馬上用的原則。</p>
+<p id="p0097" data-sha1="72cc6639b6aa"><a class="pid" href="#p0097">p0097</a>一，把任務拆成 phase，每個 phase 只做一件事。二，確定性的工作給工具，判斷的工作給 AI，最後的決定給人。三，每一個 phase 的產物都留下來，它們本身就是學習的材料。</p>
+<h2 id="s12">再聽一次那句話</h2>
+<p id="p0098" data-sha1="25b191481926"><a class="pid" href="#p0098">p0098</a>開場我說：「說話的是人，而聽話的現在有人也有 AI。」走完這一圈，再聽一次那句話：「這個你們再看看，原則上應該可以。」</p>
+<p id="p0099" data-sha1="555be8149127"><a class="pid" href="#p0099">p0099</a>回到結論，我現在不會先請 AI 把它翻成同意或不同意，而是請它保留原話、整理已知的條件、指出還沒確定的部分，再協助我草擬追問。再看看，需要補充哪些事項？由誰確認？確認之後，可以進行哪一步？人的意思由人確認，AI 協助把證據、缺口與往來整理得容易使用。</p>
+<h2 id="s13">對未來的期待</h2>
+<p id="p0100" data-sha1="1a595f24573c"><a class="pid" href="#p0100">p0100</a>我幻想未來的 AI，能陪我們把一件事情的來龍去脈接起來，讓不同背景的人都能理解，繼續一起往下做。</p>
+<p id="p0101" data-sha1="e2107b44c58d"><a class="pid" href="#p0101">p0101</a>想像有一天，一位新同仁加入進行中的工程專案，他問：「我們當初為什麼這樣設計？」AI 能帶他看當時討論過哪些方案、客戶在意什麼，以及最後採用這個方案的原因。遇到不熟悉的專業內容，就陪他理解。</p>
+<p id="p0102" data-sha1="d663ab96a15b"><a class="pid" href="#p0102">p0102</a>另一方面，資深工程師問同一件事，AI 則整理這次改了哪些條件，連回當時的依據，讓他判斷原來的做法是否還適用。同一份累積下來的資料，因為使用者與任務不同，可以提供不同的讀法。如果紀錄只寫原則上應該可以，AI 也能指出當時還有什麼沒確認、接下來需要找誰談。找不到紀錄，就說清楚缺了什麼，再由人補上與確認。</p>
+<p id="p0103" data-sha1="d518c8eda413"><a class="pid" href="#p0103">p0103</a>這是我對未來的期待，還需要在實際工作裡一步步完成。我期待我們多年累積的對話與文件，能在下一個人需要的時候，接得上他的問題。當下一個人問為什麼，AI 能陪他找回理解這件事的路。</p>
+<p id="p0104" data-sha1="dbb1a3c7d501"><a class="pid" href="#p0104">p0104</a>如果在你的工作裡，有這樣一位 AI 夥伴，你最想帶它回到哪一段討論？歡迎分享一個你想到的場景。謝謝大家。</p></div><aside class="rail ui" aria-label="深挖工具">
+<div class="tabs" role="tablist"><button type="button" role="tab" data-p="notes">我的註記（<span id="ann-n">0</span>）</button><button type="button" role="tab" data-p="topics">深挖題目（26）</button><button type="button" role="tab" data-p="claims">主張（89）</button></div>
+<div class="pane" id="pane-notes" role="tabpanel"><div id="anns"></div>
+<div class="empty" id="ann-empty">反白原文中任何一句，選「註記」或「問 Claude」，就會出現在這裡。查到的東西貼回這張註記，跟原文放在一起對照。</div>
+<div class="bar"><button type="button" id="ann-export">匯出註記（Markdown）</button><button type="button" id="ann-clear">清除全部註記</button></div></div>
+<div class="pane" id="pane-topics" role="tabpanel" hidden><details open><summary><b>K1</b> 同一句「原則上應該可以」，有人聽成同意，有人聽成條件還沒釐清<span class="n">3</span></summary><ul class="topics"><li data-refs="p0008"><span class="n-tag ask">講者保留語氣</span><span class="tt">講者說 AI 可能整理成對方已同意，也可能整理成對方拒絕；實際發生的頻率與情形為何？</span><sup class="n-ref" data-anchors="p0008"><a class="fn" href="#p0008" data-ref="p0008" title="原文 p0008">p0008</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0021"><span class="n-tag ask">沒給依據</span><span class="tt">哪些保留可以略過、哪些不能略過，講者只說由接收者判斷，判準未說明。</span><sup class="n-ref" data-anchors="p0021"><a class="fn" href="#p0021" data-ref="p0021" title="原文 p0021">p0021</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0022"><span class="n-tag ask">沒給依據</span><span class="tt">AI 列出待確認的地方要依據什麼、做到什麼程度，這一段沒有說明。</span><sup class="n-ref" data-anchors="p0022"><a class="fn" href="#p0022" data-ref="p0022" title="原文 p0022">p0022</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details><details><summary><b>K2</b> 導入 AI 時，先問它拿到的是哪一段往來<span class="n">2</span></summary><ul class="topics"><li data-refs="p0016"><span class="n-tag ask">沒給依據</span><span class="tt">講者說熟悉的雙方常省略背景、不熟的雙方可能每句話都很保留，這個說法的依據為何？</span><sup class="n-ref" data-anchors="p0016"><a class="fn" href="#p0016" data-ref="p0016" title="原文 p0016">p0016</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0016 p0017"><span class="n-tag ask">沒給依據</span><span class="tt">還缺的背景要如何補回資料裡，這一段沒有給出具體做法。</span><sup class="n-ref" data-anchors="p0016 p0017"><a class="fn" href="#p0016" data-ref="p0016" title="原文 p0016">p0016</a><span class="sep">,</span><a class="fn" href="#p0017" data-ref="p0017" title="原文 p0017">p0017</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details><details><summary><b>K3</b> 不少公司試圖用團隊累積的知識導入 AI，結果仍舊需要檢查<span class="n">4</span></summary><ul class="topics"><li data-refs="p0024"><span class="n-tag ask">講者保留語氣</span><span class="tt">講者說似乎產出的結果需要被「大幅度」強調檢證，幅度與比較的基準為何？</span><sup class="n-ref" data-anchors="p0024"><a class="fn" href="#p0024" data-ref="p0024" title="原文 p0024">p0024</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0026"><span class="n-tag ask">沒給依據</span><span class="tt">講者稱檢查的重複訓練是從 junior 到 senior 的唯一道路，這個說法的依據為何？</span><sup class="n-ref" data-anchors="p0026"><a class="fn" href="#p0026" data-ref="p0026" title="原文 p0026">p0026</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0028"><span class="n-tag ask">講者保留語氣</span><span class="tt">連到變更原因與原始依據只是「更有機會」理解，能理解到什麼程度？</span><sup class="n-ref" data-anchors="p0028"><a class="fn" href="#p0028" data-ref="p0028" title="原文 p0028">p0028</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0031"><span class="n-tag ask">沒給依據</span><span class="tt">要如何盤點「我們給了它什麼，還有哪些是它沒有拿到的」，這一段沒有說明。</span><sup class="n-ref" data-anchors="p0031"><a class="fn" href="#p0031" data-ref="p0031" title="原文 p0031">p0031</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details><details><summary><b>K4</b> 完整保留原文，補充放在旁邊、不改原文<span class="n">4</span></summary><ul class="topics"><li data-refs="p0034"><span class="n-tag ask">講者保留語氣</span><span class="tt">講者說完整文字 context 上甚至可以推測講者的情緒起伏，這個推測的依據為何？</span><sup class="n-ref" data-anchors="p0034"><a class="fn" href="#p0034" data-ref="p0034" title="原文 p0034">p0034</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0034"><span class="n-tag ask">沒給依據</span><span class="tt">講者說這和 AI 的 context 讀寫是同樣邏輯，這一段沒有給出對照的依據。</span><sup class="n-ref" data-anchors="p0034"><a class="fn" href="#p0034" data-ref="p0034" title="原文 p0034">p0034</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0035"><span class="n-tag ask">沒給依據</span><span class="tt">閱讀文字稿能「大幅降低」理解上下文的時間，降低多少、與什麼比較？</span><sup class="n-ref" data-anchors="p0035"><a class="fn" href="#p0035" data-ref="p0035" title="原文 p0035">p0035</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0048"><span class="n-tag ask">沒給依據</span><span class="tt">講者說通順文字能強化學習上的記憶觸發點，這個說法的依據為何？</span><sup class="n-ref" data-anchors="p0048"><a class="fn" href="#p0048" data-ref="p0048" title="原文 p0048">p0048</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details><details><summary><b>K5</b> 四個象限：先有完整脈絡，才能產生重點<span class="n">4</span></summary><ul class="topics"><li data-refs="p0051 p0052"><span class="n-tag ask">原文未提</span><span class="tt">重點的產生在學習前、學習過程或學習後才真正有幫助，講者提出此問，答案只給到須讀過一次原文。</span><sup class="n-ref" data-anchors="p0051 p0052"><a class="fn" href="#p0051" data-ref="p0051" title="原文 p0051">p0051</a><span class="sep">,</span><a class="fn" href="#p0052" data-ref="p0052" title="原文 p0052">p0052</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0053"><span class="n-tag ask">沒給依據</span><span class="tt">講者說摘要會直接成為理解的誤區，這一段沒有給出實例或資料。</span><sup class="n-ref" data-anchors="p0053"><a class="fn" href="#p0053" data-ref="p0053" title="原文 p0053">p0053</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0056"><span class="n-tag ask">講者保留語氣</span><span class="tt">講者「認為」學習上與重點的順序應該如此，這個順序的依據為何？</span><sup class="n-ref" data-anchors="p0056"><a class="fn" href="#p0056" data-ref="p0056" title="原文 p0056">p0056</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0057"><span class="n-tag ask">原文未提</span><span class="tt">講者請大家思考與 AI 提供 context 是否也是如此，這一段沒有給出答案。</span><sup class="n-ref" data-anchors="p0057"><a class="fn" href="#p0057" data-ref="p0057" title="原文 p0057">p0057</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details><details><summary><b>K6</b> 第三象限往深處追查，第四象限連到其他場次<span class="n">5</span></summary><ul class="topics"><li data-refs="p0070"><span class="n-tag ask">轉述他人</span><span class="tt">2022 年 Google 研究團隊的發現是講者轉述，沒有給出論文或數據，來源為何？</span><sup class="n-ref" data-anchors="p0070"><a class="fn" href="#p0070" data-ref="p0070" title="原文 p0070">p0070</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0071"><span class="n-tag ask">需外部核對</span><span class="tt">需另行查證：「模型在規模足夠以後才湧現」中的規模門檻是多大。</span><sup class="n-ref" data-anchors="p0071"><a class="fn" href="#p0071" data-ref="p0071" title="原文 p0071">p0071</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0072"><span class="n-tag ask">講者保留語氣</span><span class="tt">講者「認為」人的學習也是一樣，這個類比的依據為何？</span><sup class="n-ref" data-anchors="p0072"><a class="fn" href="#p0072" data-ref="p0072" title="原文 p0072">p0072</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0067"><span class="n-tag ask">沒給依據</span><span class="tt">第四象限需要累積多少場次才能驅動，這一段沒有說明。</span><sup class="n-ref" data-anchors="p0067"><a class="fn" href="#p0067" data-ref="p0067" title="原文 p0067">p0067</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0073"><span class="n-tag ask">沒給依據</span><span class="tt">如何分辨兩張卡是講同一件事，還是只是用了同一個名詞，這一段沒有說明。</span><sup class="n-ref" data-anchors="p0073"><a class="fn" href="#p0073" data-ref="p0073" title="原文 p0073">p0073</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details><details><summary><b>K7</b> 把任務拆成 phase，每個 phase 只做一件事<span class="n">4</span></summary><ul class="topics"><li data-refs="p0087"><span class="n-tag ask">沒給依據</span><span class="tt">講者「深信」one-shot 與三個 phase 的品質完全不同，沒有給出比較的資料。</span><sup class="n-ref" data-anchors="p0087"><a class="fn" href="#p0087" data-ref="p0087" title="原文 p0087">p0087</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0076"><span class="n-tag ask">需外部核對</span><span class="tt">需另行查證：Groq 上 Whisper 的免費額度，以及「30 分鐘以內的素材幾乎不用花錢」是否仍成立。</span><sup class="n-ref" data-anchors="p0076"><a class="fn" href="#p0076" data-ref="p0076" title="原文 p0076">p0076</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0095"><span class="n-tag ask">講者保留語氣</span><span class="tt">講者說 AI 如果只讀狀態欄，就會整理成全部已決定；這是假設的情境，實際是否發生未說明。</span><sup class="n-ref" data-anchors="p0095"><a class="fn" href="#p0095" data-ref="p0095" title="原文 p0095">p0095</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li><li data-refs="p0081 p0093"><span class="n-tag ask">沒給依據</span><span class="tt">劃分「確定性的工作」與「需要判斷的工作」的標準，講者沒有說明。</span><sup class="n-ref" data-anchors="p0081 p0093"><a class="fn" href="#p0081" data-ref="p0081" title="原文 p0081">p0081</a><span class="sep">,</span><a class="fn" href="#p0093" data-ref="p0093" title="原文 p0093">p0093</a></sup><span class="acts"><button type="button" class="t-show">標出原文</button><button type="button" class="t-ask">問 Claude</button></span></li></ul></details></div>
+<div class="pane" id="pane-claims" role="tabpanel" hidden><div class="tools">
+<input type="search" id="q" placeholder="搜尋主張或原文" aria-label="搜尋主張或原文">
+<div class="chips"><button type="button" data-f="" class="on">全部（89）</button><button type="button" data-f="claim">主張（59）</button><button type="button" data-f="condition">條件（8）</button><button type="button" data-f="exception">例外（2）</button><button type="button" data-f="step">步驟（12）</button><button type="button" data-f="number">數字（8）</button></div>
+<div class="count" id="count"></div></div><ol id="claims"><li data-type="claim" data-anchors="p0001" tabindex="0"><span class="n-tag type">主張</span><span class="ct">是在營建產業，也就是大家認識的超傳統產業，進步慢、轉動不易</span><sup class="n-ref" data-anchors="p0001"><a class="fn" href="#p0001" data-ref="p0001" title="原文 p0001">p0001</a></sup></li><li data-type="claim" data-anchors="p0003" tabindex="0"><span class="n-tag type">主張</span><span class="ct">不少人已經在用 AI 記錄對話，產生逐字稿、整理重點以外，進而開始讓 AI 有生產的能力</span><sup class="n-ref" data-anchors="p0003"><a class="fn" href="#p0003" data-ref="p0003" title="原文 p0003">p0003</a></sup></li><li data-type="claim" data-anchors="p0004" tabindex="0"><span class="n-tag type">主張</span><span class="ct">說話是人，而聽話的現在有人與 AI。</span><sup class="n-ref" data-anchors="p0004"><a class="fn" href="#p0004" data-ref="p0004" title="原文 p0004">p0004</a></sup></li><li data-type="number" data-anchors="p0004" tabindex="0"><span class="n-tag type">數字</span><span class="ct">一份我使用將近一年的逐字稿工具好學生筆記</span><sup class="n-ref" data-anchors="p0004"><a class="fn" href="#p0004" data-ref="p0004" title="原文 p0004">p0004</a></sup></li><li data-type="condition" data-anchors="p0006" tabindex="0"><span class="n-tag type">條件</span><span class="ct">如果這句話是對你說的，現在可以往下做嗎？</span><sup class="n-ref" data-anchors="p0006"><a class="fn" href="#p0006" data-ref="p0006" title="原文 p0006">p0006</a></sup></li><li data-type="claim" data-anchors="p0007" tabindex="0"><span class="n-tag type">主張</span><span class="ct">兩個人都可能認為自己聽懂了</span><sup class="n-ref" data-anchors="p0007"><a class="fn" href="#p0007" data-ref="p0007" title="原文 p0007">p0007</a></sup></li><li data-type="claim" data-anchors="p0008" tabindex="0"><span class="n-tag type">主張</span><span class="ct">中性的 AI 在語意上的加權預測後，可能會整理成對方已同意，文字很通順，卻可能刪掉了保留條件</span><sup class="n-ref" data-anchors="p0008"><a class="fn" href="#p0008" data-ref="p0008" title="原文 p0008">p0008</a></sup></li><li data-type="condition" data-anchors="p0010" tabindex="0"><span class="n-tag type">條件</span><span class="ct">如果這些資訊沒有留下，不能因為摘要寫得肯定，就做出肯定的判斷</span><sup class="n-ref" data-anchors="p0010"><a class="fn" href="#p0010" data-ref="p0010" title="原文 p0010">p0010</a></sup></li><li data-type="claim" data-anchors="p0011" tabindex="0"><span class="n-tag type">主張</span><span class="ct">而更重要的關鍵是，在場的人是誰，成員的人數與溝通間的關係為何，一對一、一對多</span><sup class="n-ref" data-anchors="p0011"><a class="fn" href="#p0011" data-ref="p0011" title="原文 p0011">p0011</a></sup></li><li data-type="claim" data-anchors="p0015" tabindex="0"><span class="n-tag type">主張</span><span class="ct">這些線索可以提醒我追問，但不能直接當作答案</span><sup class="n-ref" data-anchors="p0015"><a class="fn" href="#p0015" data-ref="p0015" title="原文 p0015">p0015</a></sup></li><li data-type="condition" data-anchors="p0016" tabindex="0"><span class="n-tag type">條件</span><span class="ct">當對話變成逐字稿或摘要，原本靠雙方理解的部分不一定跟著進入資料</span><sup class="n-ref" data-anchors="p0016"><a class="fn" href="#p0016" data-ref="p0016" title="原文 p0016">p0016</a></sup></li><li data-type="step" data-anchors="p0017" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">導入 AI 時，我會先問，它拿到的是哪一段往來、哪種媒介，以及還缺哪些背景。接著再把句子放回說話的人與組織裡</span><sup class="n-ref" data-anchors="p0017"><a class="fn" href="#p0017" data-ref="p0017" title="原文 p0017">p0017</a></sup></li><li data-type="exception" data-anchors="p0019" tabindex="0"><span class="n-tag type">例外</span><span class="ct">但這不代表知道職稱，就能推算他真正的意思</span><sup class="n-ref" data-anchors="p0019"><a class="fn" href="#p0019" data-ref="p0019" title="原文 p0019">p0019</a></sup></li><li data-type="claim" data-anchors="p0019" tabindex="0"><span class="n-tag type">主張</span><span class="ct">職稱最多提醒我這個人可能負責哪一段工作</span><sup class="n-ref" data-anchors="p0019"><a class="fn" href="#p0019" data-ref="p0019" title="原文 p0019">p0019</a></sup></li><li data-type="condition" data-anchors="p0020" tabindex="0"><span class="n-tag type">條件</span><span class="ct">如果前面還有一句等資料補齊，省略這一句，就會改變後面那句話的使用方式</span><sup class="n-ref" data-anchors="p0020"><a class="fn" href="#p0020" data-ref="p0020" title="原文 p0020">p0020</a></sup></li><li data-type="claim" data-anchors="p0021" tabindex="0"><span class="n-tag type">主張</span><span class="ct">有些保留是禮貌，有些保留則代表條件還沒滿足</span><sup class="n-ref" data-anchors="p0021"><a class="fn" href="#p0021" data-ref="p0021" title="原文 p0021">p0021</a></sup></li><li data-type="claim" data-anchors="p0022" tabindex="0"><span class="n-tag type">主張</span><span class="ct">AI 可以幫忙列出待確認的地方，但不能把禮貌用語自動翻譯成同意，或把組織層級直接翻譯成授權</span><sup class="n-ref" data-anchors="p0022"><a class="fn" href="#p0022" data-ref="p0022" title="原文 p0022">p0022</a></sup></li><li data-type="claim" data-anchors="p0024" tabindex="0"><span class="n-tag type">主張</span><span class="ct">我們曾經以為，調用過去的資料集後，AI 就可以協助製作出類似的結果，並且可以直接交付</span><sup class="n-ref" data-anchors="p0024"><a class="fn" href="#p0024" data-ref="p0024" title="原文 p0024">p0024</a></sup></li><li data-type="claim" data-anchors="p0025" tabindex="0"><span class="n-tag type">主張</span><span class="ct">我們仍舊需要如同過去，把獲得的結果再次檢查，看圖說、讀文字報告、檢查表單數據</span><sup class="n-ref" data-anchors="p0025"><a class="fn" href="#p0025" data-ref="p0025" title="原文 p0025">p0025</a></sup></li><li data-type="claim" data-anchors="p0026" tabindex="0"><span class="n-tag type">主張</span><span class="ct">利用檢查的重複訓練，累積確保成果品質與可使用的專案知識</span><sup class="n-ref" data-anchors="p0026"><a class="fn" href="#p0026" data-ref="p0026" title="原文 p0026">p0026</a></sup></li><li data-type="condition" data-anchors="p0028" tabindex="0"><span class="n-tag type">條件</span><span class="ct">如果能連到變更原因、討論紀錄與原始依據，我們才更有機會理解它的意思</span><sup class="n-ref" data-anchors="p0028"><a class="fn" href="#p0028" data-ref="p0028" title="原文 p0028">p0028</a></sup></li><li data-type="claim" data-anchors="p0030" tabindex="0"><span class="n-tag type">主張</span><span class="ct">資料整理好，不代表判斷就一定正確，需要確認的事仍然要確認</span><sup class="n-ref" data-anchors="p0030"><a class="fn" href="#p0030" data-ref="p0030" title="原文 p0030">p0030</a></sup></li><li data-type="claim" data-anchors="p0031" tabindex="0"><span class="n-tag type">主張</span><span class="ct">在 AI 整理對話之前，我想先知道：我們給了它什麼，還有哪些是它沒有拿到的</span><sup class="n-ref" data-anchors="p0031"><a class="fn" href="#p0031" data-ref="p0031" title="原文 p0031">p0031</a></sup></li><li data-type="claim" data-anchors="p0032" tabindex="0"><span class="n-tag type">主張</span><span class="ct">系統的規範要求不允許任何形式的重點與摘要</span><sup class="n-ref" data-anchors="p0032"><a class="fn" href="#p0032" data-ref="p0032" title="原文 p0032">p0032</a></sup></li><li data-type="claim" data-anchors="p0034" tabindex="0"><span class="n-tag type">主張</span><span class="ct">好學生筆記會整理成通順的閱讀稿，我們可以在完整的文字 context 上去理解講者怎麼斷句、為什麼改口</span><sup class="n-ref" data-anchors="p0034"><a class="fn" href="#p0034" data-ref="p0034" title="原文 p0034">p0034</a></sup></li><li data-type="claim" data-anchors="p0035" tabindex="0"><span class="n-tag type">主張</span><span class="ct">當然最直接的還是要回到音訊或帶時間的紀錄，但閱讀文字稿可以大幅降低我們理解上下文的時間</span><sup class="n-ref" data-anchors="p0035"><a class="fn" href="#p0035" data-ref="p0035" title="原文 p0035">p0035</a></sup></li><li data-type="claim" data-anchors="p0036" tabindex="0"><span class="n-tag type">主張</span><span class="ct">這也成為了好學生筆記升級成為好學生矩陣的原因</span><sup class="n-ref" data-anchors="p0036"><a class="fn" href="#p0036" data-ref="p0036" title="原文 p0036">p0036</a></sup></li><li data-type="claim" data-anchors="p0037" tabindex="0"><span class="n-tag type">主張</span><span class="ct">所謂的學習的結果是能夠使用學程的能力</span><sup class="n-ref" data-anchors="p0037"><a class="fn" href="#p0037" data-ref="p0037" title="原文 p0037">p0037</a></sup></li><li data-type="claim" data-anchors="p0038" tabindex="0"><span class="n-tag type">主張</span><span class="ct">連動其他的習得知識並用，最後是湧現出新的技術可能</span><sup class="n-ref" data-anchors="p0038"><a class="fn" href="#p0038" data-ref="p0038" title="原文 p0038">p0038</a></sup></li><li data-type="claim" data-anchors="p0039" tabindex="0"><span class="n-tag type">主張</span><span class="ct">企業在提供 AI 工具時，需要思考的脈絡，並非只是生成能夠產出，還包含是否能夠在產出的基礎上，協助人類建立理解的上下文</span><sup class="n-ref" data-anchors="p0039"><a class="fn" href="#p0039" data-ref="p0039" title="原文 p0039">p0039</a></sup></li><li data-type="claim" data-anchors="p0040" tabindex="0"><span class="n-tag type">主張</span><span class="ct">context 的完整性，是不管在什麼時間點都是最為重要的學習要素</span><sup class="n-ref" data-anchors="p0040"><a class="fn" href="#p0040" data-ref="p0040" title="原文 p0040">p0040</a></sup></li><li data-type="number" data-anchors="p0041" tabindex="0"><span class="n-tag type">數字</span><span class="ct">我用兩個向度組成這張圖。橫軸，左邊是完整，右邊是重點；縱軸，上面是初學，下面是精通。四個格子依照象限的順序編號</span><sup class="n-ref" data-anchors="p0041"><a class="fn" href="#p0041" data-ref="p0041" title="原文 p0041">p0041</a></sup></li><li data-type="claim" data-anchors="p0042" tabindex="0"><span class="n-tag type">主張</span><span class="ct">第一象限，右上，重點＋初學，建立入口。第二象限，左上，完整＋初學，理解過程。第三象限，左下，完整＋精通，追查與檢核。第四象限，右下，重點＋精通，交換與判斷</span><sup class="n-ref" data-anchors="p0042"><a class="fn" href="#p0042" data-ref="p0042" title="原文 p0042">p0042</a></sup></li><li data-type="claim" data-anchors="p0043" tabindex="0"><span class="n-tag type">主張</span><span class="ct">它要求在學習階段能讀到完整論述，而不只是別人篩選後的幾個結論</span><sup class="n-ref" data-anchors="p0043"><a class="fn" href="#p0043" data-ref="p0043" title="原文 p0043">p0043</a></sup></li><li data-type="number" data-anchors="p0044" tabindex="0"><span class="n-tag type">數字</span><span class="ct">在將近百場的活動紀錄中，在製作為成果的過程中，始終有一條明確的規則：完整保留原文</span><sup class="n-ref" data-anchors="p0044"><a class="fn" href="#p0044" data-ref="p0044" title="原文 p0044">p0044</a></sup></li><li data-type="claim" data-anchors="p0045" tabindex="0"><span class="n-tag type">主張</span><span class="ct">把過程拿掉，我可能記住答案，卻不知道它如何成立</span><sup class="n-ref" data-anchors="p0045"><a class="fn" href="#p0045" data-ref="p0045" title="原文 p0045">p0045</a></sup></li><li data-type="claim" data-anchors="p0046" tabindex="0"><span class="n-tag type">主張</span><span class="ct">另一條規則是：就地補充、不改原文</span><sup class="n-ref" data-anchors="p0046"><a class="fn" href="#p0046" data-ref="p0046" title="原文 p0046">p0046</a></sup></li><li data-type="number" data-anchors="p0050" tabindex="0"><span class="n-tag type">數字</span><span class="ct">就在開發筆記專案的前半年來，我把完整和摘要想成一種衝突</span><sup class="n-ref" data-anchors="p0050"><a class="fn" href="#p0050" data-ref="p0050" title="原文 p0050">p0050</a></sup></li><li data-type="claim" data-anchors="p0052" tabindex="0"><span class="n-tag type">主張</span><span class="ct">缺乏閱讀力培養的過程中，重點是僅能提供給已經有至少讀過一次原文的人來作為出發</span><sup class="n-ref" data-anchors="p0052"><a class="fn" href="#p0052" data-ref="p0052" title="原文 p0052">p0052</a></sup></li><li data-type="claim" data-anchors="p0053" tabindex="0"><span class="n-tag type">主張</span><span class="ct">對於還沒有讀過原文的人，摘要會直接成為理解的誤區</span><sup class="n-ref" data-anchors="p0053"><a class="fn" href="#p0053" data-ref="p0053" title="原文 p0053">p0053</a></sup></li><li data-type="condition" data-anchors="p0053" tabindex="0"><span class="n-tag type">條件</span><span class="ct">如果沒有完整脈絡的理解，重點也會成為誤區</span><sup class="n-ref" data-anchors="p0053"><a class="fn" href="#p0053" data-ref="p0053" title="原文 p0053">p0053</a></sup></li><li data-type="claim" data-anchors="p0054" tabindex="0"><span class="n-tag type">主張</span><span class="ct">一個先有完整脈絡、才能產生重點的兩部曲流程</span><sup class="n-ref" data-anchors="p0054"><a class="fn" href="#p0054" data-ref="p0054" title="原文 p0054">p0054</a></sup></li><li data-type="condition" data-anchors="p0059" tabindex="0"><span class="n-tag type">條件</span><span class="ct">一旦重點區塊被一次一次地強化以後，初學者會慢慢變成熟悉這個議題的人</span><sup class="n-ref" data-anchors="p0059"><a class="fn" href="#p0059" data-ref="p0059" title="原文 p0059">p0059</a></sup></li><li data-type="claim" data-anchors="p0060" tabindex="0"><span class="n-tag type">主張</span><span class="ct">這時候，他看到一張卡的反應，就不再是「我懂了」，而是「為什麼」</span><sup class="n-ref" data-anchors="p0060"><a class="fn" href="#p0060" data-ref="p0060" title="原文 p0060">p0060</a></sup></li><li data-type="claim" data-anchors="p0063" tabindex="0"><span class="n-tag type">主張</span><span class="ct">越資深的人越需要細節，因為他要負責檢核與追查，要為一個結論負責</span><sup class="n-ref" data-anchors="p0063"><a class="fn" href="#p0063" data-ref="p0063" title="原文 p0063">p0063</a></sup></li><li data-type="claim" data-anchors="p0064" tabindex="0"><span class="n-tag type">主張</span><span class="ct">對專家來說，完整不是給初學者的入門，而是判斷的依據</span><sup class="n-ref" data-anchors="p0064"><a class="fn" href="#p0064" data-ref="p0064" title="原文 p0064">p0064</a></sup></li><li data-type="claim" data-anchors="p0067" tabindex="0"><span class="n-tag type">主張</span><span class="ct">重點卡透過 tag 與其他場次的卡片產生連結</span><sup class="n-ref" data-anchors="p0067"><a class="fn" href="#p0067" data-ref="p0067" title="原文 p0067">p0067</a></sup></li><li data-type="number" data-anchors="p0070" tabindex="0"><span class="n-tag type">數字</span><span class="ct">2022 年 Google 的研究團隊發現，要求大型模型把推理的步驟一步一步寫出來，解數學與推理問題的能力會大幅提升</span><sup class="n-ref" data-anchors="p0070"><a class="fn" href="#p0070" data-ref="p0070" title="原文 p0070">p0070</a></sup></li><li data-type="exception" data-anchors="p0071" tabindex="0"><span class="n-tag type">例外</span><span class="ct">同樣的方法用在小模型上幫助很有限，甚至會寫出看似通順、其實不合邏輯的推理</span><sup class="n-ref" data-anchors="p0071"><a class="fn" href="#p0071" data-ref="p0071" title="原文 p0071">p0071</a></sup></li><li data-type="claim" data-anchors="p0072" tabindex="0"><span class="n-tag type">主張</span><span class="ct">我認為人的學習也是一樣。卡片之間的連結，要建立在第三象限累積的深度上，才會湧現出原本任何一張卡片上都沒有寫的東西</span><sup class="n-ref" data-anchors="p0072"><a class="fn" href="#p0072" data-ref="p0072" title="原文 p0072">p0072</a></sup></li><li data-type="claim" data-anchors="p0073" tabindex="0"><span class="n-tag type">主張</span><span class="ct">沒有深度就去連結，就像小模型寫出的推理，看起來很通順，但兩張卡可能只是用了同一個名詞，講的根本不是同一件事</span><sup class="n-ref" data-anchors="p0073"><a class="fn" href="#p0073" data-ref="p0073" title="原文 p0073">p0073</a></sup></li><li data-type="step" data-anchors="p0074" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">當我們扎實的完成第二象限的完整閱讀後，再前往一、三象限的強化與深化</span><sup class="n-ref" data-anchors="p0074"><a class="fn" href="#p0074" data-ref="p0074" title="原文 p0074">p0074</a></sup></li><li data-type="step" data-anchors="p0076" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">第一步，是把聲音變成帶時間軸的字幕檔，也就是 SRT。我用的是 Groq 上的 Whisper 模型</span><sup class="n-ref" data-anchors="p0076"><a class="fn" href="#p0076" data-ref="p0076" title="原文 p0076">p0076</a></sup></li><li data-type="number" data-anchors="p0076" tabindex="0"><span class="n-tag type">數字</span><span class="ct">30 分鐘以內的素材幾乎不用花錢</span><sup class="n-ref" data-anchors="p0076"><a class="fn" href="#p0076" data-ref="p0076" title="原文 p0076">p0076</a></sup></li><li data-type="claim" data-anchors="p0077" tabindex="0"><span class="n-tag type">主張</span><span class="ct">選對工具，往往比寫好 prompt 更重要</span><sup class="n-ref" data-anchors="p0077"><a class="fn" href="#p0077" data-ref="p0077" title="原文 p0077">p0077</a></sup></li><li data-type="step" data-anchors="p0078" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">轉錄前，先給它一段 context，例如講者姓名、專有名詞，辨識的錯字會少很多</span><sup class="n-ref" data-anchors="p0078"><a class="fn" href="#p0078" data-ref="p0078" title="原文 p0078">p0078</a></sup></li><li data-type="claim" data-anchors="p0078" tabindex="0"><span class="n-tag type">主張</span><span class="ct">這段 context 有長度上限，要挑最關鍵的放</span><sup class="n-ref" data-anchors="p0078"><a class="fn" href="#p0078" data-ref="p0078" title="原文 p0078">p0078</a></sup></li><li data-type="step" data-anchors="p0079" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">第二步，是翻譯成雙軌字幕，我用 Google 的 Gemini Flash</span><sup class="n-ref" data-anchors="p0079"><a class="fn" href="#p0079" data-ref="p0079" title="原文 p0079">p0079</a></sup></li><li data-type="claim" data-anchors="p0079" tabindex="0"><span class="n-tag type">主張</span><span class="ct">時間軸不能交給 LLM，它很容易在翻譯的同時，順手把時間軸改掉、合併或漏掉</span><sup class="n-ref" data-anchors="p0079"><a class="fn" href="#p0079" data-ref="p0079" title="原文 p0079">p0079</a></sup></li><li data-type="step" data-anchors="p0080" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">時間軸先由一支 Python 腳本完整保留，LLM 只負責翻譯文字，翻完再由腳本把文字放回原本的時間軸上</span><sup class="n-ref" data-anchors="p0080"><a class="fn" href="#p0080" data-ref="p0080" title="原文 p0080">p0080</a></sup></li><li data-type="claim" data-anchors="p0081" tabindex="0"><span class="n-tag type">主張</span><span class="ct">確定性的工作交給工具，需要判斷的工作才交給 LLM</span><sup class="n-ref" data-anchors="p0081"><a class="fn" href="#p0081" data-ref="p0081" title="原文 p0081">p0081</a></sup></li><li data-type="step" data-anchors="p0082" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">第三步要做的事剛好相反，把時間軸拿掉，讓一段一段被切開的字幕，重新連成有前後文的文章</span><sup class="n-ref" data-anchors="p0082"><a class="fn" href="#p0082" data-ref="p0082" title="原文 p0082">p0082</a></sup></li><li data-type="claim" data-anchors="p0083" tabindex="0"><span class="n-tag type">主張</span><span class="ct">講者說話時的斷句、停頓、思考、改口，在字幕裡全部被切成一格一格，但在文章裡，標點就是語境</span><sup class="n-ref" data-anchors="p0083"><a class="fn" href="#p0083" data-ref="p0083" title="原文 p0083">p0083</a></sup></li><li data-type="claim" data-anchors="p0085" tabindex="0"><span class="n-tag type">主張</span><span class="ct">全形化這種機械的事交給工具，標點放在哪裡，則由我和 AI 一起判斷</span><sup class="n-ref" data-anchors="p0085"><a class="fn" href="#p0085" data-ref="p0085" title="原文 p0085">p0085</a></sup></li><li data-type="claim" data-anchors="p0086" tabindex="0"><span class="n-tag type">主張</span><span class="ct">承接只能插在句子之間，不能改寫或刪掉任何一句原話</span><sup class="n-ref" data-anchors="p0086"><a class="fn" href="#p0086" data-ref="p0086" title="原文 p0086">p0086</a></sup></li><li data-type="number" data-anchors="p0087" tabindex="0"><span class="n-tag type">數字</span><span class="ct">我深信，這種 one-shot 的結果，和拆成三個 phase、每一步都有明確邊界做出來的品質，是完全不同的</span><sup class="n-ref" data-anchors="p0087"><a class="fn" href="#p0087" data-ref="p0087" title="原文 p0087">p0087</a></sup></li><li data-type="claim" data-anchors="p0088" tabindex="0"><span class="n-tag type">主張</span><span class="ct">one-shot 為了通順，很可能就把這個你們再看看、原則上應該可以，潤成了對方同意</span><sup class="n-ref" data-anchors="p0088"><a class="fn" href="#p0088" data-ref="p0088" title="原文 p0088">p0088</a></sup></li><li data-type="claim" data-anchors="p0090" tabindex="0"><span class="n-tag type">主張</span><span class="ct">全文完成以後，後面的階段就是一層一層地加上去，而且每一層都不動原文</span><sup class="n-ref" data-anchors="p0090"><a class="fn" href="#p0090" data-ref="p0090" title="原文 p0090">p0090</a></sup></li><li data-type="step" data-anchors="p0091" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">第四步是名詞補充，遇到陌生的術語，在旁邊加上說明，給對內容不熟的人</span><sup class="n-ref" data-anchors="p0091"><a class="fn" href="#p0091" data-ref="p0091" title="原文 p0091">p0091</a></sup></li><li data-type="step" data-anchors="p0091" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">第五步是立場筆記，用我的身份，例如工程師、建築師，在原文旁邊寫下我的視角與類比</span><sup class="n-ref" data-anchors="p0091"><a class="fn" href="#p0091" data-ref="p0091" title="原文 p0091">p0091</a></sup></li><li data-type="step" data-anchors="p0092" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">第一象限，建立入口，把全文整理成重點卡，每張都連回原文段落</span><sup class="n-ref" data-anchors="p0092"><a class="fn" href="#p0092" data-ref="p0092" title="原文 p0092">p0092</a></sup></li><li data-type="claim" data-anchors="p0093" tabindex="0"><span class="n-tag type">主張</span><span class="ct">工具負責轉錄、時間軸、全形化、合併段落與檢查字數；AI 負責翻譯、標點判斷、前後承接、名詞說明與重點卡；人負責決定這次要做到哪一步、確認專有名詞，以及最後的判斷</span><sup class="n-ref" data-anchors="p0093"><a class="fn" href="#p0093" data-ref="p0093" title="原文 p0093">p0093</a></sup></li><li data-type="claim" data-anchors="p0094" tabindex="0"><span class="n-tag type">主張</span><span class="ct">我在 Revit 專案裡記下過一個負面教材：追蹤系統的已結案，不等於設計上的已決定</span><sup class="n-ref" data-anchors="p0094"><a class="fn" href="#p0094" data-ref="p0094" title="原文 p0094">p0094</a></sup></li><li data-type="claim" data-anchors="p0094" tabindex="0"><span class="n-tag type">主張</span><span class="ct">狀態欄寫著 Closed，打開回覆卻是原則同意，但須等後續資料確認</span><sup class="n-ref" data-anchors="p0094"><a class="fn" href="#p0094" data-ref="p0094" title="原文 p0094">p0094</a></sup></li><li data-type="condition" data-anchors="p0095" tabindex="0"><span class="n-tag type">條件</span><span class="ct">AI 如果只讀狀態欄，就會整理成全部已決定</span><sup class="n-ref" data-anchors="p0095"><a class="fn" href="#p0095" data-ref="p0095" title="原文 p0095">p0095</a></sup></li><li data-type="claim" data-anchors="p0095" tabindex="0"><span class="n-tag type">主張</span><span class="ct">這段回覆能支持哪一步，要回到完整的回覆、權責，以及條件是否真的滿足，這一層確認不能省</span><sup class="n-ref" data-anchors="p0095"><a class="fn" href="#p0095" data-ref="p0095" title="原文 p0095">p0095</a></sup></li><li data-type="number" data-anchors="p0096" tabindex="0"><span class="n-tag type">數字</span><span class="ct">不是一個開源倉庫等著大家去 clone，而是三個可以馬上用的原則</span><sup class="n-ref" data-anchors="p0096"><a class="fn" href="#p0096" data-ref="p0096" title="原文 p0096">p0096</a></sup></li><li data-type="claim" data-anchors="p0097" tabindex="0"><span class="n-tag type">主張</span><span class="ct">把任務拆成 phase，每個 phase 只做一件事</span><sup class="n-ref" data-anchors="p0097"><a class="fn" href="#p0097" data-ref="p0097" title="原文 p0097">p0097</a></sup></li><li data-type="claim" data-anchors="p0097" tabindex="0"><span class="n-tag type">主張</span><span class="ct">確定性的工作給工具，判斷的工作給 AI，最後的決定給人</span><sup class="n-ref" data-anchors="p0097"><a class="fn" href="#p0097" data-ref="p0097" title="原文 p0097">p0097</a></sup></li><li data-type="claim" data-anchors="p0097" tabindex="0"><span class="n-tag type">主張</span><span class="ct">每一個 phase 的產物都留下來，它們本身就是學習的材料</span><sup class="n-ref" data-anchors="p0097"><a class="fn" href="#p0097" data-ref="p0097" title="原文 p0097">p0097</a></sup></li><li data-type="claim" data-anchors="p0098" tabindex="0"><span class="n-tag type">主張</span><span class="ct">說話的是人，而聽話的現在有人也有 AI</span><sup class="n-ref" data-anchors="p0098"><a class="fn" href="#p0098" data-ref="p0098" title="原文 p0098">p0098</a></sup></li><li data-type="step" data-anchors="p0099" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">我現在不會先請 AI 把它翻成同意或不同意，而是請它保留原話、整理已知的條件、指出還沒確定的部分，再協助我草擬追問</span><sup class="n-ref" data-anchors="p0099"><a class="fn" href="#p0099" data-ref="p0099" title="原文 p0099">p0099</a></sup></li><li data-type="step" data-anchors="p0099" tabindex="0"><span class="n-tag type">步驟</span><span class="ct">再看看，需要補充哪些事項？由誰確認？確認之後，可以進行哪一步？</span><sup class="n-ref" data-anchors="p0099"><a class="fn" href="#p0099" data-ref="p0099" title="原文 p0099">p0099</a></sup></li><li data-type="claim" data-anchors="p0099" tabindex="0"><span class="n-tag type">主張</span><span class="ct">人的意思由人確認，AI 協助把證據、缺口與往來整理得容易使用</span><sup class="n-ref" data-anchors="p0099"><a class="fn" href="#p0099" data-ref="p0099" title="原文 p0099">p0099</a></sup></li><li data-type="claim" data-anchors="p0100" tabindex="0"><span class="n-tag type">主張</span><span class="ct">我幻想未來的 AI，能陪我們把一件事情的來龍去脈接起來，讓不同背景的人都能理解</span><sup class="n-ref" data-anchors="p0100"><a class="fn" href="#p0100" data-ref="p0100" title="原文 p0100">p0100</a></sup></li><li data-type="claim" data-anchors="p0101" tabindex="0"><span class="n-tag type">主張</span><span class="ct">想像有一天，一位新同仁加入進行中的工程專案，他問：「我們當初為什麼這樣設計？」AI 能帶他看當時討論過哪些方案、客戶在意什麼，以及最後採用這個方案的原因</span><sup class="n-ref" data-anchors="p0101"><a class="fn" href="#p0101" data-ref="p0101" title="原文 p0101">p0101</a></sup></li><li data-type="claim" data-anchors="p0102" tabindex="0"><span class="n-tag type">主張</span><span class="ct">同一份累積下來的資料，因為使用者與任務不同，可以提供不同的讀法</span><sup class="n-ref" data-anchors="p0102"><a class="fn" href="#p0102" data-ref="p0102" title="原文 p0102">p0102</a></sup></li><li data-type="claim" data-anchors="p0102" tabindex="0"><span class="n-tag type">主張</span><span class="ct">找不到紀錄，就說清楚缺了什麼，再由人補上與確認</span><sup class="n-ref" data-anchors="p0102"><a class="fn" href="#p0102" data-ref="p0102" title="原文 p0102">p0102</a></sup></li><li data-type="claim" data-anchors="p0103" tabindex="0"><span class="n-tag type">主張</span><span class="ct">這是我對未來的期待，還需要在實際工作裡一步步完成</span><sup class="n-ref" data-anchors="p0103"><a class="fn" href="#p0103" data-ref="p0103" title="原文 p0103">p0103</a></sup></li></ol></div></aside>
+<div id="selbar" role="toolbar" aria-label="對選取文字"><button type="button" data-a="note">註記</button><button type="button" data-a="claude">問 Claude</button><button type="button" data-a="google">Google</button><button type="button" data-a="copy">複製引文</button></div></div><footer class="n-next ui"><h2>讀完之後</h2><ul><li><a href="ii.html"><b>II</b> 理解過程</a><span>查完了，回到原文順著讀</span></li><li><a href="iv.html"><b>IV</b> 交換與判斷</a><span>想看這個題目在其他場次怎麼講</span></li></ul></footer><script>const CTX={"key": "n.iii.talk-context", "title": "說話與聽話", "speaker": "江碩濤", "run": "talk-context"};
+// III 追查與檢核：反白 → 註記／問 Claude／Google；註記存在瀏覽器（localStorage），不改原文。
+// CTX 由 render_ii_iii.py 注入：{key, title, speaker, run}
+(() => {
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const para = id => document.getElementById(id);
+const ptext = id => (para(id)?.textContent || '').replace(/^p\d{4}/, '').trim();
+let A = []; try { A = JSON.parse(localStorage.getItem(CTX.key) || '[]'); } catch (e) { A = []; }
+const save = () => { localStorage.setItem(CTX.key, JSON.stringify(A)); $('#ann-n').textContent = A.length; $('#ann-empty').hidden = A.length > 0; };
+
+// ── 分頁 ──
+const tabs = $$('.tabs button');
+function tab(name) { tabs.forEach(b => b.setAttribute('aria-selected', b.dataset.p === name)); $$('.pane').forEach(p => p.hidden = p.id !== 'pane-' + name); }
+tabs.forEach(b => b.onclick = () => tab(b.dataset.p));
+
+// ── 研究簡報（帶出去的文字） ──
+function brief(quote, pid, extra) {
+  const ctx = ptext(pid).slice(0, 320);
+  return `我正在學習〈${CTX.title}〉（${CTX.speaker}）。\n講者原話（段落 ${pid}）：「${quote}」\n上下文：「${ctx}」\n` +
+    (extra ? `我想深入的點：${extra}\n` : '') +
+    `\n請幫我往外查這一點：\n1. 這句話牽涉的概念或技術是什麼，用一兩句說明。\n2. 可查證的外部資料：每一點附網址與發布日期，優先官方文件與原始來源。\n3. 外部資料和講者說法是一致、補充，還是矛盾？\n查不到就直接說查不到，不要推測。`;
+}
+const claude = q => window.open('https://claude.ai/new?q=' + encodeURIComponent(q), '_blank', 'noopener');
+const google = q => window.open('https://www.google.com/search?q=' + encodeURIComponent(q.slice(0, 80)), '_blank', 'noopener');
+
+// ── 在原文標出註記 ──
+function markOne(a) {
+  const p = para(a.pid); if (!p || $(`mark[data-id="${a.id}"]`)) return;
+  const w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT); let n;
+  while ((n = w.nextNode())) {
+    if (n.parentElement.closest('.pid,.aud-tag')) continue;
+    const i = n.data.indexOf(a.quote); if (i < 0) continue;
+    const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + a.quote.length);
+    const m = document.createElement('mark'); m.className = 'ann-m'; m.dataset.id = a.id; m.title = '我的註記';
+    r.surroundContents(m); m.onclick = () => openAnn(a.id); return;
+  }
+  p.classList.add('has-ann');   // 跨粗體等標籤時：整段標示
+}
+function unmark(id) { const m = $(`mark[data-id="${id}"]`); if (m) m.replaceWith(...m.childNodes); }
+
+// ── 註記卡 ──
+const REL = ['未定', '一致', '補充', '矛盾'];
+function card(a) {
+  const d = new Date(a.t);
+  return `<div class="ann" id="ann-${a.id}"><blockquote data-pid="${a.pid}">「${esc(a.quote)}」</blockquote>
+<div class="src">原文 ${a.pid}，${d.getMonth() + 1}/${d.getDate()} 記</div>
+<label>我的筆記</label><textarea data-f="note" placeholder="為什麼在意這句？想查什麼？">${esc(a.note || '')}</textarea>
+<label>查回來的重點（貼上）</label><textarea data-f="found" placeholder="從 Claude 或搜尋結果貼回來的重點">${esc(a.found || '')}</textarea>
+<label>來源網址</label><input data-f="url" type="url" value="${esc(a.url || '')}" placeholder="https://">
+<label>和講者說法的關係</label><select data-f="rel">${REL.map(r => `<option${(a.rel || '未定') === r ? ' selected' : ''}>${r}</option>`).join('')}</select>
+<div class="row"><button type="button" data-do="claude">問 Claude</button><button type="button" data-do="google">Google</button><button type="button" data-do="del">刪除</button></div></div>`;
+}
+function render() {
+  $('#anns').innerHTML = A.slice().reverse().map(card).join('');
+  $$('#anns .ann').forEach(el => {
+    const a = A.find(x => 'ann-' + x.id === el.id);
+    $$('[data-f]', el).forEach(f => f.oninput = f.onchange = () => { a[f.dataset.f] = f.value; save(); });
+    $('blockquote', el).onclick = () => go(a.pid, a.id);
+    $$('[data-do]', el).forEach(b => b.onclick = () => {
+      if (b.dataset.do === 'claude') claude(brief(a.quote, a.pid, a.note));
+      if (b.dataset.do === 'google') google(a.quote);
+      if (b.dataset.do === 'del') { A = A.filter(x => x.id !== a.id); unmark(a.id); save(); render(); }
+    });
+  });
+  save();
+}
+function openAnn(id) { tab('notes'); const el = document.getElementById('ann-' + id); if (!el) return; el.scrollIntoView({block: 'nearest'}); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1200); }
+function go(pid, id) { const p = para(pid); if (!p) return; p.scrollIntoView({behavior: 'smooth', block: 'center'}); p.classList.add('hit'); setTimeout(() => p.classList.remove('hit'), 1600); }
+function add(quote, pid) { const a = {id: Date.now().toString(36), pid, quote, t: Date.now()}; A.push(a); markOne(a); render(); openAnn(a.id); return a; }
+
+// ── 反白工具列 ──
+const bar = $('#selbar'); let cur = null;
+function sel() {
+  const s = getSelection(); if (!s.rangeCount || s.isCollapsed) return null;
+  const r = s.getRangeAt(0), q = s.toString().replace(/\s+/g, ' ').trim();
+  const p1 = r.startContainer.parentElement?.closest('.text p[id]'), p2 = r.endContainer.parentElement?.closest('.text p[id]');
+  if (!q || q.length < 2 || !p1 || p1 !== p2) return null;    // 一次只取同一段內的文字
+  return {q, pid: p1.id, rect: r.getBoundingClientRect()};
+}
+function showBar() {
+  cur = sel(); if (!cur) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  const top = cur.rect.top - bar.offsetHeight - 8;
+  bar.style.top = (top < 60 ? cur.rect.bottom + 8 : top) + 'px';
+  bar.style.left = Math.max(8, Math.min(innerWidth - bar.offsetWidth - 8, cur.rect.left + cur.rect.width / 2 - bar.offsetWidth / 2)) + 'px';
+}
+document.addEventListener('mouseup', e => { if (!bar.contains(e.target)) setTimeout(showBar, 0); });
+document.addEventListener('keyup', e => { if (e.shiftKey || e.key === 'Escape') setTimeout(e.key === 'Escape' ? () => bar.style.display = 'none' : showBar, 0); });
+addEventListener('scroll', () => { bar.style.display = 'none'; }, {passive: true});
+$$('button', bar).forEach(b => b.onmousedown = e => e.preventDefault());
+$$('button', bar).forEach(b => b.onclick = () => {
+  if (!cur) return; const {q, pid} = cur;
+  if (b.dataset.a === 'note') add(q, pid);
+  if (b.dataset.a === 'claude') { add(q, pid); claude(brief(q, pid)); }
+  if (b.dataset.a === 'google') google(q);
+  if (b.dataset.a === 'copy') navigator.clipboard?.writeText(`「${q}」——${CTX.speaker}，〈${CTX.title}〉，原文 ${pid}`);
+  bar.style.display = 'none'; getSelection().removeAllRanges();
+});
+
+// ── 匯出（一次性的學習筆記；原文以 II 為準） ──
+$('#ann-export').onclick = () => {
+  const md = `# 註記：${CTX.title}\n\n> 一次性的學習筆記，原文以 ii.html 為準；外部資料只代表查到的來源，不是講者說的。\n\n` +
+    A.map(a => `## 「${a.quote}」\n\n- 原文：${a.pid}（${location.href.replace(/iii\.html.*/, 'ii.html')}#${a.pid}）\n- 我的筆記：${a.note || ''}\n- 查回來的重點：${(a.found || '').replace(/\n/g, ' ')}\n- 來源：${a.url || ''}\n- 和講者說法：${a.rel || '未定'}\n`).join('\n');
+  const u = URL.createObjectURL(new Blob([md], {type: 'text/markdown'}));
+  const l = Object.assign(document.createElement('a'), {href: u, download: `${CTX.run}-註記.md`}); l.click(); URL.revokeObjectURL(u);
+};
+$('#ann-clear').onclick = () => { if (!A.length) return; A.forEach(a => unmark(a.id)); $$('.has-ann').forEach(p => p.classList.remove('has-ann')); A = []; render(); };
+
+// ── 深挖題目 ──
+$$('.topics li').forEach(li => {
+  const refs = li.dataset.refs.split(' ').filter(Boolean);
+  $('.t-show', li).onclick = () => { $$('.text p.hit').forEach(p => p.classList.remove('hit')); refs.forEach(r => para(r)?.classList.add('hit')); para(refs[0])?.scrollIntoView({behavior: 'smooth', block: 'center'}); };
+  $('.t-ask', li).onclick = () => claude(brief(($('q', li)?.textContent || ptext(refs[0]).slice(0, 60)), refs[0] || '', $('.tt', li).textContent));
+});
+
+// ── 主張：搜尋＋篩選 ──
+const L = $$('#claims li'), P = $$('.text p[id]'); let f = '';
+function apply() {
+  if (!$('#q') || !L.length) return;
+  const q = $('#q').value.trim(); let n = 0;
+  L.forEach(li => { const ok = (!f || li.dataset.type === f) && (!q || li.textContent.includes(q)); li.hidden = !ok; n += ok; });
+  P.forEach(p => p.classList.toggle('hit', !!q && p.textContent.includes(q)));
+  const m = q ? P.filter(p => p.textContent.includes(q)).length : 0;
+  $('#count').textContent = `顯示 ${n} 條` + (q ? `；原文有 ${m} 段含「${q}」（已標亮）` : '');
+}
+$$('.chips button').forEach(b => b.onclick = () => { f = b.dataset.f; $$('.chips button').forEach(x => x.classList.toggle('on', x === b)); apply(); });
+if ($('#q')) $('#q').oninput = apply;
+L.forEach(li => li.onclick = ev => { if (ev.target.closest('a')) return; L.forEach(x => x.classList.toggle('on', x === li)); P.forEach(p => p.classList.remove('hit'));
+  const ids = li.dataset.anchors.split(' '); ids.forEach(i => para(i)?.classList.add('hit')); para(ids[0])?.scrollIntoView({behavior: 'smooth', block: 'center'}); });
+
+A.forEach(markOne); render(); apply(); tab(A.length ? 'notes' : 'topics');
+})();
+</script></main></body></html>

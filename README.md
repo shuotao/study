@@ -42,7 +42,7 @@
 在這個 repo 裡，這三句話不是口號，而是程式強制的規則：
 
 - 每一步有「閘門（gate）」，沒過就不能進下一步。
-- 每一個動作都寫進改不掉的紀錄（`ledger.jsonl`），事後可以回查。
+- 每一個動作都寫進可驗證的紀錄（`ledger.jsonl`），事後可以回查。
 
 ---
 
@@ -239,7 +239,7 @@ python3 gsn.py headless <slug> --cli agy
 python3 gsn.py headless <slug> --cli claude --until p3-hooks
 
 # 全部跑完後，請一個全新的觀察者寫報告
-claude -p "/observe <slug>" --model sonnet
+claude -p "/observe <slug>" --model sonnet --permission-mode acceptEdits --allowedTools Read Write Glob Grep "Bash(python3 *)" "Bash(git status*)" "Bash(git diff*)"
 ```
 
 （上面 `--model` 的值只是示意，請換成你帳號裡可用的模型名稱。）
@@ -265,7 +265,7 @@ AI 最常見的「偷懶」有：跳步驟、一次把三步做完、把冗長�
 
 ### 第二層：紀錄與總查核（做完後）
 
-每一個動作都寫進 `ledger.jsonl`。每一筆紀錄都帶著前一筆的雜湊值（hash chain），手動改任何一行都會被發現。
+每一個動作都寫進 `ledger.jsonl`。每一筆紀錄都帶著前一筆的雜湊值（hash chain），只改其中一行一定會被發現。整條重算一遍則看不出來，所以 `audit_report.json` 會記下最後一筆的雜湊值；要更強的證據，請把它 commit 到別處或寄給別人留存。
 
 `python3 gsn.py audit <slug>` 會逐項檢查：
 
@@ -311,7 +311,7 @@ AI 最常見的「偷懶」有：跳步驟、一次把三步做完、把冗長�
 - 給人看的摘要。
 - 可信度判定：可信／可信但有註記／不可信。
 - 每一步由誰做、重做幾輪、花多久。
-- 抓到的捷徑（S1 跳步、S2 合併步驟、S3 手改、S4 摘要、S5 鑽檢查漏洞、S6 謊稱已檢查、S7 動時間軸、S8 規則本身有問題、S9 人名用猜的），每一項都附證據位置。
+- 抓到的捷徑（S1 跳步、S2 合併步驟、S3 手改、S4 摘要、S5 鑽檢查漏洞、S6 謊稱已檢查、S7 動時間軸、S8 規則本身有問題、S9 人名用猜的、S10 承接語偷加講者沒說的主張），每一項都附證據位置。
 
 本 repo 本身也是用這套方式做出來的：建置紀錄、effort 實測、觀察報告都在 `docs/qaqc/`。
 
@@ -411,7 +411,7 @@ A：寫進 `sessions/<slug>/corrections.json`。同一個錯在很多場都出�
 |---|---|---|
 | **study 原版（不改）** | Groq 轉錄（中、英）、Phase A 清理、字典、全形標點、段落長度、承接檢查、簡轉繁、座談歸屬檢查、EN→繁中字幕、迭代迴圈 | 已實跑多場；位元相同，測試鎖住 |
 | **N 原版（只改路徑）** | 好學生矩陣的工具與 prompt | 已在 N 實跑 |
-| **新的統籌層** | `gsn.py`、閘門、改不掉的紀錄、事後總查核、字數鏈、headless、`/init`、機敏掃描 | 這次新寫，有測試；完整範例跑在 `docs/qaqc/` |
+| **新的統籌層** | `gsn.py`、閘門、改不掉的紀錄、事後總查核、字數鏈、headless、`/init`、機敏掃描 | 這次新寫，有測試；完整範例在 `docs/qaqc/example-run/` |
 | **升級（比較後勝出）** | Phase A 清理 `pipeline/phase_a_clean.py` | 用 study 4 場真實逐字稿比較：原版有 1 句真話被誤刪、還會丟掉「對」「好」這類短回應；新版 0 誤刪，幻覺數量不變，所以成為預設（`--phase-a upstream` 可換回原版） |
 | **比較後落選** | 重寫的轉錄、翻譯工具 | 轉錄：中文片段少了 18% 內容，還冒出一句幻覺字幕；翻譯：輸出完全相同，但檢查會誤報 12 次「核准」。所以**繼續用原版**，落選版只留著重跑比較 |
 

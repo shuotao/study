@@ -379,6 +379,11 @@ def cmd_check(a) -> int:
         res = gates.run_gate(st, sdir)
         print_results(st, res)
         ok &= gates.passed(res)
+        if not gates.passed(res) and st in pending_markers(sdir):
+            # a red check on the open stage is a repair round: record it so rounds are traceable (observer B2)
+            n = sum(1 for e in read_ledger(sdir) if e["action"] in ("gate-fail", "check-fail") and e["stage"] == st) + 1
+            append_ledger(sdir, "check-fail", st, actor=actor_default(), round=n, gates=res)
+            loop_log(sdir, st, "gsn.py check", res)
     return 0 if ok else 1
 
 

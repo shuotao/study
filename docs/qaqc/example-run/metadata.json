@@ -1,0 +1,50 @@
+{
+  "session_id": "talk-context",
+  "source": "transcript.srt",
+  "created_at": "2026-10-22T10:55:03+08:00",
+  "title": "說話與聽話",
+  "speaker": "江碩濤",
+  "lang": "zh",
+  "domain": null,
+  "translate_to": null,
+  "identity": "工程師",
+  "phase_a_tool": "upgrade",
+  "plan": [
+    "p1-transcribe",
+    "p1-clean",
+    "p3-polish",
+    "p3-punct",
+    "p3-hooks",
+    "p4-terms",
+    "p5-stance",
+    "p6-matrix"
+  ],
+  "stop_at": "p6",
+  "status": "complete",
+  "stages": {
+    "p3-polish": {
+      "status": "done",
+      "actor": "claude-subagent:opus-5.5"
+    },
+    "p3-punct": {
+      "status": "done",
+      "actor": "claude-subagent:opus-5.5"
+    },
+    "p3-hooks": {
+      "status": "done",
+      "actor": "claude-subagent:opus-5.5"
+    },
+    "p4-terms": {
+      "status": "done",
+      "actor": "claude-subagent:opus-5.5"
+    },
+    "p5-stance": {
+      "status": "done",
+      "actor": "claude-subagent:opus-5.5"
+    },
+    "p6-matrix": {
+      "status": "done",
+      "actor": "orchestrator:fable-5.1"
+    }
+  }
+}

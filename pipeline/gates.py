@@ -33,8 +33,16 @@ def R(name, ok, detail="", level="fail", only_on_fail=False):
     return {"name": name, "ok": bool(ok), "detail": "" if (only_on_fail and ok) else detail, "level": level}
 
 
+def _rel(a):
+    """Repo-relative paths in tool calls, so gate output (and therefore the ledger) never records local folders."""
+    try:
+        return str(Path(a).resolve().relative_to(REPO)) if isinstance(a, Path) else str(a)
+    except ValueError:
+        return str(a)
+
+
 def run_tool(*args) -> tuple[int, str]:
-    r = subprocess.run([PY, *map(str, args)], cwd=REPO, capture_output=True, text=True)
+    r = subprocess.run([PY, *map(_rel, args)], cwd=REPO, capture_output=True, text=True)
     return r.returncode, (r.stdout + r.stderr).strip()
 
 
