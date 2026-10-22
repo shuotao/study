@@ -23,6 +23,11 @@ Raw numbers: `tool-comparison.json`. Run 2026-10-22.
 | songshan-xinyi | 803 | 0 | 0 | 43 (「好」「謝謝」「所以」「馬上」…) | 395 / 395 |
 | AS1569 (English) | 397 | — | — | identical to study's EN path (396 kept) | — |
 
+Second finding (from this repo's own example run, 2026-10-22): both versions first dropped the real sentence
+「我用 Google 的 Gemini Flash」 as garble (3 Han in ~20 characters < 25 %). The upgrade now treats Chinese + real
+Latin words as code-switching speech (noise symbols and foreign scripts are still dropped); upstream still drops it.
+The table above was re-run after that fix: unchanged.
+
 *False drop* = a dropped cue whose 4-grams are ≥ 50 % in the published text. The extra cues the candidate keeps are
 one- or two-character replies: `qaqc_srt.py` drops every cue under 3 characters although its own docstring says
 single-character replies are valid content. Keeping them is the zero-omission side; Phase 3 decides how they read.
@@ -54,5 +59,5 @@ quality win. Upstream kept.
 
 - `pipeline/phase_a_clean.py` is the default Phase A; `gsn.py new --phase-a upstream` runs `SRT/qaqc_srt.py`.
 - Rejected candidates stay in `pipeline/candidates/` only so the comparison can be re-run; `gsn.py` never calls them.
-- Upstream issues to report to study: (1) `qaqc_srt.py` drops < 3-char cues contrary to its docstring and drops
-  short English quotes in Chinese talks; (2) port the chunk cache to `groq_transcribe.py`.
+- Upstream issues to report to study: (1) `qaqc_srt.py` drops < 3-char cues contrary to its docstring, drops
+  short English quotes in Chinese talks and drops code-switching sentences (「我用 Google 的 Gemini Flash」); (2) port the chunk cache to `groq_transcribe.py`.

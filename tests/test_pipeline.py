@@ -131,6 +131,8 @@ class Tools(unittest.TestCase):
         from pipeline.phase_a_clean import is_garbled_cjk, is_garbled_latin
         self.assertFalse(is_garbled_cjk("domain knowledge"))
         self.assertFalse(is_garbled_cjk("Writing is rewriting"))      # upstream false drop (tool-comparison.md)
+        self.assertFalse(is_garbled_cjk("我用 Google 的 Gemini Flash"))  # code-switching, dropped by upstream too
+        self.assertTrue(is_garbled_cjk("這個 ┌┐└┘├┤ 符號"))               # noise still caught
         self.assertTrue(is_garbled_cjk("Subtitles by the Amara.org community"))
         self.assertTrue(is_garbled_latin("Thank you for watching"))
         self.assertFalse(is_garbled_latin("We shipped Claude Code to production last week"))

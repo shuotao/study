@@ -5,7 +5,8 @@ Default since it won the head-to-head on 4 real study sessions (docs/qaqc/tool-c
 and garble thresholds as qaqc_srt.py, but (1) short replies (對／好／了解) are kept, as qaqc_srt.py's own docstring
 says they must be — its code dropped every cue under 3 characters; (2) short all-Latin terms inside a Chinese talk
 ("Writing is rewriting", "domain knowledge") are no longer dropped as garble; (3) English talks get English
-caption-service patterns instead of the CJK prefix list. `gsn.py new --phase-a upstream` runs qaqc_srt.py instead.
+caption-service patterns instead of the CJK prefix list; (4) code-switching cues (「我用 Google 的 Gemini Flash」) are
+not dropped by the CJK-ratio rule. `gsn.py new --phase-a upstream` runs qaqc_srt.py instead.
 
 Reads transcript.srt (never modified) and writes cleaned.srt with:
   R1.1 hallucination cues dropped (dict/hallucination_prefixes.json + English caption-service patterns)
@@ -58,6 +59,12 @@ def is_garbled_cjk(text: str) -> bool:
     # not noise; only caption-service hallucinations or long Latin runs are dropped.
     if _SHORT_TERM_RE.fullmatch(text.strip()) and len(text.split()) <= 5:
         return any(rx.search(text.strip()) for rx in _EN_HALL)
+    # Code-switching ("我用 Google 的 Gemini Flash"): Chinese plus real Latin words is speech, not garble.
+    # The ratio rule is for symbol soup and foreign-script runs; those are still caught below.
+    rest = _CJK_RE.sub("", text)
+    if len(_CJK_RE.findall(text)) and _SHORT_TERM_RE.fullmatch(re.sub(r"\s+", " ", rest).strip() or "a") \
+            and "\ufffd" not in text and not _EXOTIC_RE.search(text) and len(_NOISE_RE.findall(text)) <= _CFG.get("noise_char_max", 1):
+        return False
     ratio = len(_CJK_RE.findall(text)) / non_space
     if ratio < _CFG.get("cjk_ratio_min", 0.25) and non_space > _CFG.get("min_chars_for_ratio_check", 10):
         return True
