@@ -1,18 +1,18 @@
 # Worker prompt: quadrant I entry page i.json v3 (Sonnet)
 
 Read first:
-- `docs/SPEC.md` §13.1 (including W4a, W5, W5a, W9), §13.2
-- `prompts/_provenance.md` (the per-unit provenance procedure; this prompt's rules must not be looser than it)
-- `runs/<run>/K.json`: 7 key points. `point` and `anchors` are the basis; `i_angle` is only a "hint for the angle of entry", **not a quotation, and not guaranteed to be something the source says** (see "Titles and openings" below).
-- `runs/<run>/source.anchors.json`, and the `cleaned.md` it points to
+- `matrix/SPEC.md` §13.1 (including W4a, W5, W5a, W9), §13.2
+- `matrix/prompts/_provenance.md` (the per-unit provenance procedure; this prompt's rules must not be looser than it)
+- `matrix/runs/<run>/K.json`: 7 key points. `point` and `anchors` are the basis; `i_angle` is only a "hint for the angle of entry", **not a quotation, and not guaranteed to be something the source says** (see "Titles and openings" below).
+- `matrix/runs/<run>/source.anchors.json`, and the `cleaned.md` it points to
 
 **Language: write all user-facing text (title, headline, paras, gloss) in Traditional Chinese (zh-TW), full-width punctuation. This prompt is in English only because it is for AI; the Chinese strings quoted below are literal required wording or source examples and stay in Chinese.**
 
 Reader: someone encountering this topic for the first time, e.g. an architecture student or a BIM practitioner who has just started using AI. They do not know programming and do not recognize the speaker's terms. They have not yet decided whether to spend time reading the full content.
 Goal: after 3 minutes of reading, they know what this talk is about, why it matters to them, and want to click through to the source.
 
-Produce `runs/<run>/i.json` (**write only content data, not HTML**). Layout, lists, font sizes, and the footer routing are all produced by
-`tools/render_i.py` + `tools/ui.py`, sharing the same components as II/III/IV (SPEC §6). After writing, run `python3 tools/n.py build runs/<run>`.
+Produce `matrix/runs/<run>/i.json` (**write only content data, not HTML**). Layout, lists, font sizes, and the footer routing are all produced by
+`matrix/tools/render_i.py` + `matrix/tools/ui.py`, sharing the same components as II/III/IV (SPEC §6). After writing, run `python3 matrix/tools/n.py build matrix/runs/<run>`.
 
 ## 一、Data format
 
@@ -66,7 +66,7 @@ All the limits on supplementary notes must be obeyed:
 The title, like every sentence, is a unit to be traced.
 - **You must not use `i_angle` directly as the title.** `i_angle` may contain claims the source does not have. Method: first find, in the card's anchor paragraphs, the one sentence that best represents the point and copy it as the quote, then write the title in plain language. Every claim in the title must match the quote.
 - The title must not contain causality, universal claims, or turns that the source does not state (「為什麼…」 "why...", 「反而…」 "on the contrary...", 「一定…」 "definitely...", 「每次…」 "every time..."), unless the source has the same word.
-- Sentence 1 must speak in the reader's world, not in terms. Prefer the speaker's own analogies, because the readers of this page mostly study architecture: p0057-p0062's grid lines, floors, and client needs corresponding to the software's business requirements, design intent corresponding to the spec, construction corresponding to implementation, and foundations and heavy rework. If the source of other cards also has an everyday or architectural way of saying it, use it.
+- Sentence 1 must speak in the reader's world, not in terms. Prefer the speaker's own analogies. Read `meta.json.reader_i` to know who the beginner reader is; if the source has an everyday or reader-domain way of saying a point (e.g. a building analogy for readers who study architecture), use that.
 - An analogy may only use correspondences the speaker has made; do not add correspondences yourself (e.g. do not say "a spec is a construction drawing" on your own). If a card's anchors contain no analogy, open directly with the plain-language explanation of ladder step 1; do not force one.
 
 ## 四、Provenance procedure (follow `_provenance.md`, plus two rules)
@@ -93,7 +93,7 @@ This is an entry page, not a shrunken full text.
 
 ## 七、Self-check
 
-1. Run `cd ~/Desktop/N && python3 tools/k_check.py runs/<run>`. If iv.html does not exist yet (it is built from links/links.json), ignore the 'iv.html missing' line and fix everything about i.html.
+1. Run `python3 matrix/tools/k_check.py matrix/runs/<run>`. If iv.html does not exist yet (it is built from matrix/links/links.json), ignore the 'iv.html missing' line and fix everything about i.html.
 2. Against the provenance table, answer the five questions of `_provenance.md` for each unit.
 3. Term scan: after `n.py build`, read i.html through from the start; for every term, at its first appearance within its card, is there a ladder step 1 explanation or a ladder step 2 note beside it? Are the titles term-free? Is there at most 1 note per card and at most 7 per page?
 4. Remove all `class="supp"` spans and read again: does each sentence's claim remain unchanged?

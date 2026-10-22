@@ -7,7 +7,7 @@ Input (filled in by the orchestrator):
 - Path of the instruction file the executor used
 - Product path
 - Path of the gate / verifier failure report
-- Acceptance criteria: `docs/SPEC.md` §13.8 and §9 (gates)
+- Acceptance criteria: `matrix/SPEC.md` §13.8 and §9 (gates)
 
 Steps:
 1. Read the instruction, the product, and the failure report. Classify each failure as exactly one of:

@@ -1,16 +1,16 @@
 # Quiz author prompt v1 (Opus): I-page acceptance quiz, `quiz.json`
 
-Spec: `docs/SPEC.md` §13.7. Purpose: measure whether the I page (`i.html`) lets a first-time reader actually understand the talk. A comprehension task replaces the old "difficult sentence count". You write the quiz; a persona (`prompts/quiz_taker.md`) takes it; a grader (`prompts/quiz_grader.md`) grades it; `tools/quiz_aggregate.py` aggregates it.
+Spec: `matrix/SPEC.md` §13.7. Purpose: measure whether the I page (`i.html`) lets a first-time reader actually understand the talk. A comprehension task replaces the old "difficult sentence count". You write the quiz; a persona (`matrix/prompts/quiz_taker.md`) takes it; a grader (`matrix/prompts/quiz_grader.md`) grades it; `matrix/tools/quiz_aggregate.py` aggregates it.
 
 Write all user-facing text (`question`, `key`, `must_include`) in Traditional Chinese (zh-TW), full-width punctuation. This prompt is in English because it is for AI.
 
 ## Inputs (read these only)
-- `runs/<run>/K.json` (the 5-7 key points and their anchors)
-- `runs/<run>/source.anchors.json` (the source, paragraph by paragraph)
-- `runs/<run>/i.json` and `runs/<run>/i.html` (what the persona will see; to confirm the quiz is answerable from the I page)
+- `matrix/runs/<run>/K.json` (the 5-7 key points and their anchors)
+- `matrix/runs/<run>/source.anchors.json` (the source, paragraph by paragraph)
+- `matrix/runs/<run>/i.json` and `matrix/runs/<run>/i.html` (what the persona will see; to confirm the quiz is answerable from the I page)
 
 ## What to write
-Write `runs/<run>/quiz.json` and `runs/<run>/quiz_questions.json`.
+Write `matrix/runs/<run>/quiz.json` and `matrix/runs/<run>/quiz_questions.json`.
 
 `quiz.json` has exactly 4 items: 3 comprehension questions (`q1`, `q2`, `q3`) and 1 navigation task (`nav1`):
 
@@ -46,7 +46,7 @@ Write `runs/<run>/quiz.json` and `runs/<run>/quiz_questions.json`.
 ## Rules for the navigation task (`nav1`)
 1. It asks where to click on the I page to read the relevant source paragraph, e.g. "if you want to know X, click the link on which card to read the source?". Pick a K different from or equal to the comprehension ones, but its answer must be an actual `more` link on a card of `i.html`.
 2. `acceptable_targets`: every `ii.html#pNNNN` target that a reasonable reader could choose and that really contains the information (the card's `more` links, plus any other paragraph that explains it first). Each must be an anchor that exists.
-3. **Mechanical grading warning.** `tools/quiz_aggregate.py` takes every `pNNNN` string found anywhere inside the `nav1` item (question, key, must_include, anchors, acceptable_targets, all of it) as an acceptable target. Therefore: put in the `nav1` item **only** paragraph ids that are truly acceptable, and never mention an unacceptable paragraph id in any of its fields. The item id must start with `n` (the aggregator treats ids starting with `n` or `nav` as navigation items).
+3. **Mechanical grading warning.** `matrix/tools/quiz_aggregate.py` takes every `pNNNN` string found anywhere inside the `nav1` item (question, key, must_include, anchors, acceptable_targets, all of it) as an acceptable target. Therefore: put in the `nav1` item **only** paragraph ids that are truly acceptable, and never mention an unacceptable paragraph id in any of its fields. The item id must start with `n` (the aggregator treats ids starting with `n` or `nav` as navigation items).
 4. `key` describes in words which card and which link to use (e.g. "click `想深入 -> 讀原文這段` on the card titled ..."); `must_include` states the card to find and the link to click.
 
 ## Self-check (do before finishing)

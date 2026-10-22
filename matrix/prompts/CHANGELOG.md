@@ -1,12 +1,14 @@
 # prompts CHANGELOG (one entry per observer fix)
 
+> Provenance: this changelog is carried over from the private source project (N). "TAO" is the author. New entries go at the bottom.
+
 (Table headers: date | file | version | trigger | key fix. Entries below the header are historical and stay in their original Chinese.)
 
 | Date | File | Version | Trigger | Key fix |
 |---|---|---|---|---|
 | 2026-10-12 | para_labels.md | v1→v2 | router R1 observer | 判斷順序＋決勝規則 |
 | 2026-10-12 | para_labels.md | v2→v3 | router R2 observer | 「示範敘述 vs 一般陳述」核心區分（v2 矯枉過正） |
-| 2026-10-12 | tools/router_v3.json | v3 | router R2 observer | Jev criteria/instructions 凍結；holdout 86.7% 通過 |
+| 2026-10-12 | matrix/tools/router_v3.json | v3 | router R2 observer | Jev criteria/instructions 凍結；holdout 86.7% 通過 |
 | 2026-10-12 | worker_ste.md | v1→v2 | STE 樣本 observer | 逐句溯源、因果詞白名單、保留限定語、中英要點對等 |
 | 2026-10-12 | worker_sheet.md | v1→v2 | sheet observer | 每格先引原文、多錨點、標題不是講者的話 |
 | 2026-10-12 | _provenance.md | v1 新增 | 跨 view observer | 所有 worker 共用的逐單位溯源程序 |

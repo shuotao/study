@@ -76,11 +76,11 @@ Each view's working draft (`verify/<view>_provenance.json`) contains at least on
  "units": [{"claim": "...", "anchor": "pNNNN", "quote": "..."}],
  "qualifiers": ["..."]}
 ```
-This draft serves both `tools/provenance_check.py` and the Verifier. The draft may stay under verify/; it does not count as an extra product.
+This draft serves both `matrix/tools/provenance_check.py` and the Verifier. The draft may stay under verify/; it does not count as an extra product.
 
 ## 五、Self-check before finishing
 
 1. Use a script to confirm every `quote` is a contiguous substring of the source paragraph of its `anchor` (one line of Python is enough). If any fails, you cannot report.
-2. If `tools/provenance_check.py` exists, run it and handle every `FAIL` (key word missing from the anchor and that word appears in a neighboring paragraph) and `WARN` (a qualifier may have been dropped).
+2. If `matrix/tools/provenance_check.py` exists, run it and handle every `FAIL` (key word missing from the anchor and that word appears in a neighboring paragraph) and `WARN` (a qualifier may have been dropped).
 3. For every `WARN` and `FAIL`: do not just quietly fix it; go back and re-answer the five questions in §二.
 4. In your report, state the number of units you deleted, split, or changed because they could not be traced (write 0 if none).

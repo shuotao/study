@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""為 study session 的 cleaned.md 產生段落錨點(只讀 study,不寫回)。
+"""Anchor the paragraphs of a session's cleaned.md (read-only; never writes to the session).
 
-用法: anchor_source.py <study_session_dir> <run_dir>
-輸出: <run_dir>/source.anchors.json
-段落切分沿用 study 的 md_to_html.parse()(一段落 = 一行),以 import 重用。
+Usage: anchor_source.py <session_dir> <run_dir>
+Output: <run_dir>/source.anchors.json
+Paragraph split = pipeline/md_parse.parse() (one paragraph = one line), shared with Phase 3.
 """
 import sys, json, hashlib, re
 from pathlib import Path
 
-STUDY = Path.home() / "Desktop/study"
-sys.path.insert(0, str(STUDY / "scripts/lang/en"))
-from md_to_html import parse  # noqa: E402
+REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO))
+from pipeline.md_parse import parse  # noqa: E402
 
 IMG = re.compile(r"^!\[.*\]\(.*\)\s*$")
 

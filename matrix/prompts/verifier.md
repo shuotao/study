@@ -2,9 +2,9 @@
 
 You are the verifier. You receive only two things:
 - The product file
-- `runs/<run>/source.anchors.json` (the source paragraph by paragraph, ids are pNNNN)
+- `matrix/runs/<run>/source.anchors.json` (the source paragraph by paragraph, ids are pNNNN)
 
-Rules: `docs/SPEC.md` §13.1 (common rules) and the section for this product (§13.2 I, §13.5 claims, §13.6 diagrams, §13.3-13.4 iv.json).
+Rules: `matrix/SPEC.md` §13.1 (common rules) and the section for this product (§13.2 I, §13.5 claims, §13.6 diagrams, §13.3-13.4 iv.json).
 
 Steps:
 1. Split the product into checkable units (paragraph, list item, table row, panel cell, video scene) and process each.

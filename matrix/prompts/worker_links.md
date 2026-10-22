@@ -1,7 +1,7 @@
 # Worker prompt: cross-session key-point-card relation judgment v1 (Sonnet)
 
-Input: `links/batch_<n>.json`; each candidate pair has two cards (session, K, point, excerpts of anchor source text) and `shared` (the literal shared words; **only the reason they were paired, not evidence**).
-Example (34 pairs already judged): `links/links.json`. Spec: `docs/SPEC.md` §2 (IV), §4 and §13.8.
+Input: `matrix/links/batch_<n>.json`; each candidate pair has two cards (session, K, point, excerpts of anchor source text) and `shared` (the literal shared words; **only the reason they were paired, not evidence**).
+Example (34 pairs already judged): `matrix/links/links.json`. Spec: `matrix/SPEC.md` §2 (IV), §4 and §13.8.
 
 Every pair **must** be judged as exactly one of:
 - Related: `{"a","b","type","why"}`, type is one of 呼應／延伸／實例／對照／不同看法 (written in Chinese exactly as listed; tools match them)
@@ -10,11 +10,11 @@ Every pair **must** be judged as exactly one of:
 - Excluded: `{"a","b","why"}`, with the reason written out (e.g. 「字面都有『模型』：一邊是 CAD 模型，一邊是 AI 語言模型」 "both literally contain 'model': one is a CAD model, the other an AI language model"; 「只共用一般詞」 "only share a generic word").
 
 Rules:
-1. The basis for judgment is the two cards' point **and the anchor source text**, not the shared word. Read the anchor paragraphs in `runs/<run>/source.anchors.json` when needed.
+1. The basis for judgment is the two cards' point **and the anchor source text**, not the shared word. Read the anchor paragraphs in `matrix/runs/<run>/source.anchors.json` when needed.
 2. Prefer omission over padding: it counts as related only if a reader would say "yes, these two sessions are talking about related things". Sharing a broad topic like "AI" or "BIM" is not enough.
 3. `why` <= 60 Chinese characters, says clearly "where they are related", mentions both sides; must not add statements that are not in the source. Write `why` in Traditional Chinese (zh-TW), full-width punctuation.
 4. **Every `why` (related and excluded) must be specific to this pair.** Name the concrete thing each side says (the product, method, or case), and for exclusions name what differs (e.g. which sense of a shared word each side uses). One generic sentence reused across pairs (「只共用一般詞」, 「主題不同」) is a defect: `links_check.py` L5 turns red when the same `why` appears more than 3 times, and a reviewer reads exclusions as public reasons. Before writing, scan your own `why` list; if two read alike, rewrite them with the pair's own nouns. Do not vary a generic sentence by one word to dodge L5; that is bending the content to pass the gate.
-5. Output `links/judged_<n>.json`: `{"links":[...],"excluded":[...]}`; the number of pairs must equal the number of input pairs.
+5. Output `matrix/links/judged_<n>.json`: `{"links":[...],"excluded":[...]}`; the number of pairs must equal the number of input pairs.
 
 Spot-check budget: you are conservative by nature (measured recall 0.46-0.64). For every exclusion, ask once more "would a reader who read both sessions say these are connected?"; list the 3 least-sure pairs, preferring excluded ones.
 

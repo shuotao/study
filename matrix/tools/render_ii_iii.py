@@ -3,11 +3,11 @@
 
 用法: render_ii_iii.py <run_dir> --mode ii|iii [--verify]
 - 段落 id 與 source.anchors.json 一致(同一套切段規則)
-- 圖片依 cleaned.md 原位置插入(連到 study session 的 slides/,只讀)
+- 圖片依 cleaned.md 原位置插入(相對連結到 session 目錄,只讀)
 - claims.json: [{"claim": "...", "type": "主張|條件|例外|步驟|數字", "anchors": ["p0012", ...]}]
 驗證: --verify 只檢查 ii.html/iii.html 每段文字與原文逐字相同(去標籤、去 ** 後比對)
 """
-import sys, json, re, html
+import os, sys, json, re, html
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import ui
@@ -29,7 +29,7 @@ def render(run, mode="iii"):
     if mode == "iii" and cp.exists():
         claims = json.loads(cp.read_text(encoding="utf-8"))
     body, toc, started, last_pid, pending = [], [], False, None, []
-    rel = "../../../study/sessions/" + sdir.name + "/"
+    rel = os.path.relpath(sdir, run).replace(os.sep, "/") + "/"   # images stay in the session dir (read-only)
     meta = json.loads((run / "meta.json").read_text(encoding="utf-8")) if (run / "meta.json").exists() else {}
     spk = json.loads((run / "speakers.json").read_text(encoding="utf-8"))["paragraphs"] if (run / "speakers.json").exists() else {}
     pub = meta.get("published_ii", "")   # 沒有就不放連結(不猜網址)

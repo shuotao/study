@@ -1,14 +1,14 @@
 # Worker prompt: quadrant I diagrams, diagrams.json v1 (Sonnet)
 
-Purpose: draw small diagrams for the points on the I page that have "a process or relationships", to help beginner readers see the structure. You write only `diagrams.json` (the judgment); the diagrams are produced deterministically by `tools/render_diagram.py`.
+Purpose: draw small diagrams for the points on the I page that have "a process or relationships", to help beginner readers see the structure. You write only `diagrams.json` (the judgment); the diagrams are produced deterministically by `matrix/tools/render_diagram.py`.
 
 Write all user-facing text (node text, arrow labels, `title`, `note`) in Traditional Chinese (zh-TW), full-width punctuation.
 
 Read first:
-- `docs/SPEC.md` §13.1 (including W4a, W5, W9), §13.2, §13.6
-- `prompts/_provenance.md`
-- `runs/<run>/K.json`, `source.anchors.json`, `meta.json` (the reader)
-- `runs/<run>/i.html`: the diagram must fit the card text; it must not contradict the card, and must not duplicate the whole card
+- `matrix/SPEC.md` §13.1 (including W4a, W5, W9), §13.2, §13.6
+- `matrix/prompts/_provenance.md`
+- `matrix/runs/<run>/K.json`, `source.anchors.json`, `meta.json` (the reader)
+- `matrix/runs/<run>/i.html`: the diagram must fit the card text; it must not contradict the card, and must not duplicate the whole card
 
 Choosing diagrams:
 - Draw only for K points whose source really has "order, causality, composition, route, or contrast"; if none, draw none. 3-5 diagrams per session is enough.
@@ -28,11 +28,11 @@ Nodes and arrows (this is the high-risk zone for hallucination):
 - Limits: <= 9 nodes, <= 12 arrows. For beginners, 5-7 nodes is best.
 - `title` uses third-person attribution (「…（沈伯洋的說法）」 "... (Shen Boyang's account)"), not written as fact.
 
-Format: see the header of `tools/render_diagram.py`. Use `id` of the form `d-k<n>`, at most one diagram per K.
+Format: see the header of `matrix/tools/render_diagram.py`. Use `id` of the form `d-k<n>`, at most one diagram per K.
 
 Self-check:
 ```
-python3 tools/render_diagram.py runs/<run> && python3 tools/diagram_check.py runs/<run> && python3 tools/k_check.py runs/<run>
+python3 matrix/tools/render_diagram.py matrix/runs/<run> && python3 matrix/tools/diagram_check.py matrix/runs/<run> && python3 matrix/tools/k_check.py matrix/runs/<run>
 ```
 All three must PASS. Also open `verify/i_diagrams.png` and look: nodes must not overlap, text must not be cropped, arrow directions must be correct.
 

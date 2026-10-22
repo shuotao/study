@@ -1,15 +1,15 @@
 # Worker prompt: key-point set K.json first draft v1 (Sonnet)
 
-Read first: `docs/SPEC.md` §13.1 (especially W5, W6, W9) and §2; examples `runs/2026-10-12_BES1245/K.json`, `runs/2026-10-12_AU4258/K.json`.
-Input: `runs/<run>/source.anchors.json` (each paragraph is `{id, section, text}`; the source is the only basis).
+Read first: `matrix/SPEC.md` §13.1 (especially W5, W6, W9) and §2.
+Input: `matrix/runs/<run>/source.anchors.json` (each paragraph is `{id, section, text}`; the source is the only basis).
 
-Produce `runs/<run>/K.json`. Write all user-facing text (`point`, `i_angle`) in Traditional Chinese (zh-TW), full-width punctuation:
+Produce `matrix/runs/<run>/K.json`. Write all user-facing text (`point`, `i_angle`) in Traditional Chinese (zh-TW), full-width punctuation:
 ```json
-{"status": "初稿，待 TAO 確認（2026-10-13，worker_k v1）",
+{"status": "初稿，待確認（2026-10-13，worker_k v1）",
  "K": [{"k": "K1", "point": "一句話重點", "anchors": ["p0012", "…"],
         "i_angle": "給初學者的切入提示（附段落編號）"}]}
 ```
-(English gloss of the placeholders: status = "draft, awaiting TAO's confirmation (2026-10-13, worker_k v1)"; point = "one-sentence key point"; i_angle = "entry hint for beginners (with paragraph ids)". The status string is required wording; keep it verbatim in Chinese.)
+(English gloss of the placeholders: status = "draft, awaiting the user's confirmation (2026-10-13, worker_k v1)"; point = "one-sentence key point"; i_angle = "entry hint for beginners (with paragraph ids)". The status string is required wording; keep it verbatim in Chinese.)
 (From 2026-10-13, do not write iv_angle: IV is now breadth; deep-dive hints go into III's topics.json with kind=deep.)
 
 Rules:
@@ -18,7 +18,7 @@ Rules:
 3. `anchors`: the paragraphs that support the point, 3-20 per point recommended (cap 35); they must exist; avoid overlap between points.
 4. Audience questions, host transitions, and pure pleasantries must not be taken as the speaker's key points.
 5. Cross-session matching uses `point` and the anchors' source text to find relations, so `point` must contain a **concrete topic word** (product, method, concept name), not a vacuous sentence like 「重要的是意圖」("what matters is intent").
-6. Write only K.json; do not change other files. When done run `python3 tools/k_draft_check.py runs/<run>`; it is complete only when all green.
+6. Write only K.json; do not change other files. When done run `python3 matrix/tools/k_draft_check.py matrix/runs/<run>`; it is complete only when all green.
 
 Reply with only: for each session the K1-Kn points (one per line) + the k_draft_check result.
 

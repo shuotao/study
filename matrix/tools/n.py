@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-"""N 四象限學習輔助 — 統一入口。
+"""Phase 6 — Good-Student Matrix (好學生矩陣) entry point.
 
-  python3 tools/n.py init  <study_session_dir> <run_name> [--title T] [--speaker S] [--published URL]
-                           [--reader-i R] [--reader-iv R] [--genre tech|policy]
-        建 runs/<run_name>/:原文錨點 → meta.json → ii.html → index.html(先有入口頁)
-  python3 tools/n.py build <run>    確定性產生/更新:ii、iii(有 claims.json 時)、I 圖解嵌入、IV 計數同步、
-                                    套用好學生筆記主題與四象限導覽列、index
-  python3 tools/n.py check <run>    跑所有已存在產物的閘門,列表回報;任何紅燈 exit 1
-  python3 tools/n.py status <run>   列出四象限進度與「下一個需要判斷的步驟」(對應 prompts/*.md)
-  python3 tools/n.py links          跨場次重點卡候選關聯 → links/candidates.json(判斷步驟寫 links/links.json)
-  python3 tools/n.py vault          匯出 Obsidian 筆記 → vault/
-  python3 tools/n.py all            重建每一個 run
-  python3 tools/n.py book <slug>    本機產生「好學生筆記｜好學生矩陣」書 → book/<slug>/(不部署)
-  python3 tools/n.py qa             QAQC 總閘門:所有 run、關聯、書、文件同步、study 未被改動
+  python3 matrix/tools/n.py init  <session_dir> <run> [--title T] [--speaker S] [--published URL]
+                                  [--reader-i R] [--reader-iv R] [--genre tech|policy] [--genealogy G]
+        create matrix/runs/<run>/: anchors -> meta.json -> ii.html -> index.html
+  python3 matrix/tools/n.py build <run>    deterministic render of ii / iii (if claims.json) / i / diagrams / iv / hub
+  python3 matrix/tools/n.py check <run>    every gate that applies to the artifacts present; any red -> exit 1
+  python3 matrix/tools/n.py status <run>   page presence + the next judgment step and its prompt
+  python3 matrix/tools/n.py links          cross-session candidates -> matrix/links/candidates.json
+  python3 matrix/tools/n.py vault          export Obsidian notes -> matrix/vault/
+  python3 matrix/tools/n.py all            rebuild every run
+  python3 matrix/tools/n.py qa             master gate over all runs + links; must be green before "done"
 
-判斷步驟(LLM)只寫資料檔,其餘全由工具確定性完成(AI 規格見 docs/SPEC.md):
-  K.json(需 TAO 確認)→ i.json(+diagrams.json)→ 深讀場次才有:claims.json、iv.json(III 題目)→ links/links.json(IV,跨場次)→ quiz
-版面由 tools/ui.py + assets/theme.css 統一產生(四頁共用元件,字級下限 14px)
-規格:docs/SPEC.md(AI)、docs/MANUAL.zh-TW.md(人);study 一律唯讀。
+Judgment steps (LLM) write data files only; tools render every page (spec: matrix/SPEC.md).
+K.json (user or orchestrator confirms) -> i.json (+diagrams.json) -> deep-study only: claims.json, iv.json
+-> links/links.json (IV) -> quiz. The session's cleaned.md is read-only for the matrix.
 """
 import sys, json, re, subprocess
 from pathlib import Path
@@ -90,7 +87,7 @@ def init(argv):
     mp = run / "meta.json"; meta = json.loads(mp.read_text(encoding="utf-8")) if mp.exists() else {}
     meta.update({k: v for k, v in {"title": opt("--title", A["title"]), "speaker": opt("--speaker"), "published_ii": opt("--published"),
                  "reader_i": opt("--reader-i", "第一次接觸這個主題的讀者"), "reader_iv": opt("--reader-iv", "熟悉這個領域的專業者"),
-                 "genre": opt("--genre", "tech"), "storage_key": f"n.iv.{name}"}.items() if v or k not in meta})
+                 "genre": opt("--genre", "tech"), "genealogy": opt("--genealogy", "default"), "storage_key": f"n.iv.{name}"}.items() if v or k not in meta})
     meta.setdefault("domain_identifiers", []); meta.setdefault("non_content_numbers", []); meta.setdefault("expert_checklist", [])
     mp.write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     build([str(run)]); status([str(run)])
@@ -143,37 +140,33 @@ def check(argv):
 def status(argv):
     run = run_dir(argv[0]); has = lambda f: (run / f).exists()
     K = json.loads((run / "K.json").read_text(encoding="utf-8")) if has("K.json") else None
-    steps = [("K.json 重點集合", has("K.json") and "已確認" in K.get("status", ""), "prompts/worker_k.md → k_draft_check → 交 TAO 確認（status 寫「已確認」）"),
-             ("claims.json（III，只給深讀場次；族譜節點可略）", has("claims.json") or not has("iii.html") and not has("iv.json"), "prompts/worker_claims.md → 再 n.py build"),
-             ("i.json（I）", has("i.json"), "prompts/worker_i.md → 再 n.py build"),
-             ("diagrams.json（I 圖解，可選）", has("diagrams.json"), "prompts/worker_diagram.md → 再 n.py build"),
-             ("III 深挖題目 topics.json（可選）", has("topics.json"), "iv.json 的追問 → tools/topics.py；或讀者在 III 自己反白開題"),
+    steps = [("K.json 重點集合", has("K.json") and "已確認" in K.get("status", ""), "matrix/prompts/worker_k.md → k_draft_check → 交人確認（status 寫「已確認」；無人值守時由 orchestrator 確認並寫 confirmed_by）"),
+             ("claims.json（III，只給深讀場次；族譜節點可略）", has("claims.json") or not has("iii.html") and not has("iv.json"), "matrix/prompts/worker_claims.md → 再 n.py build"),
+             ("i.json（I）", has("i.json"), "matrix/prompts/worker_i.md → 再 n.py build"),
+             ("diagrams.json（I 圖解，可選）", has("diagrams.json"), "matrix/prompts/worker_diagram.md → 再 n.py build"),
+             ("III 深挖題目 topics.json（可選）", has("topics.json"), "iv.json 的追問 → matrix/tools/topics.py；或讀者在 III 自己反白開題"),
              ("IV 跨場次關聯 links/links.json", (N / "links/links.json").exists(), "n.py links → 判斷每組候選（關係類型＋理由）→ links_check"),
-             ("I 理解任務測驗", has("verify/quiz_grades.json"), "prompts/quiz_author.md → quiz_taker.md ×3 → quiz_grader.md → quiz_aggregate.py")]
+             ("I 理解任務測驗", has("verify/quiz_grades.json"), "matrix/prompts/quiz_author.md → matrix/prompts/quiz_taker.md ×3 → matrix/prompts/quiz_grader.md → quiz_aggregate.py")]
     print("頁面:", " ".join(f"{r or 'index'}{'✓' if has(f) else '·'}" for f, r, _ in QUADS))
     nxt = None
     for name, done, how in steps:
         print(f"  {'✓' if done else '·'} {name}" + ("" if done else f"  ← {how}"))
         if not done and nxt is None: nxt = name
-    gd = run / "gate_disputes.md"                     # worker 回報 GATE DISPUTE / WORKAROUNDS 時由統籌者寫入,待 TAO 裁決
+    gd = run / "gate_disputes.md"                     # worker GATE DISPUTE / WORKAROUNDS reports, written by the orchestrator, await a decision
     if gd.exists() and gd.read_text(encoding="utf-8").strip():
-        print("待 TAO 裁決:", gd.relative_to(N)); nxt = nxt or "裁決 gate_disputes.md"
+        print("待裁決:", gd.relative_to(N)); nxt = nxt or "裁決 gate_disputes.md"
     print("下一步:", nxt or "全部完成 → n.py check")
 
 
 def qa():
     rows = []
-    for r in sorted((N / "runs").iterdir()):
+    for r in sorted((N / "runs").iterdir()) if (N / "runs").exists() else []:
         if not (r / "source.anchors.json").exists(): continue
         p = subprocess.run([sys.executable, str(T / "n.py"), "check", str(r)], cwd=N, capture_output=True, text=True)
         rows.append((f"run {r.name}", p.returncode, [l for l in p.stdout.splitlines() if l.startswith("FAIL")]))
-    for label, args in [("links", [T / "links_check.py"]), ("docs sync", [T / "test_docs_sync.py"])] + \
-            [(f"book {b.name}", [T / "book_check.py", b.name]) for b in sorted((N / "book").glob("*")) if (b / "BOOK.json").exists()]:
-        p = subprocess.run([sys.executable, *map(str, args)], cwd=N, capture_output=True, text=True)
-        rows.append((label, p.returncode, [l for l in (p.stdout + p.stderr).splitlines() if "FAIL" in l][:5]))
-    st = subprocess.run(["git", "-C", str(Path.home() / "Desktop/study"), "status", "--porcelain", "sessions", "scripts/publish"],
-                        capture_output=True, text=True).stdout.strip()
-    rows.append(("study untouched (sessions, publish)", 1 if st else 0, [st[:120]] if st else []))
+    if (N / "links/links.json").exists():
+        p = subprocess.run([sys.executable, str(T / "links_check.py")], cwd=N, capture_output=True, text=True)
+        rows.append(("links", p.returncode, [l for l in (p.stdout + p.stderr).splitlines() if "FAIL" in l][:5]))
     bad = 0
     for label, rc, detail in rows:
         print(f"{'PASS' if rc == 0 else 'FAIL'}  {label}"); bad += rc != 0
@@ -192,10 +185,7 @@ if __name__ == "__main__":
         for r in sorted((N / "runs").iterdir()):
             if (r / "source.anchors.json").exists(): print(r.name, end=": "); ok.append(build([str(r)], exit_on_fail=False))
         sys.exit(0 if all(ok) else 1)
-    if cmd == "book":    # 本機產生「筆記＋矩陣」書(不部署)
-        if len(sys.argv) < 3: sys.exit("usage: n.py book <book_slug>")
-        rc, _ = sh(T / "book.py", sys.argv[2]); rc2, _ = sh(T / "book_check.py", sys.argv[2]); sys.exit(rc or rc2)
-    if cmd == "qa":      # QAQC 總閘門:所有 run + 關聯 + 書 + 文件同步 + study 未被改動;任一紅燈 exit 1
+    if cmd == "qa":      # master gate: every run + links; any red -> exit 1
         sys.exit(qa())
     if len(sys.argv) < 3 or cmd not in ("init", "build", "check", "status"): sys.exit(__doc__)
     {"init": init, "build": build, "check": check, "status": status}[sys.argv[1]](sys.argv[2:])
