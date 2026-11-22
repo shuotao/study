@@ -119,7 +119,7 @@ python3 gsn.py new ~/錄音/講座.m4a \
         --identity 建築師 --terms
 ```
 
-**`--context` 是最值得花一分鐘寫的東西。** Whisper 對人名、公司名、產品名最常聽錯。把這些寫進去，錯字會少很多；後面的步驟也會拿它來校正名字。
+**`--context` 是最值得花一分鐘寫的東西。** Whisper 對人名、公司名、產品名最常聽錯。Phase 3 校稿會拿它逐一校正名字（轉錄本身預設不送提示詞，因為送了會整段漏句；`context` 只在有疑點的片段做對照轉錄時才送給 Whisper，見 `docs/gotchas.md` #8）。
 
 ### 主要選項
 
@@ -127,7 +127,8 @@ python3 gsn.py new ~/錄音/講座.m4a \
 |---|---|
 | `--context "…"` 或 `--context 檔案.txt` | 講者、公司、產品、專有名詞 |
 | `--lang zh`（預設）／`--lang en` | 錄音的語言。中文用 study 的 `groq_transcribe.py`，英文用 `groq_transcribe_en.py`。轉錄時**不翻譯** |
-| `--no-prompt` | 現場很吵時，Whisper 可能把提示詞吐回來變成假字幕；加這個重轉 |
+| `--no-prompt` | 只轉一次、完全不送提示詞，也不做「帶提示詞的對照轉錄」。（預設主轉錄本來就不送提示詞：送了 Whisper 會整段漏句；有疑點的片段才帶提示詞再轉一次當對照，結果寫進 `transcribe_report.json`，不會自動替換，交給 Phase 3 判斷） |
+| `--no-s2t` | 不做簡轉繁。預設中文場在 Phase A 後自動把漂移成簡體的字改回台灣正體（只改「不是任何正體字」的字；兩可字如「据」「干」留給 Phase 3） |
 | `--translate zh-TW` | Phase 2：外語演講加一條繁中字幕軌（雙軌字幕；限 `--lang en`） |
 | `--terms` | Phase 4：名詞補充 |
 | `--identity 建築師` | Phase 5：用這個立場寫好學生筆記 |
@@ -203,6 +204,8 @@ python3 gsn.py audit <slug>      # 全部做完後的總查核
 
 **只有一個 AI CLI 也可以。** 同一個 CLI 輪流扮演三個角色就好，檢查與紀錄照樣有效。觀察那一步請另開一個全新對話。
 
+**長講稿的校稿（3B）可以讓實作者只交「修改清單」。** 不重打全文，而是回傳 JSON：在哪一行後加標題、哪裡加講者名、哪裡分段、哪些字換成哪些字；由統籌用程式套用，再自己跑檢查。講者的原話沒有被重打，就不會被悄悄刪掉或改寫。細節見 `docs/agents.md` §3。
+
 ### 替換表（手邊有什麼就用什麼）
 
 | 角色 | Claude Code | Gemini CLI | Codex CLI | Copilot CLI | Antigravity |
@@ -233,7 +236,7 @@ python3 gsn.py headless <slug> --cli claude --model sonnet --effort medium
 python3 gsn.py headless <slug> --cli gemini  --model gemini-2.5-pro
 python3 gsn.py headless <slug> --cli codex   --model gpt-5 --effort medium
 python3 gsn.py headless <slug> --cli copilot --model claude-sonnet-4.5
-python3 gsn.py headless <slug> --cli agy
+python3 gsn.py headless <slug> --cli agy     --model gemini-4-hydrogen-medium
 
 # 跑到某一步就停
 python3 gsn.py headless <slug> --cli claude --until p3-hooks
@@ -242,7 +245,7 @@ python3 gsn.py headless <slug> --cli claude --until p3-hooks
 claude -p "/observe <slug>" --model sonnet --permission-mode acceptEdits --allowedTools Read Write Glob Grep "Bash(python3 *)" "Bash(git status*)" "Bash(git diff*)"
 ```
 
-（上面 `--model` 的值只是示意，請換成你帳號裡可用的模型名稱。）
+（上面 `--model` 的值只是示意，請換成你帳號裡可用的模型名稱；Antigravity 用 `agy models` 查。自己手打 `agy` 時，`-p "任務"` 要放在最後：`agy -p --model X "任務"` 會把 `--model` 當成任務內容而直接報錯。）
 
 運作方式：
 

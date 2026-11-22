@@ -48,11 +48,40 @@ rounds. Logs: `sessions/<slug>/.gsn/headless/`. Underlying commands (all OAuth, 
 | Gemini CLI | `gemini -m M --approval-mode yolo "<task>"` | (model choice) |
 | Codex CLI | `codex exec -m M --sandbox workspace-write -C <repo> "<task>"` | `-c model_reasoning_effort=…` |
 | Copilot CLI | `copilot -p "<task>" --allow-all-tools --model M` | `--effort …` |
-| Antigravity | `agy -p "<task>" --mode accept-edits --model M` | `--effort …` |
+| Antigravity | `agy --mode accept-edits --model M -p "<task>"` | `--effort …` |
 
 Observer headless: `claude -p "/observe <slug>" --model sonnet --permission-mode acceptEdits --allowedTools Read Write Glob Grep "Bash(python3 *)" "Bash(git status*)" "Bash(git diff*)"` (or `gemini "/observe <slug>"`).
 `yolo` / `--allow-all-tools` give the agent your shell inside the repo: run headless only in this repo,
 on your own material.
+
+**Antigravity notes (measured in study, 2026-11-22):**
+- **`-p` comes last.** `agy -p --model X "<task>"` makes `-p` take the next token (`--model`) as its prompt and
+  exits with an error. Put every flag first and `-p "<task>"` at the end, or write `-p='<task>'`. `-p "<task>"`
+  directly followed by other flags also works (the prompt is `-p`'s value), but the flags-first order is what
+  `pipeline/headless.py` and study's `describe_images.run_agy` use. The same applies to `antigravity` (same CLI).
+- **Model ids come from `agy models`**, not from memory — Antigravity retires models (study lost
+  `Gemini 3.5 Flash` overnight on 2026-09-01). As of 2026-11-22 it lists `gemini-4-hydrogen-{low,medium,high,xhigh}`,
+  `gemini-4-neon-{low,medium,high,xhigh}`, `gemini-4-argon-{low,medium,high}`, `gemini-3.8-flash-{low,medium,high}`
+  (and older Flash), `gemini-3.1-pro-{low,high}`, `claude-{opus,sonnet}-5-5-{low,medium,high}`. study moved its image
+  stage to `gemini-4-hydrogen-medium`; this repo has no image stage, and the Phase 2 batch translator
+  (`srt_translate_zhtw.py`, upstream, unchanged) still defaults to `gemini-3.8-flash-medium` and falls back along its
+  `MODEL_PREFERENCE` when that id is missing. Neon / Argon are listed but unmeasured here.
+- **Parallel workers are safe for Phase 2.** `srt_translate_zhtw.py <p2-dir> --range LO-HI` translates only cues
+  LO–HI; part files are named by cue index, so several workers on one talk never collide, and re-running fills
+  only the gaps. In study, multiple workers per lecture were ~6× faster than one. With 11 concurrent agy
+  sessions about 5 % of calls failed with `failed to start conversation: backend returned an empty conversation id`;
+  the built-in per-batch retry recovered all of them. Run `zh_parts_check.py` once after all workers finish.
+
+### Orchestration pattern: edit plan instead of rewrite (p3-polish)
+
+For long texts, a pattern that worked in study (2026-11-22): the orchestrator gives a worker subagent the
+plain text and asks for an **edit plan** in JSON — headings to insert (after which line), speaker labels,
+paragraph splits/merges, and exact `{"from": …, "to": …}` replacements (names, punctuation, glyphs) — instead of
+the rewritten file. The orchestrator applies the plan deterministically and then runs the gates itself
+(`gsn.py done`: word-count band, CJK ratio, `para_len_check.py`). Because the worker never retypes the speaker's
+words, it cannot silently drop or paraphrase them, and a bad plan fails on a specific entry instead of somewhere
+in a rewritten text. There is no tool for this in the repo yet; a one-off apply script stays in the session
+(gitignored), and the stage still closes only through `gsn.py done`.
 
 ## 4. Effort routing (live = measured)
 

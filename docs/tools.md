@@ -3,9 +3,11 @@
 The one list of every tool. `tests/test_repo_hygiene.py` fails when a tool file is missing here.
 Two kinds, kept apart on purpose:
 
-- **Upstream (study, unchanged)** — field-proven across the study sessions. Byte-identical to study commit 810fa13
-  (`docs/upstream.sha1`, checked by the test suite; `zh_parts_check.py` and `srt_translate_zhtw.py` are not committed in
-  study yet and match its working tree). Fix them upstream, then sync here.
+- **Upstream (study, unchanged)** — field-proven across the study sessions. Byte-identical to study HEAD 2d0b347
+  (2026-11-22 sync; the transcription files changed in study 3a2a5f9) — except `prompts/qaqc_core_rules.md`,
+  `scripts/phase_d_check.py` and `scripts/tests/test_phase_d_check.py`, which match study branch
+  `fix/r8-framing-example` (546aeac, issue #1) until it lands on study main (`docs/upstream.sha1`, checked by the
+  test suite; `zh_parts_check.py` and `srt_translate_zhtw.py` are not committed in study yet and match its working tree). Fix them upstream, then sync here.
 - **New in the CLI edition** — the layer study did not have: one entry point, gates, ledger, audit, headless,
   word-count chain, setup. Every new tool that *replaces* an upstream one is a candidate upgrade and must win a
   head-to-head comparison first (`docs/qaqc/tool-comparison.md`).
@@ -14,13 +16,13 @@ Two kinds, kept apart on purpose:
 
 | Tool | Phase | Purpose |
 |---|---|---|
-| `.claude/skills/good-student-notes/scripts/groq_transcribe.py` | 1 | Groq Whisper large-v3, Chinese; FFmpeg chunks, key rotation, resumable chunk cache, `GROQ_NO_PROMPT`, `GROQ_CHUNK_SECONDS` |
-| `scripts/lang/en/groq_transcribe_en.py` | 1 | same for English |
+| `.claude/skills/good-student-notes/scripts/groq_transcribe.py` | 1 | Groq Whisper large-v3, Chinese; FFmpeg chunks, key rotation, resumable chunk cache; **no prompt by default** + per-chunk coverage gate (prompted second read as a diagnostic only → `transcribe_report.json`), `GROQ_PROMPT_MODE=plain\|prompted\|off`, `GROQ_CHUNK_SECONDS`; prompt cap 896 UTF-8 bytes |
+| `scripts/lang/en/groq_transcribe_en.py` | 1 | same for English (prompt cap by UTF-8 bytes; no coverage gate) |
 | `SRT/qaqc_srt.py` | 1 | Phase A (default): hallucination prefixes, garbled cues with speech exemptions, typo dictionary; timecodes untouched |
-| `scripts/s2t_normalize.py` | 1 | Simplified-drift → Taiwan Traditional glyphs (OpenCC s2tw), refuses transcript.srt |
+| `scripts/s2t_normalize.py` | 1 | Simplified-drift → Taiwan Traditional glyphs: changes only characters that are not valid Traditional (dual-use 据/干/后/里 left to Phase 3), refuses transcript.srt |
 | `scripts/lang/en/srt_zhtw.py` | 2 | prep / assemble timeline-locked EN→zh-TW, byte-identical timecode proof |
 | `scripts/lang/en/zh_parts_check.py` | 2 | translation gate C1–C7 |
-| `scripts/lang/en/srt_translate_zhtw.py` | 2 | optional batch translator through headless Antigravity (`agy -p`) |
+| `scripts/lang/en/srt_translate_zhtw.py` | 2 | optional batch translator through headless Antigravity (`antigravity -p <prompt> --model …`); `--range LO-HI` lets several workers share one talk |
 | `scripts/normalize_punctuation.py` | 3C | full-width punctuation; `--check` = residual count |
 | `scripts/para_len_check.py` | 3B | paragraph length 60–120 CJK, shorter rather than longer |
 | `scripts/phase_d_check.py` | 3D | insert-only proof: 1:1 paragraphs, subsequence, growth cap; lists inserted causal markers as a warning (R8, issue #1) |
@@ -29,6 +31,7 @@ Two kinds, kept apart on purpose:
 | `scripts/tests/test_pipeline_logger.py` | — | its tests |
 | `scripts/tests/test_qaqc_srt.py` | 1 | tests for the R1.2 exemptions and short replies (added upstream 2026-10-22) |
 | `scripts/tests/test_phase_d_check.py` | 3D | tests for the insert-only proof and the causal-marker warning (added upstream 2026-11-22) |
+| `scripts/tests/test_s2t_normalize.py` | 1 | tests: Traditional text is never changed, only Simplified-only characters (added upstream 2026-11-08) |
 | `dict/load.py` | 1 | dictionary loader (+ `dict/*.json` data) |
 
 ## New in the CLI edition

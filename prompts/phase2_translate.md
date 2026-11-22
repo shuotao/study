@@ -17,7 +17,10 @@ You never see or write a timecode. `scripts/lang/en/srt_zhtw.py prep` already pr
 4. A cue that is a fluent hallucination (unrelated to the talk) → add its id to `p2/drops.json` (JSON list) and
    do not translate it.
 Unattended alternative for long talks: `python3 scripts/lang/en/srt_translate_zhtw.py sessions/<slug>/p2`
-(batches through headless Antigravity; same output contract).
+(batches through headless Antigravity; same output contract). It resolves its model against `agy models`
+(default `gemini-3.8-flash-medium`, `--model` to override). For speed, run several workers on disjoint ranges —
+`… --range 1-200`, `… --range 201-400`, … (1-based, inclusive cue indices) — part files are index-named, so they never collide; occasional
+`empty conversation id` errors are retried automatically (`docs/agents.md` §3). Then run the check below once.
 
 ## Finish
 ```bash

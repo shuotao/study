@@ -7,7 +7,7 @@ Every supported CLI authenticates with its own OAuth login, so no LLM API key is
   gemini   gemini -m M --approval-mode yolo "…"
   codex    codex exec -m M -c model_reasoning_effort=E --sandbox workspace-write "…"
   copilot  copilot -p … --model M --effort E --allow-all-tools
-  agy      agy -p … --model M --effort E --mode accept-edits   (Antigravity)
+  agy      agy --mode accept-edits --model M --effort E -p …   (Antigravity; -p must come last)
 
 Loop per stage (this script plays the orchestrator's mechanical part):
   1. hand the task card to the agent (fresh process = fresh context)
@@ -51,8 +51,10 @@ def command(cli: str, prompt: str, model: str | None, effort: str | None) -> lis
         return ["copilot", "-p", prompt, "--allow-all-tools", *(["--model", model] if model else []),
                 *(["--effort", effort] if effort else [])]
     if cli == "agy":
-        return ["agy", "-p", prompt, "--mode", "accept-edits", *(["--model", model] if model else []),
-                *(["--effort", effort] if effort else [])]
+        # -p LAST: `agy -p --model X "…"` makes -p swallow "--model" as the prompt and exits with an error
+        # (study 2026-11-22, describe_images.run_agy). Flags first, then -p and its prompt.
+        return ["agy", "--mode", "accept-edits", *(["--model", model] if model else []),
+                *(["--effort", effort] if effort else []), "-p", prompt]
     raise SystemExit(f"unknown cli {cli}")
 
 
