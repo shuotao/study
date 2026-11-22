@@ -53,4 +53,9 @@ two claim-adding hooks; C needs rework (missing 「」, a sentence boundary erro
 3. **The gap the gates cannot see is hook content.** "Insert-only" is proven mechanically, but a hook that adds a
    claim (「會這樣拿出來討論的原因是：」) passes. This is now an explicit observer check (S10 in
    `prompts/observer.md`) and a rule line in `prompts/rules.md` § R8.
+   Follow-up (issue #1, 2026-11-22): that causal phrase was itself one of the R8 framing examples, so the
+   example list pushed models toward cause sentences. It was replaced by non-causal framings (這段要先交代的是、
+   先講前提) upstream and here, R8.2 now says a hook never asserts a cause the speaker did not make, and
+   `phase_d_check.py` lists every inserted causal marker as a warning. The warning narrows the reading; it
+   does not prove the cause is real, so S10 still needs a human read.
 4. Re-run on the full talk before tightening further; small-N rankings can flip.

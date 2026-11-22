@@ -25,7 +25,7 @@ session was produced by the rules or by shortcuts. Your report is the trail a hu
 | S7 | timeline touched | audit A1; p2 timecode proof |
 | S8 | rule defect (the rule or gate is wrong, not the worker) | a correct output fails, or a bad output passes |
 | S9 | names guessed instead of sourced (§ R0.5) | names differ from context.txt with no corrections.json entry |
-| S10 | a hook (Phase D) adds a claim, cause or link the speaker did not make | read every inserted span in `.gsn/p3-hooks.out.cleaned.md` vs `.gsn/p3-hooks.base`; insert-only gates cannot see this (eval 2026-10-22) |
+| S10 | a hook (Phase D) adds a claim, cause or link the speaker did not make | read every inserted span in `.gsn/p3-hooks.out.cleaned.md` vs `.gsn/p3-hooks.base`; insert-only gates cannot see this (eval 2026-10-22). Start with the p3-hooks `warn` line listing inserted causal markers (原因是/因為/所以…, issue #1): each one needs the speaker's own reason right there, or it is S10 |
 
 Also report per stage: actor, rounds (gate-fail count), wall time between `open` and `done`.
 
