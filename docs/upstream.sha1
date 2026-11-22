@@ -2,7 +2,8 @@
 0111e3cded71d7ada768cb3c4ed5e7135c6ef9c4  scripts/lang/en/groq_transcribe_en.py
 aa37e54abac4077699349c6c918698f26e7f1709  SRT/qaqc_srt.py
 0170bfd299149bc3dbe5abe7c6bf5834d0995412  scripts/normalize_punctuation.py
-8cba1290fcf95821829b41407dd69f37cc34c656  scripts/phase_d_check.py
+802d682236864125e41acc5c23727e72d6d192ff  scripts/phase_d_check.py
+f4c2dc745ee568d528586bd71452aac2870abfc7  scripts/tests/test_phase_d_check.py
 81f8659ab79c4b55fcee8a63d5ccc420fcd60a80  scripts/para_len_check.py
 766f8f0bbcc0d0916f9052704130d254162c2731  scripts/s2t_normalize.py
 a63051ce4b96c5c85b0b90500605e141a330c92f  scripts/dialogue_check.py
@@ -18,5 +19,5 @@ fac21286450abec64383b321e07a4e586c7cfa89  dict/hallucination_prefixes.json
 7e7bb7c1997026a8d35fe26d1eead470f029bf47  dict/typo_dict.json
 1bf174e804f5dcc518e246703d394f6afd8a0c31  dict/typo_dict.bim.json
 6a03ca50c0b5141d4f92619d2a44943f14754aee  dict/typo_dict.parenting.json
-1e83dc608ddc56ccc9fe69eb6915f87935152c42  prompts/qaqc_core_rules.md
+c266dbabd7b42ac50a8ac5750a1ac01d2a07e02b  prompts/qaqc_core_rules.md
 498c3017669c444d8202b98481e22e82d3178d89  scripts/tests/test_qaqc_srt.py

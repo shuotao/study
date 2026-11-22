@@ -192,10 +192,13 @@ def gate_p3_hooks(sdir: Path, base: Path, **_):
     rc, out = run_tool(TOOLS / "phase_d_check.py", md, "--base", base)
     rc2, out2 = run_tool(TOOLS / "normalize_punctuation.py", md, "--check")
     grew = content_units(md.read_text(encoding="utf-8")) > content_units(base.read_text(encoding="utf-8"))
+    causal = [l.strip() for l in out.splitlines() if l.strip().startswith("- 第")]   # phase_d_check WARNING list
     return [R("insert-only proof (1:1 paragraphs, subsequence, growth <= 1.12)", rc == 0,
               " ".join(l.strip() for l in out.splitlines()[-2:]) if out else ""),
             R("still full-width after hooks", rc2 == 0, out2.splitlines()[-1] if out2 else ""),
-            R("at least one hook inserted", grew, "content did not grow — Phase D skipped?", "warn", True)]
+            R("at least one hook inserted", grew, "content did not grow — Phase D skipped?", "warn", True),
+            R("no inserted causal marker (R8: a hook never asserts a cause the speaker did not make)",
+              not causal, " ".join(causal), "warn", True)]
 
 
 SUPP_RE = re.compile(r"^>\s*\*\*(專業知識補充|Term note)[:：]\s*(.+?)\*\*", re.M)

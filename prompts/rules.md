@@ -145,12 +145,12 @@ Phase C may change punctuation ONLY. *Gate: residual half-width = 0; content cha
 
 Beyond bare connectives, insert **content-referring hooks** at seams (topic change, start of an example,
 callback, next point):
-1 callback (也因為上面的困擾、以剛剛…為例、就像前面講的) · 2 framing (會這樣拿出來討論的原因是、先講前提) ·
+1 callback (也因為上面的困擾、以剛剛…為例、就像前面講的) · 2 framing (這段要先交代的是、先講前提、從目的回頭說明) ·
 3 pivot (轉念一想、但從…的經驗來看) · 4 signpost (第二個是…、同時我還發現) · 5 transition (接下來要討論的是…) ·
 6 restatement (也就是說、換句話說) · 7 closing (回到結論、以上就是…).
-A hook must point at something real (the 「上面」 it names must exist) and must never add a claim, a cause or a link the speaker did not make (「會這樣拿出來討論的原因是：」 with no reason in the source is an invented cause). Fewer, accurate hooks beat many. **Insert only, between sentences;
+A hook must point at something real (the 「上面」 it names must exist) and must never add a claim, a cause or a link the speaker did not make. Hooks connect; they never argue: a causal marker (原因是、因為、所以、導致、因此、之所以、由於) may be inserted only when the speaker's own words already state that cause (「會這樣拿出來討論的原因是：」 is allowed only if the next sentence is the speaker's reason; between two merely listed points it turns a list into an invented cause). Fewer, accurate hooks beat many. **Insert only, between sentences;
 never rewrite or delete; paragraph count 1:1; panels: never move a turn.** Growth ≤ 12 %.
-*Gate: phase_d_check subsequence proof.*
+*Gate: phase_d_check subsequence proof; inserted spans with a causal marker are listed as a WARNING (not a fail) for the observer to check one by one.*
 
 ## R9. Phase 2 — translation (`prompts/phase2_translate.md`)
 

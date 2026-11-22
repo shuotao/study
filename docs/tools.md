@@ -23,11 +23,12 @@ Two kinds, kept apart on purpose:
 | `scripts/lang/en/srt_translate_zhtw.py` | 2 | optional batch translator through headless Antigravity (`agy -p`) |
 | `scripts/normalize_punctuation.py` | 3C | full-width punctuation; `--check` = residual count |
 | `scripts/para_len_check.py` | 3B | paragraph length 60–120 CJK, shorter rather than longer |
-| `scripts/phase_d_check.py` | 3D | insert-only proof: 1:1 paragraphs, subsequence, growth cap |
+| `scripts/phase_d_check.py` | 3D | insert-only proof: 1:1 paragraphs, subsequence, growth cap; lists inserted causal markers as a warning (R8, issue #1) |
 | `scripts/dialogue_check.py` | 3 | panels: speaker attribution and turn order |
 | `scripts/pipeline_logger.py` | all | log → check → improvement queue (the iteration loop) |
 | `scripts/tests/test_pipeline_logger.py` | — | its tests |
 | `scripts/tests/test_qaqc_srt.py` | 1 | tests for the R1.2 exemptions and short replies (added upstream 2026-10-22) |
+| `scripts/tests/test_phase_d_check.py` | 3D | tests for the insert-only proof and the causal-marker warning (added upstream 2026-11-22) |
 | `dict/load.py` | 1 | dictionary loader (+ `dict/*.json` data) |
 
 ## New in the CLI edition

@@ -6,7 +6,8 @@ Role: implementer. Rules: `prompts/rules.md` § R8.
 Read the whole text first. At seams — topic change, start of an example, a callback to earlier content,
 the next point in a list — insert a short **content-referring hook** from the seven kinds in § R8
 (callback, framing, pivot, signpost, transition, restatement, closing). A hook must refer to something that
-really exists in the text before/after it.
+really exists in the text before/after it, and it never asserts a cause: do not insert 原因是／因為／所以／導致
+unless the speaker's next words are that reason (the gate lists every inserted causal marker as a warning).
 
 Insert only:
 - between sentences or at the start of a paragraph; never inside a quote; never in a heading;
