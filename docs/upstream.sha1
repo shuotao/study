@@ -1,10 +1,10 @@
-1f1de7e9e5063e6eb8847c18dd7c7d0e3a08aafb  .claude/skills/good-student-notes/scripts/groq_transcribe.py
-0111e3cded71d7ada768cb3c4ed5e7135c6ef9c4  scripts/lang/en/groq_transcribe_en.py
+24b80c80b5cd8ff514d58eb76633dc0e9afa02f1  .claude/skills/good-student-notes/scripts/groq_transcribe.py
+5e8f7ae6366505fa571ab1ae10e27eab7f10b0e9  scripts/lang/en/groq_transcribe_en.py
 aa37e54abac4077699349c6c918698f26e7f1709  SRT/qaqc_srt.py
 0170bfd299149bc3dbe5abe7c6bf5834d0995412  scripts/normalize_punctuation.py
 8cba1290fcf95821829b41407dd69f37cc34c656  scripts/phase_d_check.py
 81f8659ab79c4b55fcee8a63d5ccc420fcd60a80  scripts/para_len_check.py
-766f8f0bbcc0d0916f9052704130d254162c2731  scripts/s2t_normalize.py
+9871bca6b632e7afbe9f3b360f35fab979ad7bb3  scripts/s2t_normalize.py
 a63051ce4b96c5c85b0b90500605e141a330c92f  scripts/dialogue_check.py
 fab47d433b26c4ff415ed7acfe1f037f718d578f  scripts/pipeline_logger.py
 0b0a47dce47437517aa010ffe4eda61fdbbac50f  scripts/tests/test_pipeline_logger.py
@@ -20,3 +20,4 @@ fac21286450abec64383b321e07a4e586c7cfa89  dict/hallucination_prefixes.json
 6a03ca50c0b5141d4f92619d2a44943f14754aee  dict/typo_dict.parenting.json
 1e83dc608ddc56ccc9fe69eb6915f87935152c42  prompts/qaqc_core_rules.md
 498c3017669c444d8202b98481e22e82d3178d89  scripts/tests/test_qaqc_srt.py
+489553e27aa6adbaef1b4264baef7e2e7a3ed0d8  scripts/tests/test_s2t_normalize.py

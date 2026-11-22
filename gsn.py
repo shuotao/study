@@ -15,12 +15,16 @@
                                                  drive pending stages through a headless agent CLI (OAuth login, no API key)
 
 new options:
-  --context TEXT|FILE   speaker names, companies, products, key terms (Groq prompt + Phase 3 name checks)
+  --context TEXT|FILE   speaker names, companies, products, key terms (Phase 3 name checks; Groq gets it only on the
+                        prompted diagnostic read of a suspect chunk)
   --lang zh|en          transcription language (zh: study groq_transcribe.py · en: groq_transcribe_en.py)
-  --no-prompt           send no prompt to Groq (noisy rooms: prevents prompt-echo hallucination)
+  --no-prompt           GROQ_PROMPT_MODE=off: one read, no prompt, no prompted diagnostic read either
+                        (default since study 3a2a5f9: the main read sends no prompt anyway — any prompt makes
+                        Whisper silently skip passages; suspect chunks get a prompted read as a diagnostic only)
   --chunk-seconds N     chunk length (default 600; 300 for noisy rooms)
   --domain NAME         typo dictionary overlay dict/typo_dict.<NAME>.json
-  --s2t                 convert Simplified-drift glyphs to Taiwan Traditional in cleaned.srt
+  --no-s2t              skip the Simplified-drift fix (default: zh sessions run study s2t_normalize.py on
+                        cleaned.srt after Phase A, as study session.py does; only Simplified-only glyphs change)
   --phase-a upstream|candidate  Phase A cleaner: study SRT/qaqc_srt.py (default) or the superseded candidate
   --translate zh-TW     Phase 2: zh-TW subtitle track for a foreign-language talk (study srt_zhtw.py)
   --terms               Phase 4: term supplements → enhanced.md
@@ -146,7 +150,7 @@ def task_card(sdir: Path, stage: str) -> dict:
                       f"sessions/{slug}/notes_{meta.get('identity', '')}.md"),
         "p6-matrix": (f"matrix/runs/{slug}/source.anchors.json", f"matrix/runs/{slug}/ (K.json, i.json, claims.json, …)"),
     }[stage]
-    return {"stage": stage, "phase": s["phase"], "title": s["title"], "prompt": s["prompt"],
+    card = {"stage": stage, "phase": s["phase"], "title": s["title"], "prompt": s["prompt"],
             "rules": "prompts/rules.md", "input": io[0], "output": io[1],
             "context_file": f"sessions/{slug}/context.txt",
             "identity": meta.get("identity"), "translate_to": meta.get("translate_to"),
@@ -155,6 +159,14 @@ def task_card(sdir: Path, stage: str) -> dict:
                              "Write only the output named above. Then run the done_command; if a gate fails, "
                              "fix the output and run it again (max 3 rounds, then stop and report). "
                              "Never delete this marker, the ledger or the snapshot by hand.")}
+    if stage == "p3-polish" and meta.get("transcription", {}).get("unresolved_chunks"):
+        card["transcribe_review"] = f"sessions/{slug}/transcribe_report.json"
+        card["instructions"] = (
+            "Transcription coverage is suspect: read `unresolved` in transcribe_review first. `gaps` — check "
+            "against the audio whether they are really silent; `review_ranges` — text another read produced for "
+            "that range (real speech, or prompt-echo hallucination). Add it only if it is real speech, and record "
+            "it in corrections.json. " + card["instructions"])
+    return card
 
 
 def open_stage(sdir: Path, stage: str) -> None:
@@ -246,7 +258,7 @@ def cmd_new(a) -> int:
         plan.append("p6-matrix")
     meta = {"session_id": slug, "source": src.name, "created_at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
             "title": a.title or src.stem, "speaker": a.speaker or "", "lang": a.lang, "domain": a.domain,
-            "translate_to": a.translate, "identity": a.identity, "phase_a_tool": a.phase_a, "plan": plan, "stop_at": stop, "status": "running"}
+            "translate_to": a.translate, "identity": a.identity, "phase_a_tool": a.phase_a, "s2t": not a.no_s2t, "plan": plan, "stop_at": stop, "status": "running"}
     save_meta(sdir, meta)
     append_ledger(sdir, "create", None, actor=actor_default(), plan=plan, source=src.name, context_chars=len(ctx))
 
@@ -267,7 +279,7 @@ def cmd_new(a) -> int:
             sys.exit("[gsn] transcription failed — fix the cause and run `python3 gsn.py resume " + slug + "`")
         how = f"groq whisper-large-v3 ({GROQ[a.lang].name})"
     finish_tool(sdir, "p1-transcribe", how)
-    phase_a(sdir, a.domain, a.s2t)
+    phase_a(sdir, a.domain, not a.no_s2t)
     if load_meta(sdir).get("status") != "complete":
         status_print(sdir)
     return 0
@@ -285,7 +297,31 @@ def transcribe(sdir: Path, link: Path, lang: str, no_prompt: bool, chunk_seconds
     out = sdir / f"{link.stem}.srt"
     if rc == 0 and out.exists():
         out.rename(sdir / "transcript.srt")
+    merge_transcribe_report(sdir, link)
     return rc if (sdir / "transcript.srt").exists() or rc else 3
+
+
+def merge_transcribe_report(sdir: Path, link: Path) -> None:
+    """study groq_transcribe.py writes <stem>.transcribe_report.json (coverage gate, study 3a2a5f9); keep it as
+    transcribe_report.json and put its summary in metadata.json, as study session.py does."""
+    src = sdir / f"{link.stem}.transcribe_report.json"
+    if not src.exists():
+        return
+    rep = json.loads(src.read_text(encoding="utf-8"))
+    src.replace(sdir / "transcribe_report.json")
+    unresolved = rep.get("unresolved", [])
+    meta = load_meta(sdir)
+    meta["transcription"] = {
+        "prompt_mode": rep.get("prompt_mode"), "coverage_fallback": rep.get("coverage_fallback"),
+        "gate_version": rep.get("gate_version"),
+        "chunks_selected": {str(c.get("chunk")): c.get("selected") for c in rep.get("chunks", [])},
+        "unresolved_chunks": [u.get("chunk") for u in unresolved],
+        "review_ranges": sum(len(u.get("review_ranges", [])) for u in unresolved),
+        "report": "transcribe_report.json"}
+    save_meta(sdir, meta)
+    if unresolved:
+        print(f"[gsn] ⚠ transcription coverage: chunk(s) {meta['transcription']['unresolved_chunks']} flagged — "
+              "see transcribe_report.json (the p3-polish task card carries the pointer)", file=sys.stderr)
 
 
 def phase_a(sdir: Path, domain: str | None, s2t: bool) -> None:
@@ -298,19 +334,25 @@ def phase_a(sdir: Path, domain: str | None, s2t: bool) -> None:
         sh(PY, REPO / "pipeline/candidates/phase_a_clean.py", sdir / "transcript.srt", sdir / "cleaned.srt",
            "--context", sdir / "context.txt", *dom)
         how = "pipeline/candidates/phase_a_clean.py (superseded candidate)"
-        if s2t:
-            sh(PY, S2T, sdir / "cleaned.srt", "--in-place")
-            how += " + s2t_normalize.py"
+        how += run_s2t(sdir) if s2t else ""
     elif meta.get("lang") == "en":
         shutil.copyfile(sdir / "transcript.srt", sdir / "cleaned.srt")
         how = "copy (English: hallucination filter runs in srt_zhtw prep)"
     else:
         sh(PY, QAQC_SRT, sdir / "transcript.srt", "-o", sdir / "cleaned.srt", *dom)
         how = "SRT/qaqc_srt.py"
-        if s2t:
-            sh(PY, S2T, sdir / "cleaned.srt", "--in-place")
-            how += " + s2t_normalize.py"
+        how += run_s2t(sdir) if s2t else ""
     finish_tool(sdir, "p1-clean", how)
+
+
+def run_s2t(sdir: Path) -> str:
+    """Prompt-free transcription drifts into Simplified glyphs (docs/gotchas.md #7/#8) → deterministic fix on
+    cleaned.srt only (transcript.srt is evidence). Needs opencc; if it fails, Phase 3 fixes glyphs (§ R2.1)."""
+    if sh(PY, S2T, sdir / "cleaned.srt", "--in-place", check=False):
+        print("[gsn] ⚠ s2t_normalize failed (pip install opencc-python-reimplemented); "
+              "p3-polish must fix Simplified glyphs", file=sys.stderr)
+        return " (s2t_normalize failed)"
+    return " + s2t_normalize.py"
 
 
 def finish_tool(sdir: Path, stage: str, how: str) -> None:
@@ -335,7 +377,7 @@ def cmd_resume(a) -> int:
             sys.exit("[gsn] transcription failed again")
         finish_tool(sdir, "p1-transcribe", "groq whisper-large-v3 (resumed)")
     if "p1-clean" not in done:
-        phase_a(sdir, meta.get("domain"), False)
+        phase_a(sdir, meta.get("domain"), meta.get("s2t", True))
     return 0
 
 
@@ -471,7 +513,8 @@ def main() -> int:
     n.add_argument("--from-srt")
     n.add_argument("--slug"); n.add_argument("--title"); n.add_argument("--speaker")
     n.add_argument("--context"); n.add_argument("--lang", default="zh", choices=["zh", "en"]); n.add_argument("--no-prompt", action="store_true")
-    n.add_argument("--chunk-seconds", type=int); n.add_argument("--phase-a", choices=["upstream", "candidate"], default="upstream"); n.add_argument("--domain"); n.add_argument("--s2t", action="store_true")
+    n.add_argument("--chunk-seconds", type=int); n.add_argument("--phase-a", choices=["upstream", "candidate"], default="upstream"); n.add_argument("--domain"); n.add_argument("--no-s2t", action="store_true")
+    n.add_argument("--s2t", action="store_true", help=argparse.SUPPRESS)   # pre-2026-11 opt-in flag; now the default
     n.add_argument("--translate", choices=["zh-TW"]); n.add_argument("--terms", action="store_true"); n.add_argument("--identity")
     n.add_argument("--matrix", action="store_true"); n.add_argument("--stop-at", choices=STOP_AT)
     sub.add_parser("improve").add_argument("--session")
